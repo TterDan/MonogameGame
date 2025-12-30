@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace FriendsPoint
 {
@@ -8,7 +9,8 @@ namespace FriendsPoint
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        private Texture2D pixel;
+        private Player player;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -26,8 +28,12 @@ namespace FriendsPoint
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            player = new Player(new Vector2(100, 100));
 
-            // TODO: use this.Content to load your game content here
+            // создаем текстуру 1x1 для прямоугольника
+            pixel = new Texture2D(GraphicsDevice, 1, 1);
+            pixel.SetData(new[] { Color.White });
+            player.Texture = pixel; // назначаем текстуру игроку
         }
 
         protected override void Update(GameTime gameTime)
@@ -39,13 +45,17 @@ namespace FriendsPoint
 
             base.Update(gameTime);
         }
-
+        private int timer = 0;
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
+            timer++;
+            _spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
+            // рисуем игрока
+            player.Draw(_spriteBatch);
 
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
