@@ -10,17 +10,17 @@ namespace FriendsPoint
         // Код обновлений
         protected void Input()
         {
-            player.rotate(getMouse().Position);
-            player.move(getKeyboard(), map);
+            player.rotate(getMouse().Position); // В метод дай ввод с мыши
+            player.move(getKeyboard(), map, obj, objects);   // В метод даю ввод с клавиатуры и все обьекты на карте, чтобы их смещать
         }
-        protected MouseState getMouse()
+        protected MouseState getMouse()  // Получение ввода с мыши
         {
             MouseState mouse = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             return mouse;
         }
-        protected Vector2 getKeyboard()
+        protected Vector2 getKeyboard() // Получение ввода с клавиатуры
         {
             KeyboardState keyboard = Keyboard.GetState();
             Vector2 direction = Vector2.Zero;
@@ -37,7 +37,7 @@ namespace FriendsPoint
                 direction.X = 1;
             
             if (direction != Vector2.Zero)
-                direction.Normalize();
+                direction.Normalize();          // ВАЖНАЯ ДЕТАЛЬ, нормализую вектор, т.е. делаю так, чтобы игрок не был быстрее, когда двигается по горизонтали
             return direction;
         }
     }

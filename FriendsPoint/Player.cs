@@ -11,7 +11,7 @@ public class Player {
     public int Height;    // Высота хитбокса игрока
     public float MoveSpeed;
     public Texture2D Texture;   // Текстура игрока
-    public Texture2D Pixel; // Пиксель
+    public Texture2D BlackTexture; // 
     public float Rotation = 0;
 
     public Player(Vector2 startPosition, int width, int height, float moveSpeed, Vector2 playerScreenPos) {
@@ -27,17 +27,19 @@ public class Player {
         Vector2 mousedirection = new Vector2(mousePosition.X - PlayerScreenPos.X, mousePosition.Y - PlayerScreenPos.Y);
         Rotation = (float)Math.Atan2(mousedirection.Y, mousedirection.X) + MathHelper.PiOver2;
     }
-    public void move(Vector2 moveDirection, Map map)
+    public void move(Vector2 moveDirection, Map map, SomeObject obj, List<GameObject> objects) // функция перемещения всех обьектов на карте, также добавляет к игроку значения к координате для удобства, про List<GameObject> писал в Main.cs
     {
-        map.Position -= moveDirection;
+        Position += moveDirection * MoveSpeed;
+        map.Position -= moveDirection * MoveSpeed;
+        obj.Position -= moveDirection * MoveSpeed;
     }
 
     // Метод для отрисовки игрока
-    public void Draw(SpriteBatch spriteBatch) {
+    public void Draw(SpriteBatch render) {
         if (Texture != null) {
             Rectangle Rect = new Rectangle((int)PlayerScreenPos.X, (int)PlayerScreenPos.Y, Width, Height);
 
-            spriteBatch.Draw(
+            render.Draw(
                 Texture, 
                 PlayerScreenPos, // Положение 
                 null, // Прямоугольник
@@ -49,8 +51,8 @@ public class Player {
                 0.0f // Глубина
                 );
 
-            spriteBatch.Draw(
-                Pixel, 
+            render.Draw(
+                BlackTexture, 
                 PlayerScreenPos, 
                 Rect, 
                 Color.Black * 0.5f, 

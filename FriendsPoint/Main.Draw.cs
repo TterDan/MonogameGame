@@ -11,10 +11,13 @@ namespace FriendsPoint
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-            _spriteBatch.Begin();
-            player.Draw(_spriteBatch);
-            map.Draw(_spriteBatch);
-            _spriteBatch.End();
+            render.Begin();
+
+            player.Draw(render);
+            map.Draw(render);
+            obj.Draw(render); //сюда закидывать рендеры всех обьектов
+
+            render.End();
             base.Draw(gameTime);
         }
     }
