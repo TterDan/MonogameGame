@@ -5,11 +5,11 @@ using System;
 using System.Diagnostics;
 
 public class Map {
-    public Vector2 Position;    // Смещение карты
-    public int Width;           // Ширина карты
-    public int Height;          // Высота карты
-    public Texture2D Texture;   // Текстура карты
-    public Texture2D BlackTexture;     // Пиксель
+    public Vector2 Position;            // Смещение карты
+    public int Width;                   // Ширина карты
+    public int Height;                  // Высота карты
+    public Texture2D Texture;           // Текстура карты
+    public Texture2D BlackTexture;      // Пиксель
     public float Rotation = 0;
 
     public Map(Vector2 position, int width, int height) {
@@ -21,6 +21,19 @@ public class Map {
     // Метод для отрисовки карты
     public void Draw(SpriteBatch render) {
         Rectangle Rect = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+
+        render.Draw(
+            Texture,
+            Position,
+            null,
+            Color.White,
+            0.0f,
+            new Vector2(Height, Width) * 0.5f,
+            1.0f,
+            SpriteEffects.None,
+            0.5f
+            );
+
         render.Draw(
             BlackTexture, 
             Position, 
@@ -28,7 +41,7 @@ public class Map {
             Color.Black * 0.5f, 
             0.0f,
             new Vector2(Height, Width) * 0.5f,
-            0.35f,  
+            1.0f,  
             SpriteEffects.None,
             0.0f);
     }

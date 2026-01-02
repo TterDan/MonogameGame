@@ -11,7 +11,7 @@ namespace FriendsPoint
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-            render.Begin();
+            render.Begin(SpriteSortMode.FrontToBack); 
 
             player.Draw(render);
             map.Draw(render);

@@ -11,6 +11,7 @@ namespace FriendsPoint
         protected override void Update(GameTime gameTime)
         {
             Input();
+            player.Weapon = "bat";
             base.Update(gameTime);
         }
     }

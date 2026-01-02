@@ -18,16 +18,16 @@ public class SomeObject {
 
     public void Draw(SpriteBatch render) {
         Rectangle Rect = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
-        render.Draw(
-            BlackTexture, 
-            Position, 
-            Rect, 
-            Color.Black, 
-            0.0f,
-            new Vector2(Height, Width) * 0.5f,
-            0.35f,  
-            SpriteEffects.None,
-            0.0f);
+        //render.Draw(
+        //    BlackTexture, 
+        //    Position, 
+        //    Rect, 
+        //    Color.Black, 
+        //    0.0f,
+        //    new Vector2(Height, Width) * 0.5f,
+        //    0.35f,  
+        //    SpriteEffects.None,
+        //    0.0f);
     }
 
 }
