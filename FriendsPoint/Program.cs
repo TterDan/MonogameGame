@@ -1,2 +1,2 @@
-﻿using var game = new FriendsPoint.Game1();
+﻿using var game = new FriendsPoint.Main();
 game.Run();

@@ -6,29 +6,40 @@ using System.Diagnostics;
 
 public class Player {
     public Vector2 Position;    // Позиция игрока
-    public int Width = 170;     // Ширина прямоугольника
-    public int Height = 170;    // Высота прямоугольника
+    public Vector2 PlayerScreenPos;    // Положение игрока на экране (в центре)
+    public int Width;     // Ширина хитбокса игрока
+    public int Height;    // Высота хитбокса игрока
+    public float MoveSpeed;
     public Texture2D Texture;   // Текстура игрока
     public Texture2D Pixel; // Пиксель
     public float Rotation = 0;
-    public Player(Vector2 startPosition) {
+
+    public Player(Vector2 startPosition, int width, int height, float moveSpeed, Vector2 playerScreenPos) {
         Position = startPosition;
+        Width = width;
+        Height = height;
+        MoveSpeed = moveSpeed;
+        PlayerScreenPos = playerScreenPos;
     }
 
-    public void direction(Point mousePosition)
+    public void rotate(Point mousePosition)
     {
-        Vector2 mousedirection = new Vector2(mousePosition.X - Position.X, mousePosition.Y - Position.Y);
+        Vector2 mousedirection = new Vector2(mousePosition.X - PlayerScreenPos.X, mousePosition.Y - PlayerScreenPos.Y);
         Rotation = (float)Math.Atan2(mousedirection.Y, mousedirection.X) + MathHelper.PiOver2;
+    }
+    public void move(Vector2 moveDirection, Map map)
+    {
+        map.Position -= moveDirection;
     }
 
     // Метод для отрисовки игрока
     public void Draw(SpriteBatch spriteBatch) {
         if (Texture != null) {
-            Rectangle Rect = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+            Rectangle Rect = new Rectangle((int)PlayerScreenPos.X, (int)PlayerScreenPos.Y, Width, Height);
 
             spriteBatch.Draw(
                 Texture, 
-                Position, // Положение 
+                PlayerScreenPos, // Положение 
                 null, // Прямоугольник
                 Color.White, // Цвет
                 Rotation, // Вращение
@@ -40,7 +51,7 @@ public class Player {
 
             spriteBatch.Draw(
                 Pixel, 
-                Position, 
+                PlayerScreenPos, 
                 Rect, 
                 Color.Black * 0.5f, 
                 0.0f,
