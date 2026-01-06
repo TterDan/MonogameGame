@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace FriendsPoint
@@ -13,9 +14,10 @@ namespace FriendsPoint
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             player = new Player(Vector2.Zero, 150, 150, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), "hand"); // Стартовая позиция игрока
             map = new Map(new Vector2(0, 0), 400, 400);
-            obj = new SomeObject();
+            obj = new SomeObject(Vector2.Zero, 100, 100);
             render = new SpriteBatch(GraphicsDevice);
             blackTxtr = new Texture2D(GraphicsDevice, 1, 1);
+            renderlist = new List<SomeWeapon>{new SomeWeapon("bat",player.PlayerScreenPos, 50, 50)};
             objects = new GameObject(); // Инициализирую список всех элементов
             base.Initialize();
         }
@@ -27,8 +29,9 @@ namespace FriendsPoint
             player.BlackTexture = blackTxtr;
             map.BlackTexture = blackTxtr;
             obj.BlackTexture = blackTxtr;
-            player.Texture = Content.Load<Texture2D>("players/soldierRF"); // Назначаем текстуру игроку
-            map.Texture = Content.Load<Texture2D>("floor"); // Назначаем текстуру карте
+            player.Texture = Content.Load<Texture2D>("players/soldierRF"); // Назначаем текстуру игрока
+            map.Texture = Content.Load<Texture2D>("floor"); // Назначаем текстуру карты
+            renderlist[0].BlackTexture = blackTxtr;
         }
     }
 }

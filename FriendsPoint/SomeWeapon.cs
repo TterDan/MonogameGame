@@ -1,25 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Diagnostics;
 
-public class SomeObject 
+public class SomeWeapon
 {
+    public string Name;
     public Vector2 Position;
+    public Texture2D Texture;
+    public Texture2D BlackTexture;
     public int Width;
     public int Height;
-    public Texture2D BlackTexture;
-    public Texture2D Texture;
 
-    public SomeObject(Vector2 position, int width, int height) 
+    public SomeWeapon(string name, Vector2 position, int width, int height)
     {
+        Name = name;
         Position = position;
         Width = width;
         Height = height;
     }
-
-    public void Draw(SpriteBatch render) 
+    
+    public void Draw(SpriteBatch render)
     {
         Rectangle Rect = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
         render.Draw(
@@ -33,5 +32,5 @@ public class SomeObject
         SpriteEffects.None,
         1.0f);
     }
-
 }
+

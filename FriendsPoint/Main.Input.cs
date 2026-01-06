@@ -11,7 +11,7 @@ namespace FriendsPoint
         protected void Input()
         {
             player.rotate(getMouse().Position); // В метод дай ввод с мыши
-            player.move(getKeyboard(), map, obj, objects);   // В метод даю ввод с клавиатуры и все обьекты на карте, чтобы их смещать
+            player.move(getKeyboard(), map, obj, objects, renderlist);   // В метод даю ввод с клавиатуры и все обьекты на карте, чтобы их смещать
         }
         protected MouseState getMouse()  // Получение ввода с мыши
         {
@@ -37,7 +37,17 @@ namespace FriendsPoint
                 direction.X = 1;
             
             if (direction != Vector2.Zero)
-                direction.Normalize();          // ВАЖНАЯ ДЕТАЛЬ, нормализую вектор, т.е. делаю так, чтобы игрок не был быстрее, когда двигается по горизонтали
+                direction.Normalize();          // ВАЖНАЯ ДЕТАЛЬ, нормализую вектор, т.е. делаю так, чтобы игрок не был быстрее, когда двигается по гgризонтали
+
+            if (keyboard.IsKeyDown(Keys.G) && player.Weapon != "hand")
+            {
+                SomeWeapon wpn = new SomeWeapon(player.Weapon,player.PlayerScreenPos, 50, 50);
+                player.flag = true; // Флажок для теста просто, потом уберу
+                wpn.BlackTexture = blackTxtr;
+                renderlist.Add(wpn);
+                player.Weapon = "hand";
+            }
+
             return direction;
         }
     }

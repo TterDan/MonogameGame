@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 
 public class Player {
     public Vector2 Position;            // Позиция игрока
@@ -17,6 +19,7 @@ public class Player {
     public string Weapon;               //Текущее оружие игрока
     public float WeaponPosY;
     public float WeaponPosX;
+    public bool flag;
     public Player(Vector2 startPosition, int width, int height, float moveSpeed, Vector2 playerScreenPos, string weapon) {
         Position = startPosition;
         Width = width;
@@ -31,11 +34,15 @@ public class Player {
         Vector2 mousedirection = new Vector2(mousePosition.X - PlayerScreenPos.X, mousePosition.Y - PlayerScreenPos.Y);
         Rotation = (float)Math.Atan2(mousedirection.Y, mousedirection.X) + MathHelper.PiOver2;
     }
-    public void move(Vector2 moveDirection, Map map, SomeObject obj, GameObject objects) // функция перемещения всех обьектов на карте, также добавляет к игроку значения к координате для удобства, про List<GameObject> писал в Main.cs
+    public void move(Vector2 moveDirection, Map map, SomeObject obj, GameObject objects, List<SomeWeapon> renderlist) // Функция перемещения всех обьектов на карте, также добавляет к игроку значения к координате для удобства, про List<GameObject> писал в Main.cs
     {
         Position += moveDirection * MoveSpeed;
         map.Position -= moveDirection * MoveSpeed;
         obj.Position -= moveDirection * MoveSpeed;
+        for (int i = 0; i < renderlist.Count; i++)
+        {
+            renderlist[i].Position -= moveDirection * MoveSpeed;
+        }
     }
 
     // Метод для отрисовки игрока
