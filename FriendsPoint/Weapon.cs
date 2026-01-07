@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class SomeWeapon
+public class Weapon
 {
     public string Name;
     public Vector2 Position;
@@ -10,7 +10,7 @@ public class SomeWeapon
     public int Width;
     public int Height;
 
-    public SomeWeapon(string name, Vector2 position, int width, int height)
+    public Weapon(string name, Vector2 position, int width, int height)
     {
         Name = name;
         Position = position;

@@ -41,7 +41,7 @@ namespace FriendsPoint
 
             if (keyboard.IsKeyDown(Keys.G) && player.Weapon != "hand")
             {
-                SomeWeapon wpn = new SomeWeapon(player.Weapon,player.PlayerScreenPos, 50, 50);
+                Weapon wpn = new Weapon(player.Weapon,player.PlayerScreenPos, 50, 50);
                 player.flag = true; // Флажок для теста просто, потом уберу
                 wpn.BlackTexture = blackTxtr;
                 renderlist.Add(wpn);

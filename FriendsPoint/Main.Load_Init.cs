@@ -17,7 +17,7 @@ namespace FriendsPoint
             obj = new SomeObject(Vector2.Zero, 100, 100);
             render = new SpriteBatch(GraphicsDevice);
             blackTxtr = new Texture2D(GraphicsDevice, 1, 1);
-            renderlist = new List<SomeWeapon>{new SomeWeapon("bat",player.PlayerScreenPos, 50, 50)};
+            renderlist = new List<Weapon>{new Weapon("bat",player.PlayerScreenPos, 50, 50)};
             objects = new GameObject(); // Инициализирую список всех элементов
             base.Initialize();
         }

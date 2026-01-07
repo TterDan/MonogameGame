@@ -34,7 +34,7 @@ public class Player {
         Vector2 mousedirection = new Vector2(mousePosition.X - PlayerScreenPos.X, mousePosition.Y - PlayerScreenPos.Y);
         Rotation = (float)Math.Atan2(mousedirection.Y, mousedirection.X) + MathHelper.PiOver2;
     }
-    public void move(Vector2 moveDirection, Map map, SomeObject obj, GameObject objects, List<SomeWeapon> renderlist) // Функция перемещения всех обьектов на карте, также добавляет к игроку значения к координате для удобства, про List<GameObject> писал в Main.cs
+    public void move(Vector2 moveDirection, Map map, SomeObject obj, GameObject objects, List<Weapon> renderlist) // Функция перемещения всех обьектов на карте, также добавляет к игроку значения к координате для удобства, про List<GameObject> писал в Main.cs
     {
         Position += moveDirection * MoveSpeed;
         map.Position -= moveDirection * MoveSpeed;
@@ -43,6 +43,19 @@ public class Player {
         {
             renderlist[i].Position -= moveDirection * MoveSpeed;
         }
+    }
+
+    public void shot() {
+
+    }
+    public void takeWeapon() {
+
+    }
+    public void throwWeapon() {
+
+    }
+    public void shiftLook() {
+
     }
 
     // Метод для отрисовки игрока
