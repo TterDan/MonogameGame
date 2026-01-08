@@ -22,6 +22,7 @@ namespace FriendsPoint
                 }
             }
                 takeWeapon();
+            Camera.ChangeOffset();
             base.Update(gameTime);
         }
 

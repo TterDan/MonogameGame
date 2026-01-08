@@ -9,6 +9,8 @@ using System.Reflection;
 
 public class Player : GameObject {          // Класс игрока, наследует класс GameObject
     public float MoveSpeed;
+    Vector2 CurrentSpeed = Vector2.Zero;
+    public Vector2 ScreenCenter;
     static public Texture2D BlackTexture;
     public string Weapon;                   // Текущее оружие игрока
     public bool flag;
@@ -18,33 +20,55 @@ public class Player : GameObject {          // Класс игрока, насл
         Height = height;
         MoveSpeed = moveSpeed;
         ScreenPosition = playerScreenPos;
+        ScreenCenter = playerScreenPos;
         Weapon = weapon;
         Layer = 0.9f;
+
     }
-    public void shot() {    // Функции на будущее
+    public void Shot() {    // Функции на будущее
         //  Если здесь попал во врага, то вызывается
         //  if (enemy.TakeDamage(Weapon.Damage) == true) {
         //      objects.RemoveAt(enemyIndex);
         //  }
     }
-    public void takeWeapon() {
+    public void TakeWeapon() {
 
     }
-    public void throwWeapon() {
+    public void ThrowWeapon() {
 
     }
-    public void shiftLook() {
-
+    public void ShiftLook(bool ShiftPressed, Point mousePosition) {
+        Vector2 mouseDirectionForCamera;
+        if (ShiftPressed) {
+            mouseDirectionForCamera = new Vector2(mousePosition.X - ScreenCenter.X, mousePosition.Y - ScreenCenter.Y);
+            mouseDirectionForCamera.Normalize();
+        } else {
+            mouseDirectionForCamera = Vector2.Zero;
+        }
+        Camera.ChangeShiftOffset(mouseDirectionForCamera);
     }
     public void rotate(Point mousePosition) {                           // Функция поворота игрока в сторону мыши
-        Vector2 mousedirection = new Vector2(mousePosition.X - ScreenPosition.X, mousePosition.Y - ScreenPosition.Y);
-        Rotation = (float)Math.Atan2(mousedirection.Y, mousedirection.X) + MathHelper.PiOver2;
+        Vector2 mouseDirection = new Vector2(mousePosition.X - ScreenPosition.X, mousePosition.Y - ScreenPosition.Y);
+        Vector2 mouseDirectionForCamera = new Vector2(mousePosition.X - ScreenCenter.X, mousePosition.Y - ScreenCenter.Y);
+        Camera.ChangeMouseOffset(mouseDirectionForCamera);
+        Rotation = (float)Math.Atan2(mouseDirection.Y, mouseDirection.X) + MathHelper.PiOver2;
     }
+
     public void move(Vector2 moveDirection, List<GameObject> objects)   // Функция перемещения всех обьектов на карте
     {
-        Position += moveDirection * MoveSpeed;                          // Изменение координат игрока
+        if (moveDirection == Vector2.Zero) {
+            CurrentSpeed = Vector2.Lerp(CurrentSpeed, Vector2.Zero, 0.3f);
+        } else {
+            Vector2 targetVelocity = moveDirection * MoveSpeed;
+            CurrentSpeed = Vector2.Lerp(CurrentSpeed, targetVelocity, 0.3f);
+        }
+        Camera.ChangeWalkOffset(moveDirection);
+        Position += CurrentSpeed;                         // Изменение координат игрока
         for (int i = 0; i < objects.Count; i++) {
+            Vector2 normVectorSpeed = CurrentSpeed;
+            normVectorSpeed.Normalize();
             if (objects[i] is Player) {
+                ScreenPosition = ScreenCenter - Camera.CameraOffset;
                 continue;
             }
             objects[i].ScreenPosition = ScreenPosition + (objects[i].Position - Position); // Арифметика для перемещения объектов по экрану игрока (их реальная позиция в мире не меняется)
