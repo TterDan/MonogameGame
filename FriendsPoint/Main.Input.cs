@@ -5,22 +5,22 @@ using System.Threading;
 
 namespace FriendsPoint
 {
-    public partial class Main
+    public partial class Main                       // Пишу именно partial class, чтобы сединить все файлы начинающиеся на Main в один класс
     {
         // Код обновлений
         protected void Input()
         {
-            player.rotate(getMouse().Position); // В метод дай ввод с мыши
-            player.move(getKeyboard(), map, obj, objects, renderlist);   // В метод даю ввод с клавиатуры и все обьекты на карте, чтобы их смещать
+            player.rotate(getMouse().Position);     // В метод даю ввод с мыши
+            player.move(getKeyboard(), objects);    // В метод даю ввод с клавиатуры и все обьекты на карте, чтобы их смещать
         }
-        protected MouseState getMouse()  // Получение ввода с мыши
+        protected MouseState getMouse()             // Получение ввода с мыши
         {
             MouseState mouse = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             return mouse;
         }
-        protected Vector2 getKeyboard() // Получение ввода с клавиатуры
+        protected Vector2 getKeyboard()             // Получение ввода с клавиатуры
         {
             KeyboardState keyboard = Keyboard.GetState();
             Vector2 direction = Vector2.Zero;
@@ -37,14 +37,13 @@ namespace FriendsPoint
                 direction.X = 1;
             
             if (direction != Vector2.Zero)
-                direction.Normalize();          // ВАЖНАЯ ДЕТАЛЬ, нормализую вектор, т.е. делаю так, чтобы игрок не был быстрее, когда двигается по гgризонтали
+                direction.Normalize();              // Нормализую вектор, т.е. делаю так, чтобы игрок не был быстрее, когда двигается по горизонтали
 
-            if (keyboard.IsKeyDown(Keys.G) && player.Weapon != "hand")
+            if (keyboard.IsKeyDown(Keys.G) && player.Weapon != "hand")                      // ДЖАС Вот этот код лучше поместить в метод throwWeapon() у игрока
             {
-                Weapon wpn = new Weapon(player.Weapon,player.PlayerScreenPos, 50, 50);
-                player.flag = true; // Флажок для теста просто, потом уберу
-                wpn.BlackTexture = blackTxtr;
-                renderlist.Add(wpn);
+                Weapon wpn = new Weapon(blackTxtr, player.Weapon, player.Position, 50, 50);
+                player.flag = true;                 // Флажок для теста просто, потом уберу
+                objects.Add(wpn);
                 player.Weapon = "hand";
             }
 

@@ -6,7 +6,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace FriendsPoint
 {
-    public partial class Main
+    public partial class Main                                   // Пишу именно partial class, чтобы сединить все файлы начинающиеся на Main в один класс
     {
         // Код обновлений
         protected override void Update(GameTime gameTime)
@@ -20,19 +20,20 @@ namespace FriendsPoint
             base.Update(gameTime);
         }
 
-        public void takeWeapon()
+        public void takeWeapon()                                // ДЖАС вот этот код лучше переместить в метод takeWeapon() у игрока
         {
-            for (int i = 0; i < renderlist.Count; i++)
+            for (int i = 0; i < objects.Count; i++)
             {
-                Vector2 playerCenter = player.PlayerScreenPos + new Vector2(player.Width / 2f, player.Height / 2f);
-                Vector2 wpnCenter = renderlist[i].Position + new Vector2(renderlist[i].Width / 2f, renderlist[i].Height / 2f);
+                if (objects[i] is Weapon) {
+                    Vector2 playerCenter = player.ScreenPosition + new Vector2(player.Width / 2f, player.Height / 2f);
+                    Vector2 wpnCenter = objects[i].ScreenPosition + new Vector2(objects[i].Width / 2f, objects[i].Height / 2f);
 
-                float distance = Vector2.Distance(playerCenter, wpnCenter);
-                if (distance < 110 && player.Weapon == "hand" && Keyboard.GetState().IsKeyDown(Keys.E))
-                {
-                    player.Weapon = "bat";
-                    renderlist.RemoveAt(i);
-                    i--;
+                    float distance = Vector2.Distance(playerCenter, wpnCenter);
+                    if (distance < 110 && player.Weapon == "hand" && Keyboard.GetState().IsKeyDown(Keys.E)) {
+                        player.Weapon = "bat";
+                        objects.RemoveAt(i);
+                        return;
+                    }
                 }
             }
         }

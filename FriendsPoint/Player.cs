@@ -7,45 +7,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 
-public class Player {
-    public Vector2 Position;            // Позиция игрока
-    public Vector2 PlayerScreenPos;     // Положение игрока на экране (в центре)
-    public int Width;                   // Ширина хитбокса игрока
-    public int Height;                  // Высота хитбокса игрока
+public class Player : GameObject {          // Класс игрока, наследует класс GameObject
     public float MoveSpeed;
-    public Texture2D Texture;           // Текстура игрока
-    public Texture2D BlackTexture;      // Пиксель
-    public float Rotation = 0;
-    public string Weapon;               //Текущее оружие игрока
-    public float WeaponPosY;
-    public float WeaponPosX;
+    static public Texture2D BlackTexture;
+    public string Weapon;                   // Текущее оружие игрока
     public bool flag;
     public Player(Vector2 startPosition, int width, int height, float moveSpeed, Vector2 playerScreenPos, string weapon) {
         Position = startPosition;
         Width = width;
         Height = height;
         MoveSpeed = moveSpeed;
-        PlayerScreenPos = playerScreenPos;
+        ScreenPosition = playerScreenPos;
         Weapon = weapon;
+        Layer = 0.9f;
     }
-
-    public void rotate(Point mousePosition)
-    {
-        Vector2 mousedirection = new Vector2(mousePosition.X - PlayerScreenPos.X, mousePosition.Y - PlayerScreenPos.Y);
-        Rotation = (float)Math.Atan2(mousedirection.Y, mousedirection.X) + MathHelper.PiOver2;
-    }
-    public void move(Vector2 moveDirection, Map map, SomeObject obj, GameObject objects, List<Weapon> renderlist) // Функция перемещения всех обьектов на карте, также добавляет к игроку значения к координате для удобства, про List<GameObject> писал в Main.cs
-    {
-        Position += moveDirection * MoveSpeed;
-        map.Position -= moveDirection * MoveSpeed;
-        obj.Position -= moveDirection * MoveSpeed;
-        for (int i = 0; i < renderlist.Count; i++)
-        {
-            renderlist[i].Position -= moveDirection * MoveSpeed;
-        }
-    }
-
-    public void shot() {
+    public void shot() {    // Функции на будущее
 
     }
     public void takeWeapon() {
@@ -57,52 +33,49 @@ public class Player {
     public void shiftLook() {
 
     }
-
-    // Метод для отрисовки игрока
-    public void Draw(SpriteBatch render) {
-        if (Texture != null) {
-            Rectangle Rect = new Rectangle((int)PlayerScreenPos.X, (int)PlayerScreenPos.Y, Width, Height);
-            Rectangle weaponRect = new Rectangle((int)PlayerScreenPos.X, (int)PlayerScreenPos.Y, 50, 50);
-            WeaponPosY = (MathF.Sin(Rotation) * 20) + (MathF.Sin(Rotation) * 40);
-            WeaponPosX = (MathF.Cos(Rotation) * 20) + (MathF.Cos(Rotation) * 40);
-
-            render.Draw( //Текстура игрока 
-                Texture, 
-                PlayerScreenPos, // Положение 
-                null, // Прямоугольник
-                Color.White, // Цвет
-                Rotation, // Вращение
-                new Vector2(Texture.Width, Texture.Height) * 0.5f, // Центр объекта, вокруг которого происходит вращение и тд.
-                0.35f, // Масштабирование
-                SpriteEffects.None, // Отражение по горизонтали и вертикали
-                0.9f // Глубина
-                );
-
-            render.Draw( //Хитбокс игрока
-                BlackTexture, 
-                PlayerScreenPos, 
-                Rect, 
-                Color.Black * 0.5f, 
-                0.0f,
-                new Vector2(Height, Width) * 0.5f,
-                0.35f,  
-                SpriteEffects.None,
-                0.0f);
-
-            if (Weapon != "hand") // Проверка и отрисовка оружия в руке персонажа
-            {
-                render.Draw(
-                    BlackTexture,
-                    new Vector2(PlayerScreenPos.X + WeaponPosX, PlayerScreenPos.Y + WeaponPosY),
-                    weaponRect,
-                    Color.Black,
-                    Rotation,
-                    new Vector2(Texture.Width, Texture.Height) * 0.5f,
-                    0.35f,
-                    SpriteEffects.None,
-                    1.0f);
+    public void rotate(Point mousePosition) {                           // Функция поворота игрока в сторону мыши
+        Vector2 mousedirection = new Vector2(mousePosition.X - ScreenPosition.X, mousePosition.Y - ScreenPosition.Y);
+        Rotation = (float)Math.Atan2(mousedirection.Y, mousedirection.X) + MathHelper.PiOver2;
+    }
+    public void move(Vector2 moveDirection, List<GameObject> objects)   // Функция перемещения всех обьектов на карте
+    {
+        Position += moveDirection * MoveSpeed;                          // Изменение координат игрока
+        for (int i = 0; i < objects.Count; i++) {
+            if (objects[i] is Player) {
+                continue;
             }
+            objects[i].ScreenPosition = ScreenPosition + (objects[i].Position - Position); // Арифметика для перемещения объектов по экрану игрока (их реальная позиция в мире не меняется)
         }
     }
+    public override void OtherDraw(SpriteBatch render) {                // Переопределяю функцию OtherDraw() из GameObject, чтобы отрисовать что-то еще помимо базовой отрисовки
+        Rectangle Rect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, Width, Height);
+        render.Draw(                                                    // Отрисовка хитбокса игрока
+            BlackTexture,
+            ScreenPosition,
+            Rect,
+            Color.Black * 0.5f,
+            0.0f,
+            new Vector2(Height, Width) * 0.5f,
+            Scale,
+            SpriteEffects.None,
+            0.0f
+        );
 
+        if (Weapon != "hand")                                           // Отрисовка оружия в руке игрока
+        {
+            Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, 50, 50);
+            Vector2 WeaponOffset = new Vector2(20, 40);                 // Координаты для смещения оружия от игрока в его руке
+            Vector2 WeaponPos = new Vector2((MathF.Cos(Rotation) * WeaponOffset.X) + (MathF.Cos(Rotation) * WeaponOffset.Y), (MathF.Sin(Rotation) * WeaponOffset.X) + (MathF.Sin(Rotation) * WeaponOffset.Y));      // Математика для определения смещения оружия от игрока в его руке
+            render.Draw(
+                BlackTexture,
+                new Vector2(ScreenPosition.X + WeaponPos.X, ScreenPosition.Y + WeaponPos.Y),
+                weaponRect,
+                Color.Black,
+                Rotation,
+                new Vector2(Texture.Width, Texture.Height) * 0.5f,
+                Scale,
+                SpriteEffects.None,
+                1.0f);
+        }
+    }
 }

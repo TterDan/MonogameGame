@@ -3,47 +3,21 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using System.Xml.Linq;
 
-public class Map {
-    public Vector2 Position;            // РЎРјРµС‰РµРЅРёРµ РєР°СЂС‚С‹
-    public int Width;                   // РЁРёСЂРёРЅР° РєР°СЂС‚С‹
-    public int Height;                  // Р’С‹СЃРѕС‚Р° РєР°СЂС‚С‹
-    public Texture2D Texture;           // РўРµРєСЃС‚СѓСЂР° РєР°СЂС‚С‹
-    public Texture2D BlackTexture;      // РџРёРєСЃРµР»СЊ
-    public float Rotation = 0;
-
+public class Map : GameObject {                                                          // Класс карты, наследует класс GameObject
     public Map(Vector2 position, int width, int height) {
-        Position = position;
         Width = width;
         Height = height;
+        Layer = 0.5f;
+        Scale = 1.0f;
+        ScreenPosition = position;
+        Position = position;
     }
+    public override void Draw(SpriteBatch render, Rectangle? sourceRectangle = null) {   // Отрисовка карты, здесь я переопределяю функцию draw() из GameObject. Если в него нужно передать какой нибудь Rectangle, то надо писать такую конструкцию, если не нужно, то функцию можно не переопределять
 
-    // РњРµС‚РѕРґ РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё РєР°СЂС‚С‹
-    public void Draw(SpriteBatch render) {
-        Rectangle Rect = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
-
-        render.Draw(
-            Texture,
-            Position,
-            null,
-            Color.White,
-            0.0f,
-            new Vector2(Height, Width) * 0.5f,
-            1.0f,
-            SpriteEffects.None,
-            0.5f
-            );
-
-        render.Draw(
-            BlackTexture, 
-            Position, 
-            Rect, 
-            Color.Black * 0.5f, 
-            0.0f,
-            new Vector2(Height, Width) * 0.5f,
-            1.0f,  
-            SpriteEffects.None,
-            0.0f);
+        Rectangle Rect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, Width, Height);
+        base.Draw(render, Rect);
     }
 
 }

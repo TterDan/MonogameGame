@@ -7,17 +7,14 @@ namespace FriendsPoint
 {
     public partial class Main
     {
-        // Отрисовка кадра, в целом лучше делать весь кадр конкретно здесь, а не в других частях проекта
+        // Отрисовка всего кадра
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
             render.Begin(SpriteSortMode.FrontToBack);
-            player.Draw(render);
-            map.Draw(render);
-            obj.Draw(render); // Сюда закидывать рендеры всех обьектов
-            for(int i = 0; i < renderlist.Count; i++)
+            for(int i = 0; i < objects.Count; i++)
             {
-               renderlist[i].Draw(render);
+                objects[i].Draw(render); // Отрисовываются все обьекты в списке
             }
             render.End();
             base.Draw(gameTime);
