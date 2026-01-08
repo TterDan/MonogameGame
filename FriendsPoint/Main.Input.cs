@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace FriendsPoint
 {
-    public partial class Main                       // Пишу именно partial class, чтобы сединить все файлы начинающиеся на Main в один класс
+    public partial class Main                       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
         // Код обновлений
         protected void Input()

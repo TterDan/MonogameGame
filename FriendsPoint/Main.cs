@@ -12,6 +12,7 @@ namespace FriendsPoint
         private GraphicsDeviceManager _graphics;
         private SpriteBatch render;         // Спрайтбатч
         private Texture2D blackTxtr;        // Черная текстурка для отрисовки разного
+        private Texture2D redTxtr;          // Красная текстурка для отрисовки врагов
         private Player player;              // Экземпляр игрока
         private Map map;                    // Экземпляр карты
         private Vector2 windowSize;         // Размеры окна
@@ -20,7 +21,7 @@ namespace FriendsPoint
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = false;
+            IsMouseVisible = true;
         }
     }
 }

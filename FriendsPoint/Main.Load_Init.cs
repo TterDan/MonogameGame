@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace FriendsPoint
 {
-    public partial class Main           // Пишу именно partial class, чтобы сединить все файлы начинающиеся на Main в один класс
+    public partial class Main           // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
         // Инициализация
         protected override void Initialize()
@@ -14,11 +14,25 @@ namespace FriendsPoint
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             render = new SpriteBatch(GraphicsDevice);                                                                   // Инициализирую спрайтбатч
             blackTxtr = new Texture2D(GraphicsDevice, 1, 1);                                                            // Инициализирую черную текстуру
+            redTxtr = new Texture2D(GraphicsDevice, 1, 1);                                                              // Инициализирую красную текстуру
+            redTxtr.SetData(new[] { Color.Red });
             player = new Player(Vector2.Zero, 150, 150, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), "hand");   // Инициализирую игрока
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             objects = new List<GameObject>();                                                                           // Инициализирую список всех элементов
             objects.Add(map);
             objects.Add(player);
+
+            for (int i = 0; i < 5; i++) {                                                                                     // Добавляю несколько врагов на карту для теста
+                Enemy enemy = new Enemy(
+                    redTxtr,
+                    new Vector2(200 + i * 100, 200),
+                    50,
+                    50,
+                    3.0f
+                );
+                objects.Add(enemy);
+            }
+
             base.Initialize();
         }
 

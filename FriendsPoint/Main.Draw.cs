@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace FriendsPoint
 {
-    public partial class Main
+    public partial class Main           // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
         // Отрисовка всего кадра
         protected override void Draw(GameTime gameTime)

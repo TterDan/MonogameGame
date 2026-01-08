@@ -22,7 +22,10 @@ public class Player : GameObject {          // Класс игрока, насл
         Layer = 0.9f;
     }
     public void shot() {    // Функции на будущее
-
+        //  Если здесь попал во врага, то вызывается
+        //  if (enemy.TakeDamage(Weapon.Damage) == true) {
+        //      objects.RemoveAt(enemyIndex);
+        //  }
     }
     public void takeWeapon() {
 
