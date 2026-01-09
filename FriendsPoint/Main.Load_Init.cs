@@ -16,13 +16,15 @@ namespace FriendsPoint
             blackTxtr = new Texture2D(GraphicsDevice, 1, 1);                                                            // Инициализирую черную текстуру
             redTxtr = new Texture2D(GraphicsDevice, 1, 1);                                                              // Инициализирую красную текстуру
             redTxtr.SetData(new[] { Color.Red });
-            player = new Player(Vector2.Zero, 150, 150, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), "hand");   // Инициализирую игрока
+            player = new Player(Vector2.Zero, 60, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), "hand");     // Инициализирую игрока
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             objects = new List<GameObject>();                                                                           // Инициализирую список всех элементов
+            debugPixel = new Texture2D(GraphicsDevice, 1, 1);
+            debugPixel.SetData(new[] { Color.Red });                                                                    
             objects.Add(map);
             objects.Add(player);
 
-            for (int i = 0; i < 5; i++) {                                                                                     // Добавляю несколько врагов на карту для теста
+            for (int i = 0; i < 5; i++) {                                                                                // Добавляю несколько врагов на карту для теста
                 Enemy enemy = new Enemy(
                     redTxtr,
                     new Vector2(200 + i * 100, 200),
@@ -43,6 +45,7 @@ namespace FriendsPoint
             Player.BlackTexture = blackTxtr;                                        // Назначаю черную текстуру для класса игрока
             player.Texture = Content.Load<Texture2D>("players/soldierRF");          // Назначаю текстуру игрока
             map.Texture = Content.Load<Texture2D>("floor");                         // Назначаю текстуру карты
+            font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
         }
     }
 }

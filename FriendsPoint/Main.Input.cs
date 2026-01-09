@@ -47,10 +47,7 @@ namespace FriendsPoint
             }
             if (keyboard.IsKeyDown(Keys.G) && player.Weapon != "hand")                      // ДЖАС Вот этот код лучше поместить в метод throwWeapon() у игрока
             {
-                Weapon wpn = new Weapon(blackTxtr, player.Weapon, player.Position, 50, 50);
-                player.flag = true;                 // Флажок для теста просто, потом уберу
-                objects.Add(wpn);
-                player.Weapon = "hand";
+                objects.Add(player.ThrowWeapon(blackTxtr));
             }
 
             return direction;

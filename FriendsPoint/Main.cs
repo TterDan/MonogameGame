@@ -17,6 +17,8 @@ namespace FriendsPoint
         private Map map;                    // Экземпляр карты
         private Vector2 windowSize;         // Размеры окна
         private List<GameObject> objects;   // Множество всех объектов на карте
+        private Texture2D debugPixel;       // Текстура для отладки
+        private SpriteFont font;            // Экземпляр интерфейса
         public Main()
         {
             _graphics = new GraphicsDeviceManager(this);

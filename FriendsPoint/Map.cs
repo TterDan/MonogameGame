@@ -15,7 +15,6 @@ public class Map : GameObject {                                                 
         Position = position;
     }
     public override void Draw(SpriteBatch render, Rectangle? sourceRectangle = null) {   // Отрисовка карты, здесь я переопределяю функцию draw() из GameObject. Если в него нужно передать какой нибудь Rectangle, то надо писать такую конструкцию, если не нужно, то функцию можно не переопределять
-
         Rectangle Rect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, Width, Height);
         base.Draw(render, Rect);
     }

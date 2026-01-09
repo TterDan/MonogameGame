@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace FriendsPoint
 {
-    public partial class Main           // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
+    public partial class Main       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
         // Отрисовка всего кадра
         protected override void Draw(GameTime gameTime) {
@@ -15,8 +15,10 @@ namespace FriendsPoint
             {
                 objects[i].Draw(render); // Отрисовываются все обьекты в списке
             }
-            render.End();
+            render.Draw(blackTxtr, player.Rect, Color.Pink); // Радиус, в котором игрок может подбирать вещи, временно оставил для отладки в будущем
+            DrawUI(render); // Отрисовка интерфейса
             base.Draw(gameTime);
+            render.End();
         }
     }
 }

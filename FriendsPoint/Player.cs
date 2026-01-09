@@ -14,6 +14,7 @@ public class Player : GameObject {          // Класс игрока, насл
     static public Texture2D BlackTexture;
     public string Weapon;                   // Текущее оружие игрока
     public bool flag;
+    public Rectangle Rect;
     public Player(Vector2 startPosition, int width, int height, float moveSpeed, Vector2 playerScreenPos, string weapon) {
         Position = startPosition;
         Width = width;
@@ -31,11 +32,30 @@ public class Player : GameObject {          // Класс игрока, насл
         //      objects.RemoveAt(enemyIndex);
         //  }
     }
-    public void TakeWeapon() {
-
+    public bool TakeWeapon(List<GameObject> objects) {
+        for (int i = 0; i < objects.Count; i++)
+        {
+            if (objects[i] is Weapon weapon)
+            {
+                if (Rect.Intersects(weapon.Rect))
+                {
+                    if (Keyboard.GetState().IsKeyDown(Keys.E))
+                    {
+                        Weapon = weapon.Name;
+                        objects.RemoveAt(i);
+                        i--;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
     }
-    public void ThrowWeapon() {
-
+    public Weapon ThrowWeapon(Texture2D blacktxtr) {
+        Weapon wpn = new Weapon(blacktxtr, Weapon, Position, 50, 50);
+        flag = true;                 // Флажок для теста просто, потом уберу
+        Weapon = "hand";
+        return wpn;
     }
     public void ShiftLook(bool ShiftPressed, Point mousePosition) {
         Vector2 mouseDirectionForCamera;
@@ -78,7 +98,7 @@ public class Player : GameObject {          // Класс игрока, насл
         }
     }
     public override void OtherDraw(SpriteBatch render) {                // Переопределяю функцию OtherDraw() из GameObject, чтобы отрисовать что-то еще помимо базовой отрисовки
-        Rectangle Rect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, Width, Height);
+        Rect = new Rectangle((int)ScreenPosition.X - Width / 2, (int)ScreenPosition.Y - Height / 2, Width, Height);
         render.Draw(                                                    // Отрисовка хитбокса игрока
             BlackTexture,
             ScreenPosition,
@@ -88,7 +108,7 @@ public class Player : GameObject {          // Класс игрока, насл
             new Vector2(Height, Width) * 0.5f,
             Scale,
             SpriteEffects.None,
-            0.0f
+            0.9f
         );
 
         if (Weapon != "hand")                                           // Отрисовка оружия в руке игрока
