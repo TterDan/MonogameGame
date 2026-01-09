@@ -10,13 +10,13 @@ static public class Camera {                                                    
     static public Vector2 ShiftOffset = Vector2.Zero;
     static public float ShiftOffsetSpeed = 0.15f;
 
-    static public float MaxMouseOffset = 0.2f;
+    static public float MaxMouseOffset = 0.1f;
     static public Vector2 MouseOffset = Vector2.Zero;
     static public float MouseOffsetSpeed = 0.2f;
 
-    static public float MaxWalkOffset = 20f;
+    static public float MaxWalkOffset = 30f;
     static public Vector2 WalkOffset = Vector2.Zero;
-    static public float WalkOffsetSpeed = 0.2f;
+    static public float WalkOffsetSpeed = 0.15f;
 
     static public Vector2 CameraOffset = Vector2.Zero;
 
@@ -33,7 +33,7 @@ static public class Camera {                                                    
         WalkOffset = Vector2.Lerp(WalkOffset, MaxWalkOffset * direction, WalkOffsetSpeed);
     }
     static public void ChangeOffset() {
-        CameraOffset = WalkOffset + MouseOffset + ShiftOffset;
+        CameraOffset = -WalkOffset + MouseOffset + ShiftOffset;
     }
 
 }

@@ -49,7 +49,10 @@ public class Player : GameObject {          // Класс игрока, насл
     }
     public void rotate(Point mousePosition) {                           // Функция поворота игрока в сторону мыши
         Vector2 mouseDirection = new Vector2(mousePosition.X - ScreenPosition.X, mousePosition.Y - ScreenPosition.Y);
-        Vector2 mouseDirectionForCamera = new Vector2(mousePosition.X - ScreenCenter.X, mousePosition.Y - ScreenCenter.Y);
+        Vector2 mouseDirectionNormalized = mouseDirection;
+        mouseDirectionNormalized.Normalize();
+        mouseDirectionNormalized *= 500f;
+        Vector2 mouseDirectionForCamera = new Vector2(mousePosition.X - ScreenCenter.X, mousePosition.Y - ScreenCenter.Y) + mouseDirectionNormalized;
         Camera.ChangeMouseOffset(mouseDirectionForCamera);
         Rotation = (float)Math.Atan2(mouseDirection.Y, mouseDirection.X) + MathHelper.PiOver2;
     }
