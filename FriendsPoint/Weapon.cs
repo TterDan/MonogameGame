@@ -12,9 +12,10 @@ public class Weapon : GameObject {                                              
         Layer = 1.0f;
     }
     public override void Draw(SpriteBatch render, Rectangle? sourceRectangle = null) {      // Отрисовка оружия, здесь я переопределяю функцию draw() из GameObject. Если в него нужно передать какой нибудь Rectangle, то надо писать такую конструкцию, если не нужно, то функцию можно не переопределять
-
-        Rect = new Rectangle((int)ScreenPosition.X - Width / 2, (int)ScreenPosition.Y - Height / 2, 50, 50);
-        base.Draw(render, Rect);
+        //Rect = new Rectangle((int)ScreenPosition.X - Width / 2, (int)ScreenPosition.Y - Height / 2, Width, Height);
+        Rect = new Rectangle((int)ScreenPosition.X - Width / 2, (int)ScreenPosition.Y - Height / 2,
+        (int)(Width * Scale), (int)(Height * Scale));
+        render.Draw(Texture, Rect, Color.Black);
     }
 }
 

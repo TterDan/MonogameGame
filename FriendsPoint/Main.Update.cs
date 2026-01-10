@@ -12,10 +12,6 @@ namespace FriendsPoint
         protected override void Update(GameTime gameTime)
         {
             Input();
-            if(player.flag == false)
-            {
-                player.Weapon = "glock";
-            }
             for (int i = 0; i < objects.Count; i++) {
                 if (objects[i] is Enemy enemy) {
                     enemy.moveTowardsPlayer(player.Position);

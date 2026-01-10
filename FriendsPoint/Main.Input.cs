@@ -45,11 +45,10 @@ namespace FriendsPoint
             } else {
                 player.ShiftLook(false, Point.Zero);
             }
-            if (keyboard.IsKeyDown(Keys.G) && player.Weapon != "hand")                      // ДЖАС Вот этот код лучше поместить в метод throwWeapon() у игрока
+            if (keyboard.IsKeyDown(Keys.G) && player.currentWeapon.Name != "hand")                      // ДЖАС Вот этот код лучше поместить в метод throwWeapon() у игрока
             {
                 objects.Add(player.ThrowWeapon(blackTxtr));
             }
-
             return direction;
         }
     }

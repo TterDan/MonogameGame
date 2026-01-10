@@ -13,13 +13,12 @@ abstract public class GameObject        // Абстрактный класс д�
     public Vector2 Position;
     public int Width;
     public int Height;
-
     public float Layer;
-
     public Texture2D Texture;
     public float Scale = 0.35f;
     public float Rotation = 0f;
     public Microsoft.Xna.Framework.Color TextureColor = Color.White;
+
     public virtual void Draw(SpriteBatch render, Rectangle? sourceRectangle = null) {       // Соответственно функция отрисовки, передаю сюда SpriteBatch и sourceRectangle, если вдруг не было передано sourceRectangle, то оно заменится на null и не вызовет ошибку
         if (Texture != null) {      // Если у объекта нет текстуры, то вызовет ошибку, поэтому прерываю действие здесь
             render.Draw(
@@ -36,7 +35,8 @@ abstract public class GameObject        // Абстрактный класс д�
         }
         OtherDraw(render);          // Функция, если вдруг для объекта нужно отрисовать что-то ещё
     }
-    public virtual void OtherDraw(SpriteBatch render) {         // Функция конкретно здесь пустая, потому что не у всех объектов есть что-то ещё для отрисовки, а если и есть, то ОБЯЗАТЕЛЬНО функцию нужно переопределять.
 
+    public virtual void OtherDraw(SpriteBatch render) {         // Функция конкретно здесь пустая, потому что не у всех объектов есть что-то ещё для отрисовки, а если и есть, то ОБЯЗАТЕЛЬНО функцию нужно переопределять.
+        
     }
 }

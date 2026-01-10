@@ -9,7 +9,7 @@ public class Map : GameObject {                                                 
     public Map(Vector2 position, int width, int height) {
         Width = width;
         Height = height;
-        Layer = 0.5f;
+        Layer = 0.0f;
         Scale = 1.0f;
         ScreenPosition = position;
         Position = position;

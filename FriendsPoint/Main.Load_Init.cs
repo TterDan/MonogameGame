@@ -16,7 +16,8 @@ namespace FriendsPoint
             blackTxtr = new Texture2D(GraphicsDevice, 1, 1);                                                            // Инициализирую черную текстуру
             redTxtr = new Texture2D(GraphicsDevice, 1, 1);                                                              // Инициализирую красную текстуру
             redTxtr.SetData(new[] { Color.Red });
-            player = new Player(Vector2.Zero, 60, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), "hand");     // Инициализирую игрока
+            hand = new Weapon(null, "hand", Vector2.Zero, 10, 10);
+            player = new Player(Vector2.Zero, 60, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), hand);     // Инициализирую игрока
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             objects = new List<GameObject>();                                                                           // Инициализирую список всех элементов
             debugPixel = new Texture2D(GraphicsDevice, 1, 1);
@@ -46,6 +47,10 @@ namespace FriendsPoint
             player.Texture = Content.Load<Texture2D>("players/soldierRF");          // Назначаю текстуру игрока
             map.Texture = Content.Load<Texture2D>("floor");                         // Назначаю текстуру карты
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
+            Weapon testwpn = new Weapon(blackTxtr, "glock", new Vector2(100, 100), 40, 40);
+            Weapon testwpn2 = new Weapon(blackTxtr, "glock", new Vector2(100, 200), 40, 40);
+            objects.Add(testwpn);
+            objects.Add(testwpn2);
         }
     }
 }
