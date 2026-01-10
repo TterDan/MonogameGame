@@ -24,6 +24,7 @@ public class Player : GameObject {          // Класс игрока, насл
         ScreenCenter = playerScreenPos;
         currentWeapon = weapon;
         Layer = 0.9f;
+        Scale = 0.35f;
     }
     public void Shot() {    // Функции на будущее
         //  Если здесь попал во врага, то вызывается
@@ -104,7 +105,7 @@ public class Player : GameObject {          // Класс игрока, насл
             Color.Black * 0.5f,
             0.0f,
             new Vector2(Height, Width) * 0.5f,
-            1.0f,
+            1f,
             SpriteEffects.None,
             0.8f
         );
@@ -112,18 +113,22 @@ public class Player : GameObject {          // Класс игрока, насл
         if (currentWeapon.Name != "hand")                                           // Отрисовка оружия в руке игрока
         {
             Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, currentWeapon.Width, currentWeapon.Height);
-            Vector2 WeaponOffset = new Vector2(20, 40);                              // Координаты для смещения оружия от игрока в его руке
-            Vector2 WeaponPos = new Vector2((MathF.Cos(Rotation) * WeaponOffset.X) + (MathF.Cos(Rotation) * WeaponOffset.Y), (MathF.Sin(Rotation) * WeaponOffset.X) + (MathF.Sin(Rotation) * WeaponOffset.Y));      // Математика для определения смещения оружия от игрока в его руке
+            Vector2 WeaponOffset = new Vector2(0, 0);                              // Координаты для смещения оружия от игрока в его руке
+            float fixedRotation = Rotation + 90 * MathF.PI / 180;
+            float cosRotation = MathF.Cos(fixedRotation);
+            float sinRotation = MathF.Sin(fixedRotation);
+            Vector2 WeaponPos = new Vector2(cosRotation * WeaponOffset.X - sinRotation * WeaponOffset.Y, sinRotation * WeaponOffset.X + cosRotation * WeaponOffset.Y);      // Математика для определения смещения оружия от игрока в его руке
             render.Draw(
-            BlackTexture,
-            new Vector2(ScreenPosition.X + WeaponPos.X, ScreenPosition.Y + WeaponPos.Y),
-            weaponRect,
-            Color.Black,
-            Rotation,
-            new Vector2(Texture.Width, Texture.Height) * 0.5f,
-            Scale,
-            SpriteEffects.None,
-            1.0f);
+                BlackTexture,
+                new Vector2(ScreenPosition.X, ScreenPosition.Y),
+                weaponRect,
+                Color.Black,
+                fixedRotation,
+                new Vector2(Texture.Width, Texture.Height) * 0.5f,
+                1f,
+                SpriteEffects.None,
+                1.0f
+            );
         }
     }
 }

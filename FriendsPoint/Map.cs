@@ -10,7 +10,6 @@ public class Map : GameObject {                                                 
         Width = width;
         Height = height;
         Layer = 0.0f;
-        Scale = 1.0f;
         ScreenPosition = position;
         Position = position;
     }

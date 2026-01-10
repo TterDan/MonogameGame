@@ -12,7 +12,6 @@ public class Enemy : GameObject {                                               
         Width = width;
         Height = height;
         Layer = 0.5f;
-        Scale = 1.0f;
         ScreenPosition = position;
         Position = position;
         MoveSpeed = moveSpeed;
