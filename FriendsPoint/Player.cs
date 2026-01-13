@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 
 public class Player : GameObject {          // Класс игрока, наследует класс GameObject
     public float MoveSpeed;
@@ -15,6 +16,8 @@ public class Player : GameObject {          // Класс игрока, насл
     static public Texture2D BlackTexture;
     public Weapon currentWeapon;            // Текущее оружие игрока
     public Rectangle Rect;
+    Vector2 mouseDirection;
+    public float wpnDifference;
     public Player(Vector2 startPosition, int width, int height, float moveSpeed, Vector2 playerScreenPos, Weapon weapon) {
         Position = startPosition;
         Width = width;
@@ -39,7 +42,8 @@ public class Player : GameObject {          // Класс игрока, насл
             {
                 if (Rect.Intersects(weapon.Rect))
                 {
-                    if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "hand")
+                    WeaponInch(weapon.Position);
+                    if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "hand" && wpnDifference < 0.4 && wpnDifference > -0.4)
                     {
                         currentWeapon = weapon;
                         objects.RemoveAt(i);
@@ -51,6 +55,17 @@ public class Player : GameObject {          // Класс игрока, насл
         }
         return false;
     }
+
+    public void WeaponInch(Vector2 position)
+    {
+        Vector2 weaponDirection = new Vector2(position.X - Position.X, position.Y - Position.Y);
+        float weaponRotate = (float)Math.Atan2(weaponDirection.Y, weaponDirection.X) + MathHelper.PiOver2;
+        if(weaponRotate < 0 && Rotation < 0)
+            wpnDifference = Math.Abs(weaponRotate) - Math.Abs(Rotation);
+        else
+           wpnDifference = Math.Abs(weaponRotate) - Rotation;
+    }
+
     public Weapon ThrowWeapon(Texture2D blacktxtr) {
         Weapon wpn = new Weapon(blacktxtr, currentWeapon.Name, Position, currentWeapon.Width, currentWeapon.Width);
         currentWeapon.Name = "hand";
@@ -67,7 +82,7 @@ public class Player : GameObject {          // Класс игрока, насл
         Camera.ChangeShiftOffset(mouseDirectionForCamera);
     }
     public void rotate(Point mousePosition) {                           // Функция поворота игрока в сторону мыши
-        Vector2 mouseDirection = new Vector2(mousePosition.X - ScreenPosition.X, mousePosition.Y - ScreenPosition.Y);
+        mouseDirection = new Vector2(mousePosition.X - ScreenPosition.X, mousePosition.Y - ScreenPosition.Y);
         Vector2 mouseDirectionNormalized = mouseDirection;
         mouseDirectionNormalized.Normalize();
         mouseDirectionNormalized *= 500f;
@@ -113,14 +128,14 @@ public class Player : GameObject {          // Класс игрока, насл
         if (currentWeapon.Name != "hand")                                           // Отрисовка оружия в руке игрока
         {
             Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, currentWeapon.Width, currentWeapon.Height);
-            Vector2 WeaponOffset = new Vector2(0, 0);                              // Координаты для смещения оружия от игрока в его руке
+            Vector2 WeaponOffset = new Vector2(60,80);                              // Координаты для смещения оружия от игрока в его руке
             float fixedRotation = Rotation + 90 * MathF.PI / 180;
             float cosRotation = MathF.Cos(fixedRotation);
             float sinRotation = MathF.Sin(fixedRotation);
             Vector2 WeaponPos = new Vector2(cosRotation * WeaponOffset.X - sinRotation * WeaponOffset.Y, sinRotation * WeaponOffset.X + cosRotation * WeaponOffset.Y);      // Математика для определения смещения оружия от игрока в его руке
             render.Draw(
                 BlackTexture,
-                new Vector2(ScreenPosition.X, ScreenPosition.Y),
+                new Vector2(ScreenPosition.X + WeaponPos.X, ScreenPosition.Y + WeaponPos.Y),
                 weaponRect,
                 Color.Black,
                 fixedRotation,
