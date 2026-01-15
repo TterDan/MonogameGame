@@ -4,10 +4,12 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
 using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Enemy : GameObject {                                                          // Класс врага, наследует класс GameObject
     public int Health = 100;
     public float MoveSpeed;
+    public Rectangle Rect;
     public Enemy(Texture2D texture, Vector2 position, int width, int height, float moveSpeed) {
         Width = width;
         Height = height;
@@ -17,9 +19,11 @@ public class Enemy : GameObject {                                               
         MoveSpeed = moveSpeed;
         Texture = texture;
     }
+
     public void hit() {
 
     }
+
     public bool TakeDamage(int damage, int objectIndex) {
         Health -= damage;
         if (Health <= 0) {
@@ -42,7 +46,7 @@ public class Enemy : GameObject {                                               
     }
     public override void Draw(SpriteBatch render, Rectangle? sourceRectangle = null) {   // Отрисовка врага, здесь я переопределяю функцию draw() из GameObject. Если в него нужно передать какой нибудь Rectangle, то надо писать такую конструкцию, если не нужно, то функцию можно не переопределять
 
-        Rectangle Rect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, Width, Height);
+        Rect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, Width, Height);
         base.Draw(render, Rect);
     }
 }

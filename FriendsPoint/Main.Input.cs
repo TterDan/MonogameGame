@@ -9,6 +9,7 @@ namespace FriendsPoint
     {
         // Код обновлений
         protected MouseState mouse;
+        protected bool mouseState = false;
         protected void Input()
         {
             player.rotate(getMouse().Position);     // В метод даю ввод с мыши
@@ -19,6 +20,14 @@ namespace FriendsPoint
             mouse = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (mouse.LeftButton == ButtonState.Pressed && mouseState == false)
+                player.Shot(objects);
+                mouseState = true;
+
+            if (mouse.LeftButton == ButtonState.Released)
+                mouseState = false;
+
             return mouse;
         }
         protected Vector2 getKeyboard()             // Получение ввода с клавиатуры

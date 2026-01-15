@@ -25,7 +25,7 @@ namespace FriendsPoint
             objects.Add(map);
             objects.Add(player);
 
-            for (int i = 0; i < 5; i++) {                                                                                // Добавляю несколько врагов на карту для теста
+            for (int i = 0; i < 3; i++) {                                                                                // Добавляю несколько врагов на карту для теста
                 Enemy enemy = new Enemy(
                     redTxtr,
                     new Vector2(200 + i * 100, 200),

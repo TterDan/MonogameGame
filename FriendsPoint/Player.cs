@@ -10,6 +10,7 @@ using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 
 public class Player : GameObject {          // Класс игрока, наследует класс GameObject
+
     public float MoveSpeed;
     Vector2 CurrentSpeed = Vector2.Zero;
     public Vector2 ScreenCenter;
@@ -18,6 +19,9 @@ public class Player : GameObject {          // Класс игрока, насл
     public Rectangle Rect;
     Vector2 mouseDirection;
     public float wpnDifference;
+    public Vector2 mousePos;
+    public Vector2 ray;
+    public bool isray;
     public Player(Vector2 startPosition, int width, int height, float moveSpeed, Vector2 playerScreenPos, Weapon weapon) {
         Position = startPosition;
         Width = width;
@@ -26,14 +30,33 @@ public class Player : GameObject {          // Класс игрока, насл
         ScreenPosition = playerScreenPos;
         ScreenCenter = playerScreenPos;
         currentWeapon = weapon;
+        isray = false;
         Layer = 0.9f;
         Scale = 0.35f;
     }
-    public void Shot() {    // Функции на будущее
-        //  Если здесь попал во врага, то вызывается
-        //  if (enemy.TakeDamage(Weapon.Damage) == true) {
-        //      objects.RemoveAt(enemyIndex);
-        //  }
+    public void Shot(List<GameObject> objects) {
+        Vector2 direction = Vector2.Normalize(mousePos - ScreenPosition);
+        for(int i = 0; i < 400; i++)
+        {
+            if (isray == true)
+            {
+                isray = false;
+                break;
+            }
+            ray = ScreenPosition + direction * i;
+            for (int j = 0; j < objects.Count; j++)
+            {
+                if (objects[j] is Enemy enemy)
+                {
+                    if (enemy.Rect.Contains(ray))
+                    {
+                        isray = true;
+                        objects.RemoveAt(j);
+                        break;
+                    }
+                }
+            }
+        }
     }
     public bool TakeWeapon(List<GameObject> objects) {
         for (int i = 0; i < objects.Count; i++)
@@ -42,7 +65,7 @@ public class Player : GameObject {          // Класс игрока, насл
             {
                 if (Rect.Intersects(weapon.Rect))
                 {
-                    WeaponInch(weapon.Position);
+                    WeaponDegress(weapon.Position);
                     if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "hand" && wpnDifference < 0.4 && wpnDifference > -0.4)
                     {
                         currentWeapon = weapon;
@@ -56,7 +79,7 @@ public class Player : GameObject {          // Класс игрока, насл
         return false;
     }
 
-    public void WeaponInch(Vector2 position)
+    public void WeaponDegress(Vector2 position)
     {
         Vector2 weaponDirection = new Vector2(position.X - Position.X, position.Y - Position.Y);
         float weaponRotate = (float)Math.Atan2(weaponDirection.Y, weaponDirection.X) + MathHelper.PiOver2;
@@ -82,6 +105,7 @@ public class Player : GameObject {          // Класс игрока, насл
         Camera.ChangeShiftOffset(mouseDirectionForCamera);
     }
     public void rotate(Point mousePosition) {                           // Функция поворота игрока в сторону мыши
+        mousePos = new Vector2(mousePosition.X, mousePosition.Y);
         mouseDirection = new Vector2(mousePosition.X - ScreenPosition.X, mousePosition.Y - ScreenPosition.Y);
         Vector2 mouseDirectionNormalized = mouseDirection;
         mouseDirectionNormalized.Normalize();
