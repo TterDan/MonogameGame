@@ -10,7 +10,10 @@ namespace FriendsPoint
         // Отрисовка всего кадра
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.White);
-            render.Begin(SpriteSortMode.FrontToBack);
+            render.Begin(
+                SpriteSortMode.FrontToBack
+                //samplerState: SamplerState.PointWrap
+                );
             for(int i = 0; i < objects.Count; i++)
             {
                 objects[i].Draw(render); // Отрисовываются все обьекты в списке

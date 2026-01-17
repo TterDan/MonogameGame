@@ -22,6 +22,7 @@ public class Player : GameObject {          // Класс игрока, насл
     public Vector2 mousePos;
     public Vector2 ray;
     public bool isray;
+    public float scaleMultiplierForPlayerTexture = 0.35f;
     public Player(Vector2 startPosition, int width, int height, float moveSpeed, Vector2 playerScreenPos, Weapon weapon) {
         Position = startPosition;
         Width = width;
@@ -32,7 +33,6 @@ public class Player : GameObject {          // Класс игрока, насл
         currentWeapon = weapon;
         isray = false;
         Layer = 0.9f;
-        Scale = 0.35f;
     }
     public void Shot(List<GameObject> objects) {
         Vector2 direction = Vector2.Normalize(mousePos - ScreenPosition);
@@ -126,8 +126,6 @@ public class Player : GameObject {          // Класс игрока, насл
         Camera.ChangeWalkOffset(moveDirection);
         Position += CurrentSpeed;                         // Изменение координат игрока
         for (int i = 0; i < objects.Count; i++) {
-            Vector2 normVectorSpeed = CurrentSpeed;
-            normVectorSpeed.Normalize();
             if (objects[i] is Player) {
                 ScreenPosition = ScreenCenter - Camera.CameraOffset;
                 continue;
@@ -135,7 +133,12 @@ public class Player : GameObject {          // Класс игрока, насл
             objects[i].ScreenPosition = ScreenPosition + (objects[i].Position - Position); // Арифметика для перемещения объектов по экрану игрока (их реальная позиция в мире не меняется)
         }
     }
+    public override void Draw(SpriteBatch render, Rectangle? sourceRectangle = null) {
+        Scale *= scaleMultiplierForPlayerTexture;
+        base.Draw(render, null);
+    }
     public override void OtherDraw(SpriteBatch render) {                // Переопределяю функцию OtherDraw() из GameObject, чтобы отрисовать что-то еще помимо базовой отрисовки
+        Scale /= scaleMultiplierForPlayerTexture;
         Rect = new Rectangle((int)ScreenPosition.X - Width / 2, (int)ScreenPosition.Y - Height / 2, Width, Height);
         render.Draw(                                                    // Отрисовка хитбокса игрока
             BlackTexture,
@@ -144,7 +147,7 @@ public class Player : GameObject {          // Класс игрока, насл
             Color.Black * 0.5f,
             0.0f,
             new Vector2(Height, Width) * 0.5f,
-            1f,
+            Scale,
             SpriteEffects.None,
             0.8f
         );
@@ -164,7 +167,7 @@ public class Player : GameObject {          // Класс игрока, насл
                 Color.Black,
                 fixedRotation,
                 new Vector2(Texture.Width, Texture.Height) * 0.5f,
-                1f,
+                Scale,
                 SpriteEffects.None,
                 1.0f
             );

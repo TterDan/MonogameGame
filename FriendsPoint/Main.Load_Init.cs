@@ -24,7 +24,7 @@ namespace FriendsPoint
             debugPixel.SetData(new[] { Color.Red });                                                                    
             objects.Add(map);
             objects.Add(player);
-
+            graphics.ApplyChanges();
             for (int i = 0; i < 3; i++) {                                                                                // Добавляю несколько врагов на карту для теста
                 Enemy enemy = new Enemy(
                     redTxtr,

@@ -9,7 +9,7 @@ namespace FriendsPoint
     public partial class Main : Game
     {
         // Начальные переменные
-        private GraphicsDeviceManager _graphics;
+        private GraphicsDeviceManager graphics;
         private SpriteBatch render;         // Спрайтбатч
         private Texture2D blackTxtr;        // Черная текстурка для отрисовки разного
         private Texture2D redTxtr;          // Красная текстурка для отрисовки врагов
@@ -22,9 +22,13 @@ namespace FriendsPoint
         private Weapon hand;
         public Main()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.IsFullScreen = false;
         }
     }
 }

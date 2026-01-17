@@ -15,7 +15,7 @@ abstract public class GameObject        // Абстрактный класс д�
     public int Height;
     public float Layer;
     public Texture2D Texture;
-    public float Scale = 1f;
+    public float Scale = 1.4f;
     public float Rotation = 0f;
     public Microsoft.Xna.Framework.Color TextureColor = Color.White;
 

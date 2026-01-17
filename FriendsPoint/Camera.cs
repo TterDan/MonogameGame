@@ -6,13 +6,13 @@ using System.Diagnostics;
 using System.Xml.Linq;
 
 static public class Camera {                                                          // Статический класс камеры
-    static public float MaxShiftOffset = 150f;
+    static public float MaxShiftOffset = 180f;
     static public Vector2 ShiftOffset = Vector2.Zero;
     static public float ShiftOffsetSpeed = 0.15f;
 
     static public float MaxMouseOffset = 0.1f;
     static public Vector2 MouseOffset = Vector2.Zero;
-    static public float MouseOffsetSpeed = 0.2f;
+    static public float MouseOffsetSpeed = 0.4f;
 
     static public float MaxWalkOffset = 30f;
     static public Vector2 WalkOffset = Vector2.Zero;
