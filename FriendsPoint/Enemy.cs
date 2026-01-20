@@ -6,18 +6,18 @@ using System.Diagnostics;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-public class Enemy : GameObject {                                                          // Класс врага, наследует класс GameObject
+public class Enemy : CircleHBoxObj {                                                          // Класс врага, наследует класс GameObject
     public int Health = 100;
     public float MoveSpeed;
     public Rectangle Rect;
-    public Enemy(Texture2D texture, Vector2 position, int width, int height, float moveSpeed) {
-        Width = width;
-        Height = height;
+    public Enemy(GraphicsDevice GraphicsDevice, Vector2 position, int radius, float moveSpeed) {
         Layer = 0.5f;
         ScreenPosition = position;
         Position = position;
         MoveSpeed = moveSpeed;
-        Texture = texture;
+        Radius = radius;
+        Texture = CreateCircleTexture(GraphicsDevice, Radius, Color.Red);
+        DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
     }
 
     public void hit() {
@@ -43,10 +43,5 @@ public class Enemy : GameObject {                                               
             Position += direction * MoveSpeed;
             ScreenPosition += direction * MoveSpeed;
         }
-    }
-    public override void Draw(SpriteBatch render, Rectangle? sourceRectangle = null) {   // Отрисовка врага, здесь я переопределяю функцию draw() из GameObject. Если в него нужно передать какой нибудь Rectangle, то надо писать такую конструкцию, если не нужно, то функцию можно не переопределять
-
-        Rect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, Width, Height);
-        base.Draw(render, Rect);
     }
 }

@@ -13,11 +13,12 @@ namespace FriendsPoint
         {
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             render = new SpriteBatch(GraphicsDevice);                                                                   // Инициализирую спрайтбатч
-            blackTxtr = new Texture2D(GraphicsDevice, 1, 1);                                                            // Инициализирую черную текстуру
-            redTxtr = new Texture2D(GraphicsDevice, 1, 1);                                                              // Инициализирую красную текстуру
-            redTxtr.SetData(new[] { Color.Red });
-            hand = new Weapon(null, "hand", Vector2.Zero, 10, 10);
-            player = new Player(Vector2.Zero, 60, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), hand);     // Инициализирую игрока
+
+            hand = new Weapon(GraphicsDevice, "hand", Vector2.Zero, 10);
+
+            player = new Player(GraphicsDevice, Vector2.Zero, 35, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), hand);     // Инициализирую игрока
+
+            System.Diagnostics.Debug.WriteLine(windowSize);
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             objects = new List<GameObject>();                                                                           // Инициализирую список всех элементов
             debugPixel = new Texture2D(GraphicsDevice, 1, 1);
@@ -27,10 +28,9 @@ namespace FriendsPoint
             graphics.ApplyChanges();
             for (int i = 0; i < 3; i++) {                                                                                // Добавляю несколько врагов на карту для теста
                 Enemy enemy = new Enemy(
-                    redTxtr,
+                    GraphicsDevice,
                     new Vector2(200 + i * 100, 200),
-                    50,
-                    50,
+                    30,
                     3.0f
                 );
                 objects.Add(enemy);
@@ -42,13 +42,11 @@ namespace FriendsPoint
         // Код загрузки моделей и контента
         protected override void LoadContent()
         {
-            blackTxtr.SetData(new[] { Color.Black });                               // Делаю черную текстуру реально черной
-            Player.BlackTexture = blackTxtr;                                        // Назначаю черную текстуру для класса игрока
             player.Texture = Content.Load<Texture2D>("players/soldierRF");          // Назначаю текстуру игрока
             map.Texture = Content.Load<Texture2D>("floor");                         // Назначаю текстуру карты
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
-            Weapon testwpn = new Weapon(blackTxtr, "glock", new Vector2(100, 100), 40, 40);
-            Weapon testwpn2 = new Weapon(blackTxtr, "glock", new Vector2(100, 200), 40, 40);
+            Weapon testwpn = new Weapon(GraphicsDevice, "glock", new Vector2(100, 100), 20);
+            Weapon testwpn2 = new Weapon(GraphicsDevice, "glock", new Vector2(100, 200), 20);
             objects.Add(testwpn);
             objects.Add(testwpn2);
         }

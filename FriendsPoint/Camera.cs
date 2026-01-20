@@ -24,7 +24,6 @@ static public class Camera {                                                    
 
     static public void ChangeShiftOffset(Vector2 direction) {
         ShiftOffset = Vector2.Lerp(ShiftOffset, MaxShiftOffset * direction, ShiftOffsetSpeed);
-        System.Diagnostics.Debug.WriteLine(ShiftOffset);
     }
     static public void ChangeMouseOffset(Vector2 direction) {
         MouseOffset = Vector2.Lerp(MouseOffset, MaxMouseOffset * direction, MouseOffsetSpeed);

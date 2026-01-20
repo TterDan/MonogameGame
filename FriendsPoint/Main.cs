@@ -11,8 +11,6 @@ namespace FriendsPoint
         // Начальные переменные
         private GraphicsDeviceManager graphics;
         private SpriteBatch render;         // Спрайтбатч
-        private Texture2D blackTxtr;        // Черная текстурка для отрисовки разного
-        private Texture2D redTxtr;          // Красная текстурка для отрисовки врагов
         private Player player;              // Экземпляр игрока
         private Map map;                    // Экземпляр карты
         private Vector2 windowSize;         // Размеры окна

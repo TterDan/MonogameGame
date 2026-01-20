@@ -27,7 +27,7 @@ namespace FriendsPoint
 
             if (mouse.LeftButton == ButtonState.Released)
                 mouseState = false;
-
+            //System.Diagnostics.Debug.WriteLine(mouse.Position);
             return mouse;
         }
         protected Vector2 getKeyboard()             // Получение ввода с клавиатуры
@@ -56,7 +56,7 @@ namespace FriendsPoint
             }
             if (keyboard.IsKeyDown(Keys.G) && player.currentWeapon.Name != "hand")                      // ДЖАС Вот этот код лучше поместить в метод throwWeapon() у игрока
             {
-                objects.Add(player.ThrowWeapon(blackTxtr));
+                objects.Add(player.ThrowWeapon(GraphicsDevice));
             }
             return direction;
         }
