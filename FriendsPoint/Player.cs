@@ -20,8 +20,10 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
     public Vector2 mousePos;
     public Vector2 ray;
     public bool isray;
-
+    public double length;
     public Rectangle Rect;
+    public double vectorsCorner;
+    public Vector2 enemyDirection;
     public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon) {
         Position = startPosition;
         MoveSpeed = moveSpeed;
@@ -33,34 +35,40 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
         HitboxTexture = CreateCircleTexture(GraphicsDevice, Radius, Color.Black);
         TextureScale = Scale * 0.35f;
         DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
-
         HitboxOpacity = 0.5f;
     }
+
     public void Shot(List<GameObject> objects) {
-        Vector2 direction = Vector2.Normalize(mousePos - ScreenPosition);
-        for(int i = 0; i < 400; i++)
+        Vector2 direction = mousePos - ScreenPosition;
+        ray = direction;
+        Vector2.Normalize(ray);
+        ray /= 10000;
+        ray += ScreenPosition;
+        for (int j = 0; j < objects.Count; j++)
         {
-            if (isray == true)
+            if (objects[j] is Enemy enemy)
             {
-                isray = false;
-                break;
-            }
-            ray = ScreenPosition + direction * i;
-            for (int j = 0; j < objects.Count; j++)
-            {
-                if (objects[j] is Enemy enemy)
+                enemyDirection = enemy.ScreenPosition - ScreenPosition;
+                Vector2 enemyRay = enemyDirection;
+                Vector2.Normalize(enemyRay);
+                double AB = direction.X * enemyDirection.X + direction.Y * enemyDirection.Y;
+                double moduleA = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+                double moduleB = Math.Sqrt(enemyDirection.X * enemyDirection.X + enemyDirection.Y * enemyDirection.Y);
+                double corner = AB / (moduleA * moduleB);
+                float diffEnemy = (enemy.ScreenPosition - ray).Length();
+                float diffPlayer = (enemy.ScreenPosition - ScreenPosition).Length();
+                vectorsCorner = Math.Acos(corner);
+                length = moduleB * Math.Sin(vectorsCorner);
+                Rectangle RectEnemy = new Rectangle((int)enemy.ScreenPosition.X - enemy.Radius, (int)enemy.ScreenPosition.Y - enemy.Radius, enemy.Radius * 2, enemy.Radius * 2);
+                if (length < enemy.Radius && diffEnemy < diffPlayer)
                 {
-                    Rectangle RectEnemy = new Rectangle((int)enemy.ScreenPosition.X - enemy.Radius, (int)enemy.ScreenPosition.Y - enemy.Radius, enemy.Radius * 2, enemy.Radius * 2);
-                    if (RectEnemy.Contains(ray))
-                    {
-                        isray = true;
-                        objects.RemoveAt(j);
-                        break;
-                    }
+                    objects.RemoveAt(j);
+                    break;
                 }
             }
         }
     }
+
     public bool TakeWeapon(List<GameObject> objects) {
         for (int i = 0; i < objects.Count; i++)
         {
