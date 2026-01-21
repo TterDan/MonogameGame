@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 public class Player : CircleHBoxObj {          // Класс игрока, наследует класс GameObject
 
@@ -15,7 +16,7 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
     Vector2 CurrentSpeed = Vector2.Zero;
     public Vector2 ScreenCenter;
     public Weapon currentWeapon;            // Текущее оружие игрока
-    Vector2 mouseDirection;
+    public Vector2 mouseDirection;
     public float wpnDifference;
     public Vector2 mousePos;
     public Vector2 ray;
@@ -24,6 +25,9 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
     public Rectangle Rect;
     public double vectorsCorner;
     public Vector2 enemyDirection;
+    public bool isdropped;
+    public Weapon droppedWeapon;
+    public Vector2 droppedDirection;
     public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon) {
         Position = startPosition;
         MoveSpeed = moveSpeed;
@@ -81,7 +85,7 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
                 if (RectPlayer.Intersects(RectWeapon))
                 {
                     WeaponDegress(weapon.Position);
-                    if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "hand" && wpnDifference < 0.4 && wpnDifference > -0.4)
+                    if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "hand" && wpnDifference < 0.4 && wpnDifference > -0.4 && !weapon.isflying)
                     {
                         currentWeapon = weapon;
                         objects.RemoveAt(i);
@@ -104,10 +108,12 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
            wpnDifference = Math.Abs(weaponRotate) - Rotation;
     }
 
-    public Weapon ThrowWeapon(GraphicsDevice GraphicsDevice) {
-        Weapon wpn = new Weapon(GraphicsDevice, currentWeapon.Name, Position, currentWeapon.Radius);
-        currentWeapon.Name = "hand";
-        return wpn;
+    public Weapon ThrowWeapon()
+    {
+        droppedWeapon = currentWeapon;
+        droppedDirection = mouseDirection;
+        isdropped = true;
+        return currentWeapon;
     }
     public void ShiftLook(bool ShiftPressed, Point mousePosition) {
         Vector2 mouseDirectionForCamera;
@@ -159,7 +165,8 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
             float cosRotation = MathF.Cos(fixedRotation);
             float sinRotation = MathF.Sin(fixedRotation);
             Vector2 WeaponPos = new Vector2(cosRotation * WeaponOffset.X - sinRotation * WeaponOffset.Y, sinRotation * WeaponOffset.X + cosRotation * WeaponOffset.Y);      // Математика для определения смещения оружия от игрока в его руке
-            
+            currentWeapon.Position = Position;
+
             render.Draw(
                 currentWeapon.HitboxTexture,
                 new Vector2(ScreenPosition.X + WeaponPos.X, ScreenPosition.Y + WeaponPos.Y),

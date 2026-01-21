@@ -25,6 +25,9 @@ abstract public class GameObject        // Абстрактный класс д�
     public float Scale = 1.4f;
 
     public float Rotation = 0f;
+    public float Speed = 7f;
+
+    public bool isflying = false;
 
     public Rectangle? DrawRect = null;
 
