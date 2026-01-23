@@ -17,74 +17,101 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
     public Vector2 ScreenCenter;
     public Weapon currentWeapon;            // Текущее оружие игрока
     public Vector2 mouseDirection;
-    public float wpnDifference;
-    public Vector2 mousePos;
-    public Vector2 ray;
-    public bool isray;
-    public double length;
+    public Vector2 mousePosition;
     public Rectangle Rect;
-    public double vectorsCorner;
-    public Vector2 enemyDirection;
     public bool isdropped;
     public Weapon droppedWeapon;
     public Vector2 droppedDirection;
-    public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon) {
+    public float Health = 100f;
+
+    public int AdditionalHitboxRadius;          // Дополнительный хитбокс, нужный для оценки расстояния подбора оружия, движения врагов
+    public Texture2D AdditionalHitboxTexture;
+
+    public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, int additionalHitboxRadius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon) {
         Position = startPosition;
         MoveSpeed = moveSpeed;
         ScreenPosition = playerScreenPos;
         ScreenCenter = playerScreenPos;
         currentWeapon = weapon;
-        isray = false;
         Radius = radius;
+        AdditionalHitboxRadius = additionalHitboxRadius;
         HitboxTexture = CreateCircleTexture(GraphicsDevice, Radius, Color.Black);
+        AdditionalHitboxTexture = CreateCircleTexture(GraphicsDevice, AdditionalHitboxRadius, Color.Black);
         TextureScale = Scale * 0.35f;
         DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
         HitboxOpacity = 0.5f;
     }
 
-    public void Shot(List<GameObject> objects) {
-        Vector2 direction = mousePos - ScreenPosition;
-        ray = direction;
-        Vector2.Normalize(ray);
-        ray /= 10000;
-        ray += ScreenPosition;
-        for (int j = 0; j < objects.Count; j++)
-        {
-            if (objects[j] is Enemy enemy)
-            {
-                enemyDirection = enemy.ScreenPosition - ScreenPosition;
-                Vector2 enemyRay = enemyDirection;
-                Vector2.Normalize(enemyRay);
-                double AB = direction.X * enemyDirection.X + direction.Y * enemyDirection.Y;
-                double moduleA = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
-                double moduleB = Math.Sqrt(enemyDirection.X * enemyDirection.X + enemyDirection.Y * enemyDirection.Y);
-                double corner = AB / (moduleA * moduleB);
-                float diffEnemy = (enemy.ScreenPosition - ray).Length();
-                float diffPlayer = (enemy.ScreenPosition - ScreenPosition).Length();
-                vectorsCorner = Math.Acos(corner);
-                length = moduleB * Math.Sin(vectorsCorner);
-                Rectangle RectEnemy = new Rectangle((int)enemy.ScreenPosition.X - enemy.Radius, (int)enemy.ScreenPosition.Y - enemy.Radius, enemy.Radius * 2, enemy.Radius * 2);
-                if (length < enemy.Radius && diffEnemy < diffPlayer)
-                {
-                    objects.RemoveAt(j);
-                    break;
+    public void UseWeapon(List<GameObject> objects) {
+        Vector2 direction = mousePosition - ScreenPosition;
+        if (currentWeapon.Type == "Melee") {
+            Beat(objects);
+        }
+        if (currentWeapon.Type == "Throwing") {
+
+        }
+        if (currentWeapon.Type == "Gun") {
+            Shot(objects, direction);
+        }
+    }
+    public void Beat(List<GameObject> objects) {
+        List<int> IndexesOfNearestObjects = new List<int> { };
+        for (int j = 0; j < objects.Count; j++) {
+            if (objects[j] is Enemy enemy) {
+                float enemyDifference = WeaponDegress(enemy.Position);
+                if (AdditionalHitboxRadius + enemy.Radius * 2 >= (ScreenPosition - enemy.ScreenPosition).Length() && enemyDifference < 0.4 && enemyDifference > -0.4) {
+                    Vector2 normalizedDirection = (ScreenPosition - enemy.ScreenPosition);
+                    normalizedDirection.Normalize();
+                    normalizedDirection *= 10.0f;
+                    enemy.currentSpeed = normalizedDirection;
+
+                    enemy.Health -= currentWeapon.Damage;
+                    if (enemy.Health <= 0) {
+                        objects.RemoveAt(j);
+                    }
+                }
+            }
+            if (objects[j] is Weapon weapon) {
+                float enemyDifference = WeaponDegress(weapon.Position);
+                if (AdditionalHitboxRadius + weapon.Radius * 2 >= (ScreenPosition - weapon.ScreenPosition).Length() && enemyDifference < 0.4 && enemyDifference > -0.4) {
+                    Vector2 normalizedDirection = (ScreenPosition - weapon.ScreenPosition);
+                    normalizedDirection.Normalize();
+                    normalizedDirection *= 25.0f;
+                    weapon.currentSpeed = normalizedDirection;
                 }
             }
         }
     }
-
+    public void Shot(List<GameObject> objects, Vector2 direction) {
+        for (int j = 0; j < objects.Count; j++) {
+            if (objects[j] is Enemy enemy) {
+                Vector2 enemyDirection = enemy.ScreenPosition - ScreenPosition;
+                float AB = direction.X * enemyDirection.X + direction.Y * enemyDirection.Y;
+                float moduleA = MathF.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+                float moduleB = MathF.Sqrt(enemyDirection.X * enemyDirection.X + enemyDirection.Y * enemyDirection.Y);
+                float CosAngle = AB / (moduleA * moduleB);
+                float Angle = MathF.Acos(CosAngle);
+                float LengthBetweenDirectionAndEnemy = moduleB * MathF.Sin(Angle);
+                Rectangle RectEnemy = new Rectangle((int)enemy.ScreenPosition.X - enemy.Radius, (int)enemy.ScreenPosition.Y - enemy.Radius, enemy.Radius * 2, enemy.Radius * 2);
+                if (LengthBetweenDirectionAndEnemy < enemy.Radius && CosAngle > 0) {
+                    enemy.Health -= currentWeapon.Damage;
+                    if (enemy.Health <= 0) {
+                        objects.RemoveAt(j);
+                    }
+                }
+            }
+        }
+    }
     public bool TakeWeapon(List<GameObject> objects) {
         for (int i = 0; i < objects.Count; i++)
         {
-            Rectangle RectPlayer = new Rectangle((int)Position.X - Radius, (int)Position.Y - Radius, Radius * 2, Radius * 2);
             if (objects[i] is Weapon weapon)
             {
-
-                Rectangle RectWeapon = new Rectangle((int)weapon.Position.X - weapon.Radius, (int)weapon.Position.Y - weapon.Radius, weapon.Radius * 2, weapon.Radius * 2);
-
-                if (RectPlayer.Intersects(RectWeapon))
+                //System.Diagnostics.Debug.WriteLine((ScreenPosition - weapon.ScreenPosition).Length());
+                //System.Diagnostics.Debug.WriteLine(AdditionalHitboxRadius + weapon.Radius * 2);
+                if (AdditionalHitboxRadius + weapon.Radius * 2 >= (ScreenPosition - weapon.ScreenPosition).Length())
                 {
-                    WeaponDegress(weapon.Position);
+                    float wpnDifference = WeaponDegress(weapon.Position);
                     if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "hand" && wpnDifference < 0.4 && wpnDifference > -0.4 && !weapon.isflying)
                     {
                         currentWeapon = weapon;
@@ -98,14 +125,16 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
         return false;
     }
 
-    public void WeaponDegress(Vector2 position)
+    public float WeaponDegress(Vector2 position)
     {
         Vector2 weaponDirection = new Vector2(position.X - Position.X, position.Y - Position.Y);
-        float weaponRotate = (float)Math.Atan2(weaponDirection.Y, weaponDirection.X) + MathHelper.PiOver2;
-        if(weaponRotate < 0 && Rotation < 0)
-            wpnDifference = Math.Abs(weaponRotate) - Math.Abs(Rotation);
+        float weaponRotate = (float)MathF.Atan2(weaponDirection.Y, weaponDirection.X) + MathHelper.PiOver2;
+        float wpnDifference;
+        if (weaponRotate < 0 && Rotation < 0)
+            wpnDifference = MathF.Abs(weaponRotate) - MathF.Abs(Rotation);
         else
-           wpnDifference = Math.Abs(weaponRotate) - Rotation;
+           wpnDifference = MathF.Abs(weaponRotate) - Rotation;
+        return wpnDifference;
     }
 
     public Weapon ThrowWeapon()
@@ -125,8 +154,8 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
         }
         Camera.ChangeShiftOffset(mouseDirectionForCamera);
     }
-    public void rotate(Point mousePosition) {                           // Функция поворота игрока в сторону мыши
-        mousePos = new Vector2(mousePosition.X, mousePosition.Y);
+    public void rotate(Point mousePositionPoint) {                           // Функция поворота игрока в сторону мыши
+        mousePosition = new Vector2(mousePositionPoint.X, mousePositionPoint.Y);
         mouseDirection = new Vector2(mousePosition.X - ScreenPosition.X, mousePosition.Y - ScreenPosition.Y);
         Vector2 mouseDirectionNormalized = mouseDirection;
         mouseDirectionNormalized.Normalize();
@@ -155,7 +184,19 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
         }
     }
     public override void OtherDraw(SpriteBatch render) {                // Переопределяю функцию OtherDraw() из GameObject, чтобы отрисовать что-то еще помимо базовой отрисовки
-        System.Diagnostics.Debug.WriteLine(ScreenCenter);
+        //System.Diagnostics.Debug.WriteLine(ScreenCenter);
+
+        render.Draw(
+            AdditionalHitboxTexture,                //Текстура
+            ScreenPosition,         // Положение 
+            new Rectangle(0,0, AdditionalHitboxRadius*2, AdditionalHitboxRadius*2),    // Область текстуры для отрисовки
+            Color.Black * 0.2f,       // Цвет
+            Rotation,           // Вращение
+            new Vector2(AdditionalHitboxRadius, AdditionalHitboxRadius), // Центр объекта, вокруг которого происходит вращение и тд
+            Scale,              // Масштабирование
+            SpriteEffects.None, // Отражение по горизонтали и вертикали
+            Layer               // Слой
+        );
 
         if (currentWeapon.Name != "hand")                                           // Отрисовка оружия в руке игрока
         {
@@ -179,16 +220,5 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
                 1.0f
             );
         }
-        //render.Draw(
-        //    HitboxTexture,
-        //    ScreenPosition,
-        //    DrawRect,
-        //    Color.Black,
-        //    0,
-        //    new Vector2(DrawRect.Value.Width, DrawRect.Value.Height) / 2,
-        //    Scale,
-        //    SpriteEffects.None,
-        //    1.0f
-        //);
     }
 }

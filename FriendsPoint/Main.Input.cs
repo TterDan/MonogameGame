@@ -22,7 +22,7 @@ namespace FriendsPoint
                 Exit();
 
             if (mouse.LeftButton == ButtonState.Pressed && mouseState == false)
-                player.Shot(objects);
+                player.UseWeapon(objects);
                 mouseState = true;
 
             if (mouse.LeftButton == ButtonState.Released)
@@ -54,7 +54,7 @@ namespace FriendsPoint
             } else {
                 player.ShiftLook(false, Point.Zero);
             }
-            if (keyboard.IsKeyDown(Keys.G) && player.currentWeapon.Name != "hand")                      // ДЖАС Вот этот код лучше поместить в метод throwWeapon() у игрока
+            if (keyboard.IsKeyDown(Keys.G) && player.currentWeapon.Name != "hand")
             {
                 player.ThrowWeapon();
                 objects.Add(player.currentWeapon);

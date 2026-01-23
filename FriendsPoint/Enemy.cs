@@ -2,13 +2,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Enemy : CircleHBoxObj {                                                          // Класс врага, наследует класс GameObject
-    public int Health = 100;
+    public float Health = 100f;
     public float MoveSpeed;
+    public Vector2 currentSpeed = Vector2.Zero;
     public Rectangle Rect;
     public Enemy(GraphicsDevice GraphicsDevice, Vector2 position, int radius, float moveSpeed) {
         Layer = 0.5f;
@@ -36,12 +38,13 @@ public class Enemy : CircleHBoxObj {                                            
         // Код при смерти врага
         return true;
     }
-    public void moveTowardsPlayer(Vector2 playerPosition) {
-        Vector2 direction = playerPosition - Position;
-        if (direction != Vector2.Zero) {
-            direction.Normalize();
-            Position += direction * MoveSpeed;
-            ScreenPosition += direction * MoveSpeed;
-        }
+
+    public void move(Vector2 moveDirection) {
+        System.Diagnostics.Debug.WriteLine(moveDirection);
+        moveDirection.Normalize();
+        moveDirection -= currentSpeed;
+        currentSpeed = Vector2.Lerp(currentSpeed, Vector2.Zero, 0.1f);
+        Position += moveDirection * MoveSpeed;
+        ScreenPosition += moveDirection * MoveSpeed;
     }
 }

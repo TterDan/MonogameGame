@@ -15,11 +15,14 @@ namespace FriendsPoint
         public virtual void DrawUI(SpriteBatch render, Rectangle? sourceRectangle = null)
         {
             if(player.TakeWeapon(objects))
-                    render.DrawString(font, "Press E to take weapon", new Vector2((windowSize.X / 2f) - (150 / 2f), 50), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
-                    render.DrawString(font, $"{player.length}", new Vector2(0, 50), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
-                    render.DrawString(font, $"{player.vectorsCorner * 180 / Math.PI}", new Vector2(0, 80), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
-                    render.DrawString(font, $"{player.enemyDirection}", new Vector2(0, 100), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
-                    render.DrawString(font, $"{Vector2.Normalize(player.mouseDirection)}", new Vector2(0, 140), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
+                render.DrawString(font, "Press E to take weapon", new Vector2((windowSize.X / 2f) - (150 / 2f), 50), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
+                render.DrawString(font, $"MouseDirection: {Vector2.Normalize(player.mouseDirection)}", new Vector2(0, 140), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
+
+            for (int j = 0; j < objects.Count; j++) {
+                if (objects[j] is Enemy enemy) {
+                    render.DrawString(font, $"HP: {enemy.Health}", new Vector2(enemy.ScreenPosition.X, enemy.ScreenPosition.Y), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
+                }
+            }
         }
     }
 }

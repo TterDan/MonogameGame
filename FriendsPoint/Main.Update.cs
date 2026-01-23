@@ -19,7 +19,7 @@ namespace FriendsPoint
                 index = objects.IndexOf(player.droppedWeapon);
                 if (objects[index].Speed >= 0f)
                 {
-                    objects[index].Speed -= 0.08f;
+                    objects[index].Speed -= 0.3f;
                     objects[index].Position += Vector2.Normalize(player.droppedDirection) * objects[index].Speed;
                     objects[index].isflying = true;
                 }
@@ -27,13 +27,16 @@ namespace FriendsPoint
                 {
                     player.isdropped = false;
                     objects[index].isflying = false;
-                    objects[index].Speed = 7f;
+                    objects[index].Speed = 10f;
                 }
             }
 
             for (int i = 0; i < objects.Count; i++) {
                 if (objects[i] is Enemy enemy) {
-                    enemy.moveTowardsPlayer(player.Position);
+                    enemy.move(player.Position - enemy.Position);
+                }
+                if (objects[i] is Weapon weapon) {
+                    weapon.move();
                 }
             }
             Camera.ChangeOffset();
