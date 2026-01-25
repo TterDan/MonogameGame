@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json.Nodes;
 using System.Threading;
 
 namespace FriendsPoint
@@ -21,11 +23,14 @@ namespace FriendsPoint
             System.Diagnostics.Debug.WriteLine(windowSize);
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             objects = new List<GameObject>();                                                                           // Инициализирую список всех элементов
+            droppedWeapons = new List<(Weapon, Vector2)>();
             debugPixel = new Texture2D(GraphicsDevice, 1, 1);
             debugPixel.SetData(new[] { Color.Red });                                                                    
             objects.Add(map);
             objects.Add(player);
             graphics.ApplyChanges();
+            rnd = new System.Random();
+            weaponsArray = JsonNode.Parse(File.ReadAllText("Data\\WeaponData.json")).AsArray();
             for (int i = 0; i < 2; i++) {                                                                                // Добавляю несколько врагов на карту для теста
                 Enemy enemy = new Enemy(
                     GraphicsDevice,
@@ -34,6 +39,12 @@ namespace FriendsPoint
                     3f
                 );
                 objects.Add(enemy);
+            }
+            for(int i = 0; i < 5; i++)
+            {
+                int rndWeapon = rnd.Next(0, weaponsArray.Count);
+                Weapon wpn = new Weapon(GraphicsDevice, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), weaponsArray[rndWeapon]["Radius"].GetValue<int>(), new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 });
+                objects.Add(wpn);
             }
 
             base.Initialize();
@@ -45,10 +56,6 @@ namespace FriendsPoint
             player.Texture = Content.Load<Texture2D>("players/soldierRF");          // Назначаю текстуру игрока
             map.Texture = Content.Load<Texture2D>("floor");                         // Назначаю текстуру карты
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
-            Weapon testwpn = new Weapon(GraphicsDevice, "ak47", "Gun", new Vector2(100, 100), 20, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45});
-            //Weapon testwpn2 = new Weapon(GraphicsDevice, "glock", new Vector2(100, 200), 20);
-            objects.Add(testwpn);
-            //objects.Add(testwpn2);
         }
     }
 }

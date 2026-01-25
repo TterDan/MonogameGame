@@ -58,6 +58,7 @@ namespace FriendsPoint
             {
                 player.ThrowWeapon();
                 objects.Add(player.currentWeapon);
+                droppedWeapons.Add((player.currentWeapon, player.mouseDirection));
                 player.currentWeapon = hand;
             }
             return direction;

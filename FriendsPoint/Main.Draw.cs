@@ -15,6 +15,7 @@ namespace FriendsPoint
                 //samplerState: SamplerState.PointWrap
                 );
             //render.Draw(roundTexture, new Vector2(50, 50), new Rectangle(0, 0, 125, 125), Color.Red);
+
             for (int i = 0; i < objects.Count; i++)
             {
                 objects[i].Draw(render); // Отрисовываются все обьекты в списке

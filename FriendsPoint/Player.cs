@@ -19,8 +19,6 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
     public Vector2 mouseDirection;
     public Vector2 mousePosition;
     public Rectangle Rect;
-    public bool isdropped;
-    public Weapon droppedWeapon;
     public Vector2 droppedDirection;
     public float Health = 100f;
 
@@ -64,7 +62,6 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
                     normalizedDirection.Normalize();
                     normalizedDirection *= 10.0f;
                     enemy.currentSpeed = normalizedDirection;
-
                     enemy.Health -= currentWeapon.Damage;
                     if (enemy.Health <= 0) {
                         objects.RemoveAt(j);
@@ -125,6 +122,46 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
         return false;
     }
 
+    public void WeaponFly(List<GameObject> objects, List<(Weapon, Vector2)> droppedWeapons)
+    {
+        if (droppedWeapons.Count > 0) 
+        {
+            for (int i = 0; i < droppedWeapons.Count; i++)
+            {
+                var (weapon, dir) = droppedWeapons[i];
+                weapon.Speed -= 0.1f;
+                weapon.Position += Vector2.Normalize(dir) * weapon.Speed;
+                weapon.isflying = true;
+                for(int j = 0; j < objects.Count; j++)
+                {
+                    if (objects[j] is Enemy enemy)
+                    {
+                        if (enemy.Radius + weapon.Radius * 2 >= (enemy.ScreenPosition - weapon.ScreenPosition).Length() && weapon.isflying)
+                        {
+                            enemy.Health -= weapon.HitDamage;
+                            weapon.isflying = false;
+                            weapon.Speed = 0;
+                            if (enemy.Health <= 0)
+                                objects.RemoveAt(j);
+                        }
+                    }
+                }
+                if (weapon.Speed <= 0)
+                {
+                    weapon.isflying = false;
+                    weapon.Speed = 10f;
+                    droppedWeapons.RemoveAt(i);
+                }
+                
+            }
+        }
+    }
+
+    public Weapon ThrowWeapon()
+    {
+        return currentWeapon;
+    }
+
     public float WeaponDegress(Vector2 position)
     {
         Vector2 weaponDirection = new Vector2(position.X - Position.X, position.Y - Position.Y);
@@ -137,13 +174,6 @@ public class Player : CircleHBoxObj {          // Класс игрока, на�
         return wpnDifference;
     }
 
-    public Weapon ThrowWeapon()
-    {
-        droppedWeapon = currentWeapon;
-        droppedDirection = mouseDirection;
-        isdropped = true;
-        return currentWeapon;
-    }
     public void ShiftLook(bool ShiftPressed, Point mousePosition) {
         Vector2 mouseDirectionForCamera;
         if (ShiftPressed) {
