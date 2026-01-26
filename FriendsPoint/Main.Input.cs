@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
-
+using FriendsPoint.GameObjects;
 namespace FriendsPoint
 {
     public partial class Main                       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
@@ -54,12 +54,11 @@ namespace FriendsPoint
             } else {
                 player.ShiftLook(false, Point.Zero);
             }
-            if (keyboard.IsKeyDown(Keys.G) && player.currentWeapon.Name != "hand")
+            if (keyboard.IsKeyDown(Keys.G) && player.currentWeapon.Name != "Fist")
             {
-                player.ThrowWeapon();
                 objects.Add(player.currentWeapon);
                 droppedWeapons.Add((player.currentWeapon, player.mouseDirection));
-                player.currentWeapon = hand;
+                player.currentWeapon = fist;
             }
             return direction;
         }

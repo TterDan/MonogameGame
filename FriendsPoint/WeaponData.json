@@ -1,0 +1,86 @@
+[
+  {
+    "Name": "Rifle",
+    "Type": "Gun"
+  },
+  {
+    "Name": "Pistol",
+    "Type": "Gun"
+  },
+  {
+    "Name": "Sniper_rifle",
+    "Type": "Gun"
+  },
+  {
+    "Name": "Minigun",
+    "Type": "Gun"
+  },
+  {
+    "Name": "Shotgun",
+    "Type": "Gun"
+  },
+  {
+    "Name": "Slingshot",
+    "Type": "Gun"
+  },
+  {
+    "Name": "Rpg",
+    "Type": "Gun"
+  },
+
+
+
+  {
+    "Name": "Bat",
+    "Type": "Melee"
+  },
+  {
+    "Name": "Knuckle",
+    "Type": "Melee"
+  },
+  {
+    "Name": "Pipe",
+    "Type": "Melee"
+  },
+  {
+    "Name": "Knife",
+    "Type": "Melee"
+  },
+  {
+    "Name": "Chainsaw",
+    "Type": "Melee"
+  },
+  {
+    "Name": "Bottle",
+    "Type": "Melee"
+  },
+
+
+
+  {
+    "Name": "Explosive_grenade",
+    "Type": "Throwing"
+  },
+  {
+    "Name": "Smoke_grenade",
+    "Type": "Throwing"
+  },
+  {
+    "Name": "Molotov_Grenade",
+    "Type": "Throwing"
+  },
+  {
+    "Name": "Flash_Grenade",
+    "Type": "Throwing"
+  },
+
+
+  {
+    "Name": "Mine",
+    "Type": "Placing"
+  },
+  {
+    "Name": "Ridgepole",
+    "Type": "Placing"
+  }
+]

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json.Nodes;
 using System.Threading;
-
+using FriendsPoint.GameObjects;
 namespace FriendsPoint
 {
     public partial class Main           // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
@@ -16,9 +16,9 @@ namespace FriendsPoint
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             render = new SpriteBatch(GraphicsDevice);                                                                   // Инициализирую спрайтбатч
 
-            hand = new Weapon(GraphicsDevice, "hand", "Melee", Vector2.Zero, 10, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
+            fist = new Weapon(GraphicsDevice, "Fist", "Melee", Vector2.Zero, 10, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
 
-            player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), hand);     // Инициализирую игрока
+            player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist);     // Инициализирую игрока
 
             System.Diagnostics.Debug.WriteLine(windowSize);
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
@@ -30,7 +30,7 @@ namespace FriendsPoint
             objects.Add(player);
             graphics.ApplyChanges();
             rnd = new System.Random();
-            weaponsArray = JsonNode.Parse(File.ReadAllText("Data\\WeaponData.json")).AsArray();
+            weaponsArray = JsonNode.Parse(File.ReadAllText("../../../WeaponData.json")).AsArray();
             for (int i = 0; i < 2; i++) {                                                                                // Добавляю несколько врагов на карту для теста
                 Enemy enemy = new Enemy(
                     GraphicsDevice,

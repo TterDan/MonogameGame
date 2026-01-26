@@ -7,7 +7,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
-
+using FriendsPoint.GameObjects;
 namespace FriendsPoint
 {
     public partial class Main 

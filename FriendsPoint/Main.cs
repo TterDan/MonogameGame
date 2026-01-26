@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Nodes;
 using System.Threading;
-
+using FriendsPoint.GameObjects;
 namespace FriendsPoint
 {
     public partial class Main : Game
@@ -20,7 +20,7 @@ namespace FriendsPoint
         private List<(Weapon, Vector2)> droppedWeapons;
         private Texture2D debugPixel;       // Текстура для отладки
         private SpriteFont font;            // Экземпляр интерфейса
-        private Weapon hand;
+        private Weapon fist;
         private JsonArray weaponsArray;
         private Random rnd;
         public Main()

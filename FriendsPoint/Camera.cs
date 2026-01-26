@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
 using System.Xml.Linq;
-
+using FriendsPoint.GameObjects;
 static public class Camera {                                                          // Статический класс камеры
     static public float MaxShiftOffset = 180f;
     static public Vector2 ShiftOffset = Vector2.Zero;
