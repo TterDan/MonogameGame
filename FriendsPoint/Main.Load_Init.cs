@@ -16,9 +16,15 @@ namespace FriendsPoint
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             render = new SpriteBatch(GraphicsDevice);                                                                   // Инициализирую спрайтбатч
 
-            fist = new Weapon(GraphicsDevice, "Fist", "Melee", Vector2.Zero, 10, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
+            fist = new Weapon(GraphicsDevice, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
 
             player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist);     // Инициализирую игрока
+
+            Texture2D line;
+            line = new Texture2D(GraphicsDevice, 1, 1);
+            line.SetData(new[] { Color.White });
+            player.lineTexture = line;
+            player.render = render;
 
             System.Diagnostics.Debug.WriteLine(windowSize);
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
@@ -43,7 +49,8 @@ namespace FriendsPoint
             for(int i = 0; i < 5; i++)
             {
                 int rndWeapon = rnd.Next(0, weaponsArray.Count);
-                Weapon wpn = new Weapon(GraphicsDevice, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), weaponsArray[rndWeapon]["Radius"].GetValue<int>(), new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 });
+                System.Diagnostics.Debug.WriteLine(weaponsArray.Count);
+                Weapon wpn = new Weapon(GraphicsDevice, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 30, 50, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 });
                 objects.Add(wpn);
             }
 

@@ -27,9 +27,6 @@
     "Name": "Rpg",
     "Type": "Gun"
   },
-
-
-
   {
     "Name": "Bat",
     "Type": "Melee"
@@ -54,9 +51,6 @@
     "Name": "Bottle",
     "Type": "Melee"
   },
-
-
-
   {
     "Name": "Explosive_grenade",
     "Type": "Throwing"
@@ -73,8 +67,6 @@
     "Name": "Flash_Grenade",
     "Type": "Throwing"
   },
-
-
   {
     "Name": "Mine",
     "Type": "Placing"

@@ -25,6 +25,10 @@ namespace FriendsPoint
                 }
             }
             Camera.ChangeOffset();
+
+            player.currentFireTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+            player.ShotDrawTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+
             base.Update(gameTime);
         }
         protected void weaponMove() {

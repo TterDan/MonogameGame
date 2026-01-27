@@ -22,15 +22,19 @@ namespace FriendsPoint.GameObjects {
 
         public float moveSpeedMultiplier;
 
-
         public Vector2 currentSpeed;
 
-        public Weapon(GraphicsDevice GraphicsDevice, string name, string type, Vector2 position, int radius, List<float> gunSets) {
+        public int AdditionRadius;
+        public Texture2D AdditionalHitboxTexture;
+
+        public Weapon(GraphicsDevice GraphicsDevice, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets) {
             Name = name;
             Type = type;
             Position = position;
             Layer = 1.0f;
             Radius = radius;
+            AdditionRadius = additionRadius;
+            AdditionalHitboxTexture = CreateCircleTexture(GraphicsDevice, AdditionRadius, Color.Black);
             HitboxTexture = CreateCircleTexture(GraphicsDevice, Radius, Color.Black);
             DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
             Damage = gunSets[0];
@@ -49,5 +53,19 @@ namespace FriendsPoint.GameObjects {
             Position -= currentSpeed;
             ScreenPosition -= currentSpeed;
         }
+
+        public override void OtherDraw(SpriteBatch render) {                // Переопределяю функцию OtherDraw() из GameObject, чтобы отрисовать что-то еще помимо базовой отрисовки
+            render.Draw(
+                AdditionalHitboxTexture,              //Текстура
+                ScreenPosition,         // Положение 
+                new Rectangle(0, 0, AdditionRadius * 2, AdditionRadius * 2),    // Область текстуры для отрисовки
+                Color.Black * 0.2f,       // Цвет
+                Rotation,           // Вращение
+                new Vector2(AdditionRadius, AdditionRadius), // Центр объекта, вокруг которого происходит вращение и тд
+                Scale,              // Масштабирование
+                SpriteEffects.None, // Отражение по горизонтали и вертикали
+                Layer               // Слой
+            );
+        }
+        }
     }
-}

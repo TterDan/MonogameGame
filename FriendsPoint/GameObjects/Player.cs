@@ -25,6 +25,12 @@ namespace FriendsPoint.GameObjects {
 
         public int AdditionalHitboxRadius;          // Дополнительный хитбокс, нужный для оценки расстояния подбора оружия, движения врагов
         public Texture2D AdditionalHitboxTexture;
+        public Texture2D lineTexture;
+        public SpriteBatch render;
+
+        public double currentFireTime = 0;
+        public double ShotDrawTimer = 70;
+        public int currentShotDrawTime = 70;
 
         public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, int additionalHitboxRadius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon) {
             Position = startPosition;
@@ -43,17 +49,20 @@ namespace FriendsPoint.GameObjects {
 
         public void UseWeapon(List<GameObject> objects) {
             Vector2 direction = mousePosition - ScreenPosition;
-            if (currentWeapon.Type == "Melee") {
-                Beat(objects);
-            }
-            if (currentWeapon.Type == "Throwing") {
-                Throw(objects);
-            }
-            if (currentWeapon.Type == "Gun") {
-                Shot(objects, direction);
-            }
-            if (currentWeapon.Type == "Placing") {
+            if (currentFireTime > currentWeapon.fireRate) {
+                currentFireTime = 0;
+                if (currentWeapon.Type == "Melee") {
+                    Beat(objects);
+                }
+                if (currentWeapon.Type == "Throwing") {
+                    Throw(objects);
+                }
+                if (currentWeapon.Type == "Gun") {
+                    Shot(objects, direction);
+                }
+                if (currentWeapon.Type == "Placing") {
 
+                }
             }
         }
         public void Throw(List<GameObject> objects) {
@@ -67,7 +76,7 @@ namespace FriendsPoint.GameObjects {
                         Vector2 normalizedDirection = (ScreenPosition - enemy.ScreenPosition);
                         normalizedDirection.Normalize();
                         normalizedDirection *= 10.0f;
-                        enemy.currentSpeed = normalizedDirection;
+                        enemy.currentSpeed += normalizedDirection;
 
                         enemy.TakeDamage(currentWeapon.Damage, objects, j);
                     }
@@ -78,7 +87,7 @@ namespace FriendsPoint.GameObjects {
                         Vector2 normalizedDirection = (ScreenPosition - weapon.ScreenPosition);
                         normalizedDirection.Normalize();
                         normalizedDirection *= 25.0f;
-                        weapon.currentSpeed = normalizedDirection;
+                        weapon.currentSpeed += normalizedDirection;
                     }
                 }
             }
@@ -99,13 +108,14 @@ namespace FriendsPoint.GameObjects {
                     }
                 }
             }
+            ShotDrawTimer = 0;
         }
         public bool TakeWeapon(List<GameObject> objects) {
             for (int i = 0; i < objects.Count; i++) {
                 if (objects[i] is Weapon weapon) {
                     //System.Diagnostics.Debug.WriteLine((ScreenPosition - weapon.ScreenPosition).Length());
                     //System.Diagnostics.Debug.WriteLine(AdditionalHitboxRadius + weapon.Radius * 2);
-                    if (AdditionalHitboxRadius + weapon.Radius * 2 >= (ScreenPosition - weapon.ScreenPosition).Length()) {
+                    if (AdditionalHitboxRadius + weapon.AdditionRadius >= (weapon.Position - Position).Length()) {
                         float wpnDifference = WeaponDegress(weapon.Position);
                         if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "Fist" && wpnDifference < 0.4 && wpnDifference > -0.4 && !weapon.isflying) {
                             currentWeapon = weapon;
@@ -170,7 +180,13 @@ namespace FriendsPoint.GameObjects {
             }
         }
         public override void OtherDraw(SpriteBatch render) {                // Переопределяю функцию OtherDraw() из GameObject, чтобы отрисовать что-то еще помимо базовой отрисовки
-            //System.Diagnostics.Debug.WriteLine(ScreenCenter);
+            System.Diagnostics.Debug.WriteLine(ShotDrawTimer);
+            if (currentShotDrawTime >= ShotDrawTimer) {
+                Vector2 secondPoint = (mousePosition - ScreenPosition);
+                secondPoint.Normalize();
+                secondPoint *= ScreenCenter.X * 2;
+                DrawLine(render, ScreenPosition, ScreenPosition + secondPoint, Color.Red, 6f);
+            }
 
             render.Draw(
                 AdditionalHitboxTexture,                //Текстура
@@ -206,6 +222,29 @@ namespace FriendsPoint.GameObjects {
                     1.0f
                 );
             }
+        }
+
+
+        void DrawLine(SpriteBatch spriteBatch,
+              Vector2 start,
+              Vector2 end,
+              Color color,
+              float thickness = 1f) {
+            Vector2 delta = end - start;
+            float length = delta.Length();
+            float angle = MathF.Atan2(delta.Y, delta.X);
+
+            spriteBatch.Draw(
+                lineTexture,
+                start,
+                null,
+                color,
+                angle,
+                Vector2.Zero,
+                new Vector2(length, thickness),
+                SpriteEffects.None,
+                0f
+            );
         }
     }
 }
