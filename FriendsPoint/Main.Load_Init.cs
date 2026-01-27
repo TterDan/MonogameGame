@@ -65,7 +65,7 @@ namespace FriendsPoint
         {
 
 
-            player.Texture = Content.Load<Texture2D>("players/soldierRF");          // Назначаю текстуру игрока
+            player.Texture = Content.Load<Texture2D>("weapons/fist");          // Назначаю текстуру игрока
             map.Texture = Content.Load<Texture2D>("floor");                         // Назначаю текстуру карты
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
         }
