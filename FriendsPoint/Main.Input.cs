@@ -12,7 +12,7 @@ namespace FriendsPoint
         protected bool mouseState = false;
         protected void Input()
         {
-            player.rotate(getMouse().Position);     // В метод даю ввод с мыши
+            player.rotate(getMouse().Position, objects);     // В метод даю ввод с мыши
             player.move(getKeyboard(), objects);    // В метод даю ввод с клавиатуры и все обьекты на карте, чтобы их смещать
         }
         protected MouseState getMouse()             // Получение ввода с мыши

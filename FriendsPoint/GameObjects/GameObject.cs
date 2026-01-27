@@ -22,8 +22,8 @@ namespace FriendsPoint.GameObjects {
         public float HitboxOpacity = 1.0f;
         public float TextureOpacity = 1.0f;
 
-        public float TextureScale = 1.4f;
-        public float Scale = 1.4f;
+        public float TextureScale = 1.7f;
+        public float Scale = 1.7f;
 
         public float Rotation = 0f;
         public float Speed = 7f;

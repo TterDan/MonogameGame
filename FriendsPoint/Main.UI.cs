@@ -14,8 +14,8 @@ namespace FriendsPoint
     {
         public virtual void DrawUI(SpriteBatch render, Rectangle? sourceRectangle = null)
         {
-            if(player.TakeWeapon(objects))
-                render.DrawString(font, "Press E to take weapon", new Vector2((windowSize.X / 2f) - (150 / 2f), 50), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
+            if (player.TakeWeapon(objects))
+                //render.DrawString(font, "Press E to take weapon", new Vector2((windowSize.X / 2f) - (150 / 2f), 50), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
                 render.DrawString(font, $"MouseDirection: {Vector2.Normalize(player.mouseDirection)}", new Vector2(0, 140), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
                 
             for (int j = 0; j < objects.Count; j++) {

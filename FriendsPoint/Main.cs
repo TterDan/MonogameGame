@@ -23,6 +23,8 @@ namespace FriendsPoint
         private Weapon fist;
         private JsonArray weaponsArray;
         private Random rnd;
+
+        Texture2D black1;
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);

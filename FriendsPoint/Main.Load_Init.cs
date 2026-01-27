@@ -1,11 +1,12 @@
+using FriendsPoint.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json.Nodes;
 using System.Threading;
-using FriendsPoint.GameObjects;
 namespace FriendsPoint
 {
     public partial class Main           // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
@@ -13,15 +14,17 @@ namespace FriendsPoint
         // Инициализация
         protected override void Initialize()
         {
+            font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             render = new SpriteBatch(GraphicsDevice);      
             // Инициализирую спрайтбатч
             Texture2D fistTexture = Content.Load<Texture2D>("weapons/deagle");
             fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
 
-            player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist);     // Инициализирую игрока
+            player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
 
             Texture2D line;
+
             line = new Texture2D(GraphicsDevice, 1, 1);
             line.SetData(new[] { Color.White });
             player.lineTexture = line;
@@ -63,11 +66,12 @@ namespace FriendsPoint
         // Код загрузки моделей и контента
         protected override void LoadContent()
         {
+            black1 = new Texture2D(GraphicsDevice, 1, 1);
+            black1.SetData(new[] { Color.White });
 
-
-            player.Texture = Content.Load<Texture2D>("weapons/fist");          // Назначаю текстуру игрока
+            player.blackTexture = black1;
+            player.Texture = Content.Load<Texture2D>("players/soldierRF");          // Назначаю текстуру игрока
             map.Texture = Content.Load<Texture2D>("floor");                         // Назначаю текстуру карты
-            font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
         }
     }
 }

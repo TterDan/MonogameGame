@@ -49,7 +49,7 @@ namespace FriendsPoint.GameObjects {
             cartrigesInMagazine = gunSets[8];
             totalCartriges = gunSets[9];
 
-            TextureScale = Scale * 0.35f;
+            TextureScale = Scale * 0.45f;
         }
         public void move() {
             currentSpeed = Vector2.Lerp(currentSpeed, Vector2.Zero, 0.2f);
