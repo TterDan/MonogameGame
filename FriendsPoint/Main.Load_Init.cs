@@ -14,9 +14,10 @@ namespace FriendsPoint
         protected override void Initialize()
         {
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
-            render = new SpriteBatch(GraphicsDevice);                                                                   // Инициализирую спрайтбатч
-
-            fist = new Weapon(GraphicsDevice, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
+            render = new SpriteBatch(GraphicsDevice);      
+            // Инициализирую спрайтбатч
+            Texture2D fistTexture = Content.Load<Texture2D>("weapons/deagle");
+            fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
 
             player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist);     // Инициализирую игрока
 
@@ -50,7 +51,9 @@ namespace FriendsPoint
             {
                 int rndWeapon = rnd.Next(0, weaponsArray.Count);
                 System.Diagnostics.Debug.WriteLine(weaponsArray.Count);
-                Weapon wpn = new Weapon(GraphicsDevice, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 30, 50, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 });
+                string pathToImg = weaponsArray[rndWeapon]["Path"].ToString();
+                Texture2D weaponTexture = Content.Load<Texture2D>($"weapons/{pathToImg}");
+                Weapon wpn = new Weapon(GraphicsDevice, weaponTexture, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 30, 50, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 });
                 objects.Add(wpn);
             }
 
@@ -60,6 +63,8 @@ namespace FriendsPoint
         // Код загрузки моделей и контента
         protected override void LoadContent()
         {
+
+
             player.Texture = Content.Load<Texture2D>("players/soldierRF");          // Назначаю текстуру игрока
             map.Texture = Content.Load<Texture2D>("floor");                         // Назначаю текстуру карты
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста

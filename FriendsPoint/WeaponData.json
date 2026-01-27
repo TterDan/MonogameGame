@@ -1,78 +1,111 @@
 [
   {
     "Name": "Rifle",
-    "Type": "Gun"
+    "Type": "Gun",
+    "Path": "mp5"
   },
   {
     "Name": "Pistol",
-    "Type": "Gun"
+    "Type": "Gun",
+    "Path": "glock"
   },
   {
     "Name": "Sniper_rifle",
-    "Type": "Gun"
+    "Type": "Gun",
+    "Path": "sniper"
   },
   {
     "Name": "Minigun",
-    "Type": "Gun"
+    "Type": "Gun",
+    "Path": "deagle"
   },
   {
     "Name": "Shotgun",
-    "Type": "Gun"
+    "Type": "Gun",
+    "Path": "shotgun"
   },
   {
     "Name": "Slingshot",
-    "Type": "Gun"
+    "Type": "Gun",
+    "Path": "deagle"
   },
   {
     "Name": "Rpg",
-    "Type": "Gun"
+    "Type": "Gun",
+    "Path": "rpg"
   },
+
+
+
   {
     "Name": "Bat",
-    "Type": "Melee"
+    "Type": "Melee",
+    "Path": "bat"
   },
   {
     "Name": "Knuckle",
-    "Type": "Melee"
+    "Type": "Melee",
+    "Path": "knuckles"
   },
   {
     "Name": "Pipe",
-    "Type": "Melee"
+    "Type": "Melee",
+    "Path": "pipe"
   },
   {
     "Name": "Knife",
-    "Type": "Melee"
+    "Type": "Melee",
+    "Path": "knife"
   },
   {
     "Name": "Chainsaw",
-    "Type": "Melee"
+    "Type": "Melee",
+    "Path": "saw"
   },
   {
     "Name": "Bottle",
-    "Type": "Melee"
+    "Type": "Melee",
+    "Path": "deagle"
   },
   {
+    "Name": "Fist",
+    "Type": "Melee",
+    "Path": "fist"
+  },
+
+
+
+  {
     "Name": "Explosive_grenade",
-    "Type": "Throwing"
+    "Type": "Throwing",
+    "Path": "he"
   },
   {
     "Name": "Smoke_grenade",
-    "Type": "Throwing"
+    "Type": "Throwing",
+    "Path": "deagle"
   },
   {
     "Name": "Molotov_Grenade",
-    "Type": "Throwing"
+    "Type": "Throwing",
+    "Path": "deagle"
   },
   {
     "Name": "Flash_Grenade",
-    "Type": "Throwing"
+    "Type": "Throwing",
+    "Path": "deagle"
   },
+
+
+
   {
     "Name": "Mine",
-    "Type": "Placing"
+    "Type": "Placing",
+    "Path": "deagle"
   },
   {
     "Name": "Ridgepole",
-    "Type": "Placing"
+    "Type": "Placing",
+    "Path": "deagle"
   }
 ]
