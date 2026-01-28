@@ -10,6 +10,7 @@ namespace FriendsPoint
         // Код обновлений
         protected MouseState mouse;
         protected bool mouseState = false;
+        public bool isOemTildePressed = false;
         protected void Input()
         {
             player.rotate(getMouse().Position, objects);     // В метод даю ввод с мыши
@@ -34,6 +35,17 @@ namespace FriendsPoint
         {
             KeyboardState keyboard = Keyboard.GetState();
             Vector2 direction = Vector2.Zero;
+
+            if (keyboard.IsKeyDown(Keys.OemTilde)) {
+                if (isOemTildePressed == false) {
+                    Console.IsConsoleOpen = (Console.IsConsoleOpen == true) ? false : true;
+                    Console.Log("Console gets opened/closed");
+                    isOemTildePressed = true;
+                }
+            }
+            if (keyboard.IsKeyUp(Keys.OemTilde)) {
+                isOemTildePressed = false;
+            }
             if (keyboard.IsKeyDown(Keys.W))
                 direction.Y = -1;
 

@@ -14,9 +14,9 @@ static public class Camera {                                                    
     static public Vector2 MouseOffset = Vector2.Zero;
     static public float MouseOffsetSpeed = 0.4f;
 
-    static public float MaxWalkOffset = 30f;
+    static public float MaxWalkOffset = 50f;
     static public Vector2 WalkOffset = Vector2.Zero;
-    static public float WalkOffsetSpeed = 0.15f;
+    static public float WalkOffsetSpeed = 0.10f;
 
     static public Vector2 CameraOffset = Vector2.Zero;
 

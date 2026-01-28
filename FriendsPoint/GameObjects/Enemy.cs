@@ -20,7 +20,7 @@ namespace FriendsPoint.GameObjects {
             Position = position;
             MoveSpeed = moveSpeed;
             Radius = radius;
-            Texture = CreateCircleTexture(GraphicsDevice, Radius, Color.Red);
+            //Texture = CreateCircleTexture(GraphicsDevice, Radius, Color.Red);
             DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
         }
 
@@ -38,6 +38,7 @@ namespace FriendsPoint.GameObjects {
             if (Health <= 0) {
                  Die(objects, objectIndex);
             }
+            Console.Log("Enemy gets punched", "non-repeat", "Ouch!");
             // Код при попадании во врага
 
         }
@@ -49,6 +50,10 @@ namespace FriendsPoint.GameObjects {
             currentSpeed = Vector2.Lerp(currentSpeed, Vector2.Zero, 0.1f);
             Position += moveDirection * MoveSpeed;
             ScreenPosition += moveDirection * MoveSpeed;
+        }
+
+        public override void Draw(SpriteBatch render) {
+            DrawEngine.DrawCircle(render, ScreenPosition, DrawRect.Value, new Vector2(DrawRect.Value.Width / 2, DrawRect.Value.Height / 2), Radius, Color.Red, 0, 1, 0.5f);
         }
     }
 }

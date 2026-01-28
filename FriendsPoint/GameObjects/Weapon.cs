@@ -35,8 +35,6 @@ namespace FriendsPoint.GameObjects {
             Layer = 1.0f;
             Radius = radius;
             AdditionRadius = additionRadius;
-            AdditionalHitboxTexture = CreateCircleTexture(GraphicsDevice, AdditionRadius, Color.Black);
-            HitboxTexture = CreateCircleTexture(GraphicsDevice, Radius, Color.Black);
             DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
             Damage = gunSets[0];
             HitDamage = gunSets[1];
@@ -57,18 +55,11 @@ namespace FriendsPoint.GameObjects {
             ScreenPosition -= currentSpeed;
         }
 
-        public override void OtherDraw(SpriteBatch render) {                // Переопределяю функцию OtherDraw() из GameObject, чтобы отрисовать что-то еще помимо базовой отрисовки
-            render.Draw(
-                AdditionalHitboxTexture,              //Текстура
-                ScreenPosition,         // Положение 
-                new Rectangle(0, 0, AdditionRadius * 2, AdditionRadius * 2),    // Область текстуры для отрисовки
-                Color.Black * 0.2f,       // Цвет
-                Rotation,           // Вращение
-                new Vector2(AdditionRadius, AdditionRadius), // Центр объекта, вокруг которого происходит вращение и тд
-                Scale,              // Масштабирование
-                SpriteEffects.None, // Отражение по горизонтали и вертикали
-                Layer               // Слой
-            );
-        }
+        public override void Draw(SpriteBatch render) {
+            DrawEngine.DrawTexture(render, Texture, ScreenPosition, null, null, Rotation, 0.5f, 0.12f);
+            DrawEngine.DrawCircle(render, ScreenPosition, DrawRect.Value, new Vector2(DrawRect.Value.Width / 2, DrawRect.Value.Height / 2), Radius, Color.Black, Rotation, 1, 0.11f);
+            Rectangle AdditionDrawRect = new Rectangle(0, 0, AdditionRadius * 2, AdditionRadius * 2);
+            DrawEngine.DrawCircle(render, ScreenPosition, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), AdditionRadius, Color.Black * 0.5f, Rotation, 1, 0.1f);
         }
     }
+}

@@ -47,8 +47,6 @@ namespace FriendsPoint.GameObjects {
             currentWeapon = weapon;
             Radius = radius;
             AdditionalHitboxRadius = additionalHitboxRadius;
-            HitboxTexture = CreateCircleTexture(GraphicsDevice, Radius, Color.Black);
-            AdditionalHitboxTexture = CreateCircleTexture(GraphicsDevice, AdditionalHitboxRadius, Color.Black);
             TextureScale = Scale * 0.35f;
             DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
             HitboxOpacity = 0.5f;
@@ -180,6 +178,7 @@ namespace FriendsPoint.GameObjects {
 
         public void move(Vector2 moveDirection, List<GameObject> objects)   // Функция перемещения всех обьектов на карте
         {
+            Console.Log($"{Position.X} {Position.Y}", "repeat", "position");
             if (moveDirection == Vector2.Zero) {
                 CurrentSpeed = Vector2.Lerp(CurrentSpeed, Vector2.Zero, 0.3f);
             } else {
@@ -196,110 +195,112 @@ namespace FriendsPoint.GameObjects {
                 objects[i].ScreenPosition = ScreenPosition + (objects[i].Position - Position); // Арифметика для перемещения объектов по экрану игрока (их реальная позиция в мире не меняется)
             }
         }
-        public override void OtherDraw(SpriteBatch render) {                // Переопределяю функцию OtherDraw() из GameObject, чтобы отрисовать что-то еще помимо базовой отрисовки
-            System.Diagnostics.Debug.WriteLine(ShotDrawTimer);
-            if (currentShotDrawTime >= ShotDrawTimer) {
-                Vector2 secondPoint1 = (mousePosition - ScreenPosition);
-                secondPoint1.Normalize();
-                secondPoint1 *= ScreenCenter.X * 2;
-                DrawLine(render, ScreenPosition, ScreenPosition + secondPoint1, Color.Red, 6f);
+        public override void Draw(SpriteBatch render) {
+            DrawEngine.DrawTexture(render, Texture, ScreenPosition, null, null, Rotation, 0.35f, 0.52f);
+            DrawEngine.DrawCircle(render, ScreenPosition, DrawRect.Value, new Vector2(DrawRect.Value.Width / 2, DrawRect.Value.Height / 2), Radius, Color.Black, 0, 1, 0.51f);
+            Rectangle AdditionDrawRect = new Rectangle(0, 0, AdditionalHitboxRadius * 2, AdditionalHitboxRadius * 2);
+            DrawEngine.DrawCircle(render, ScreenPosition, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), AdditionalHitboxRadius, Color.Black * 0.5f, 0, 1, 0.505f);
+
+
+
+            Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, currentWeapon.Radius * 2, currentWeapon.Radius * 2);
+            Vector2 WeaponOffset1 = -new Vector2(36, 55);                              // Координаты для смещения оружия от игрока в его руке
+            Vector2 WeaponOffset2 = -new Vector2(36, -55);
+            float fixedRotation = Rotation + MathF.PI / 2;
+            float cosRotation = MathF.Cos(fixedRotation);
+            float sinRotation = MathF.Sin(fixedRotation);
+            Vector2 WeaponPos1 = new Vector2(cosRotation * WeaponOffset1.X - sinRotation * WeaponOffset1.Y, sinRotation * WeaponOffset1.X + cosRotation * WeaponOffset1.Y);      // Математика для определения смещения оружия от игрока в его руке
+            Vector2 WeaponPos2 = new Vector2(cosRotation * WeaponOffset2.X - sinRotation * WeaponOffset2.Y, sinRotation * WeaponOffset2.X + cosRotation * WeaponOffset2.Y);      // Математика для определения смещения оружия от игрока в его руке
+            currentWeapon.Position = Position;
+            if (currentWeapon.Name == "Fist") {
+                DrawEngine.DrawTexture(render, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, Rotation, 0.40f, 0.54f, SpriteEffects.FlipVertically);
+                DrawEngine.DrawTexture(render, currentWeapon.Texture, ScreenPosition + WeaponPos2, null, null, Rotation, 0.40f, 0.54f);
+            } else {
+                DrawEngine.DrawTexture(render, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, Rotation - MathF.PI / 2, 0.45f, 0.54f);
             }
-
-            if (viewWeapon != null) {
-                float minCord = MathF.Abs(mouseDirection.X) > MathF.Abs(mouseDirection.Y) ? mouseDirection.Y : mouseDirection.X;
-                minCord = MathF.Abs(minCord);
-
-                Vector2 firstPoint = ScreenPosition;
-                Vector2 secondPoint = firstPoint + new Vector2(minCord * mouseDirection.X / Math.Abs(mouseDirection.X), minCord * mouseDirection.Y / Math.Abs(mouseDirection.Y));
-                Vector2 thirdPoint = secondPoint + (mousePosition - secondPoint);
-
-                DrawLine(render, firstPoint, secondPoint, Color.Black, 6f);
-                DrawLine(render, secondPoint, thirdPoint, Color.Black, 6f);
-
-                render.Draw(
-                    blackTexture,                //Текстура
-                    thirdPoint,         // Положение 
-                    new Rectangle(0, 0, 120, 20),    // Область текстуры для отрисовки
-                    Color.Black,       // Цвет
-                    0,           // Вращение
-                    new Vector2(120, 20) / 2, // Центр объекта, вокруг которого происходит вращение и тд
-                    Scale,              // Масштабирование
-                    SpriteEffects.None, // Отражение по горизонтали и вертикали
-                    Layer - 0.1f               // Слой
-                );
-
-                render.DrawString(font, $"Take {viewWeapon.Name}", thirdPoint - new Vector2(60, 0), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
-            }
-
-
-            render.Draw(
-                AdditionalHitboxTexture,                //Текстура
-                ScreenPosition,         // Положение 
-                new Rectangle(0, 0, AdditionalHitboxRadius * 2, AdditionalHitboxRadius * 2),    // Область текстуры для отрисовки
-                Color.Black * 0.2f,       // Цвет
-                Rotation,           // Вращение
-                new Vector2(AdditionalHitboxRadius, AdditionalHitboxRadius), // Центр объекта, вокруг которого происходит вращение и тд
-                Scale,              // Масштабирование
-                SpriteEffects.None, // Отражение по горизонтали и вертикали
-                Layer               // Слой
-            );
-
-            if (currentWeapon.Name != "Fist")                                           // Отрисовка оружия в руке игрока
-            {
-                Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, currentWeapon.Radius * 2, currentWeapon.Radius * 2);
-                Vector2 WeaponOffset = -new Vector2(40, 55);                              // Координаты для смещения оружия от игрока в его руке
-                float fixedRotation = Rotation + 90 * MathF.PI / 180;
-                float cosRotation = MathF.Cos(fixedRotation);
-                float sinRotation = MathF.Sin(fixedRotation);
-                Vector2 WeaponPos = new Vector2(cosRotation * WeaponOffset.X - sinRotation * WeaponOffset.Y, sinRotation * WeaponOffset.X + cosRotation * WeaponOffset.Y);      // Математика для определения смещения оружия от игрока в его руке
-                currentWeapon.Position = Position;
-
-                render.Draw(
-                    currentWeapon.HitboxTexture,
-                    new Vector2(ScreenPosition.X + WeaponPos.X, ScreenPosition.Y + WeaponPos.Y),
-                    currentWeapon.DrawRect,
-                    Color.Black,
-                    fixedRotation,
-                    new Vector2(currentWeapon.DrawRect.Value.Width, currentWeapon.DrawRect.Value.Height) / 2,
-                    Scale,
-                    SpriteEffects.None,
-                    1.0f
-                );
-                render.Draw(
-                    currentWeapon.Texture,                //Текстура
-                    new Vector2(ScreenPosition.X + WeaponPos.X, ScreenPosition.Y + WeaponPos.Y),         // Положение 
-                    null,    // Область текстуры для отрисовки
-                    currentWeapon.TextureColor,       // Цвет
-                    fixedRotation,           // Вращение
-                    new Vector2(Texture.Width, Texture.Height) / 2, // Центр объекта, вокруг которого происходит вращение и тд
-                    currentWeapon.TextureScale,              // Масштабирование
-                    SpriteEffects.None, // Отражение по горизонтали и вертикали
-                    currentWeapon.Layer               // Слой
-                );
-            }
+            DrawEngine.DrawCircle(render, ScreenPosition + WeaponPos1, weaponRect, new Vector2(weaponRect.Width / 2, weaponRect.Height / 2), currentWeapon.Radius, Color.Black, 0.53f);
         }
+        //public override void OtherDraw(SpriteBatch render) {                // Переопределяю функцию OtherDraw() из GameObject, чтобы отрисовать что-то еще помимо базовой отрисовки
+        //    System.Diagnostics.Debug.WriteLine(ShotDrawTimer);
+        //    if (currentShotDrawTime >= ShotDrawTimer) {
+        //        Vector2 secondPoint1 = (mousePosition - ScreenPosition);
+        //        secondPoint1.Normalize();
+        //        secondPoint1 *= ScreenCenter.X * 2;
+        //        DrawLine(render, ScreenPosition, ScreenPosition + secondPoint1, Color.Red, 6f);
+        //    }
+
+        //    if (viewWeapon != null) {
+        //        float minCord = MathF.Abs(mouseDirection.X) > MathF.Abs(mouseDirection.Y) ? mouseDirection.Y : mouseDirection.X;
+        //        minCord = MathF.Abs(minCord);
+
+        //        Vector2 firstPoint = ScreenPosition;
+        //        Vector2 secondPoint = firstPoint + new Vector2(minCord * mouseDirection.X / Math.Abs(mouseDirection.X), minCord * mouseDirection.Y / Math.Abs(mouseDirection.Y));
+        //        Vector2 thirdPoint = secondPoint + (mousePosition - secondPoint);
+
+        //        DrawLine(render, firstPoint, secondPoint, Color.Black, 6f);
+        //        DrawLine(render, secondPoint, thirdPoint, Color.Black, 6f);
+
+        //        render.Draw(
+        //            blackTexture,                //Текстура
+        //            thirdPoint,         // Положение 
+        //            new Rectangle(0, 0, 120, 20),    // Область текстуры для отрисовки
+        //            Color.Black,       // Цвет
+        //            0,           // Вращение
+        //            new Vector2(120, 20) / 2, // Центр объекта, вокруг которого происходит вращение и тд
+        //            Scale,              // Масштабирование
+        //            SpriteEffects.None, // Отражение по горизонтали и вертикали
+        //            Layer - 0.1f               // Слой
+        //        );
+
+        //        render.DrawString(font, $"Take {viewWeapon.Name}", thirdPoint - new Vector2(60, 0), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
+        //    }
 
 
-        void DrawLine(SpriteBatch spriteBatch,
-              Vector2 start,
-              Vector2 end,
-              Color color,
-              float thickness = 1f) {
-            Vector2 delta = end - start;
-            float length = delta.Length();
-            float angle = MathF.Atan2(delta.Y, delta.X);
+        //    render.Draw(
+        //        AdditionalHitboxTexture,                //Текстура
+        //        ScreenPosition,         // Положение 
+        //        new Rectangle(0, 0, AdditionalHitboxRadius * 2, AdditionalHitboxRadius * 2),    // Область текстуры для отрисовки
+        //        Color.Black * 0.2f,       // Цвет
+        //        Rotation,           // Вращение
+        //        new Vector2(AdditionalHitboxRadius, AdditionalHitboxRadius), // Центр объекта, вокруг которого происходит вращение и тд
+        //        Scale,              // Масштабирование
+        //        SpriteEffects.None, // Отражение по горизонтали и вертикали
+        //        Layer               // Слой
+        //    );
 
-            spriteBatch.Draw(
-                lineTexture,
-                start,
-                null,
-                color,
-                angle,
-                Vector2.Zero,
-                new Vector2(length, thickness),
-                SpriteEffects.None,
-                0f
-            );
-        }
+        //    if (currentWeapon.Name != "Fist")                                           // Отрисовка оружия в руке игрока
+        //    {
+        //        Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, currentWeapon.Radius * 2, currentWeapon.Radius * 2);
+        //        Vector2 WeaponOffset = -new Vector2(40, 55);                              // Координаты для смещения оружия от игрока в его руке
+        //        float fixedRotation = Rotation + 90 * MathF.PI / 180;
+        //        float cosRotation = MathF.Cos(fixedRotation);
+        //        float sinRotation = MathF.Sin(fixedRotation);
+        //        Vector2 WeaponPos = new Vector2(cosRotation * WeaponOffset.X - sinRotation * WeaponOffset.Y, sinRotation * WeaponOffset.X + cosRotation * WeaponOffset.Y);      // Математика для определения смещения оружия от игрока в его руке
+        //        currentWeapon.Position = Position;
+
+        //        render.Draw(
+        //            currentWeapon.HitboxTexture,
+        //            new Vector2(ScreenPosition.X + WeaponPos.X, ScreenPosition.Y + WeaponPos.Y),
+        //            currentWeapon.DrawRect,
+        //            Color.Black,
+        //            fixedRotation,
+        //            new Vector2(currentWeapon.DrawRect.Value.Width, currentWeapon.DrawRect.Value.Height) / 2,
+        //            Scale,
+        //            SpriteEffects.None,
+        //            1.0f
+        //        );
+        //        render.Draw(
+        //            currentWeapon.Texture,                //Текстура
+        //            new Vector2(ScreenPosition.X + WeaponPos.X, ScreenPosition.Y + WeaponPos.Y),         // Положение 
+        //            null,    // Область текстуры для отрисовки
+        //            currentWeapon.TextureColor,       // Цвет
+        //            fixedRotation,           // Вращение
+        //            new Vector2(Texture.Width, Texture.Height) / 2, // Центр объекта, вокруг которого происходит вращение и тд
+        //            currentWeapon.TextureScale,              // Масштабирование
+        //            SpriteEffects.None, // Отражение по горизонтали и вертикали
+        //            currentWeapon.Layer               // Слой
+        //        );
+        //    }
+        //}
     }
 }

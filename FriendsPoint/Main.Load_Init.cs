@@ -15,19 +15,20 @@ namespace FriendsPoint
         protected override void Initialize()
         {
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
+            DrawEngine.GameFont = font;
+            DrawEngine.SpriteBatch = render;
+            DrawEngine.GraphicsDevice = GraphicsDevice;
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
+            Console.WindowSize = windowSize;
+
+
             render = new SpriteBatch(GraphicsDevice);      
             // Инициализирую спрайтбатч
-            Texture2D fistTexture = Content.Load<Texture2D>("weapons/deagle");
+            Texture2D fistTexture = Content.Load<Texture2D>("weapons/fist");
             fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
 
-            player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 5, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
+            player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 7, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
 
-            Texture2D line;
-
-            line = new Texture2D(GraphicsDevice, 1, 1);
-            line.SetData(new[] { Color.White });
-            player.lineTexture = line;
             player.render = render;
 
             System.Diagnostics.Debug.WriteLine(windowSize);
