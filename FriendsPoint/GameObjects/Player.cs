@@ -21,15 +21,13 @@ namespace FriendsPoint.GameObjects {
         public Weapon currentWeapon;            // Текущее оружие игрока
         public Vector2 mouseDirection;
         public Vector2 mousePosition;
-        public Rectangle Rect;
-        public Vector2 droppedDirection;
+
         public float Health = 100f;
 
         public int AdditionalHitboxRadius;          // Дополнительный хитбокс, нужный для оценки расстояния подбора оружия, движения врагов
         public Texture2D AdditionalHitboxTexture;
-        public Texture2D lineTexture;
-        public Texture2D blackTexture;
-        public SpriteBatch render;
+        public SpriteBatch spriteBatch;
+
 
         public double currentFireTime = 0;
         public double ShotDrawTimer = 70;
@@ -122,7 +120,7 @@ namespace FriendsPoint.GameObjects {
                     //System.Diagnostics.Debug.WriteLine((ScreenPosition - weapon.ScreenPosition).Length());
                     if (AdditionalHitboxRadius + weapon.AdditionRadius >= (weapon.Position - Position).Length() / Scale) {
                         float wpnDifference = WeaponDegress(weapon.Position);
-                        if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "Fist" && wpnDifference < 0.4 && wpnDifference > -0.4 && !weapon.isflying) {
+                        if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "Fist") {
                             currentWeapon = weapon;
                             objects.RemoveAt(i);
                             i--;
@@ -195,11 +193,11 @@ namespace FriendsPoint.GameObjects {
                 objects[i].ScreenPosition = ScreenPosition + (objects[i].Position - Position); // Арифметика для перемещения объектов по экрану игрока (их реальная позиция в мире не меняется)
             }
         }
-        public override void Draw(SpriteBatch render) {
-            DrawEngine.DrawTexture(render, Texture, ScreenPosition, null, null, Rotation, 0.35f, 0.52f);
-            DrawEngine.DrawCircle(render, ScreenPosition, DrawRect.Value, new Vector2(DrawRect.Value.Width / 2, DrawRect.Value.Height / 2), Radius, Color.Black, 0, 1, 0.51f);
+        public override void Draw(SpriteBatch spriteBatch) {
+            DrawEngine.DrawTexture(spriteBatch, Texture, ScreenPosition, null, null, Rotation, 0.35f, 0.52f);
+            DrawEngine.DrawCircle(spriteBatch, ScreenPosition, DrawRect.Value, new Vector2(DrawRect.Value.Width / 2, DrawRect.Value.Height / 2), Radius, Color.Black, 0, 1, 0.51f);
             Rectangle AdditionDrawRect = new Rectangle(0, 0, AdditionalHitboxRadius * 2, AdditionalHitboxRadius * 2);
-            DrawEngine.DrawCircle(render, ScreenPosition, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), AdditionalHitboxRadius, Color.Black * 0.5f, 0, 1, 0.505f);
+            DrawEngine.DrawCircle(spriteBatch, ScreenPosition, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), AdditionalHitboxRadius, Color.Black * 0.5f, 0, 1, 0.505f);
 
 
 
@@ -213,18 +211,18 @@ namespace FriendsPoint.GameObjects {
             Vector2 WeaponPos2 = new Vector2(cosRotation * WeaponOffset2.X - sinRotation * WeaponOffset2.Y, sinRotation * WeaponOffset2.X + cosRotation * WeaponOffset2.Y);      // Математика для определения смещения оружия от игрока в его руке
             currentWeapon.Position = Position;
             if (currentWeapon.Name == "Fist") {
-                DrawEngine.DrawTexture(render, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, Rotation, 0.40f, 0.54f, SpriteEffects.FlipVertically);
-                DrawEngine.DrawTexture(render, currentWeapon.Texture, ScreenPosition + WeaponPos2, null, null, Rotation, 0.40f, 0.54f);
+                DrawEngine.DrawTexture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, Rotation, 0.40f, 0.54f, SpriteEffects.FlipVertically);
+                DrawEngine.DrawTexture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos2, null, null, Rotation, 0.40f, 0.54f);
             } else {
-                DrawEngine.DrawTexture(render, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, Rotation - MathF.PI / 2, 0.45f, 0.54f);
+                DrawEngine.DrawTexture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, Rotation - MathF.PI / 2, 0.45f, 0.54f);
             }
-            DrawEngine.DrawCircle(render, ScreenPosition + WeaponPos1, weaponRect, new Vector2(weaponRect.Width / 2, weaponRect.Height / 2), currentWeapon.Radius, Color.Black, 0.53f);
+            DrawEngine.DrawCircle(spriteBatch, ScreenPosition + WeaponPos1, weaponRect, new Vector2(weaponRect.Width / 2, weaponRect.Height / 2), currentWeapon.Radius, Color.Black, 0.53f);
 
             if (currentShotDrawTime >= ShotDrawTimer) {
                 Vector2 secondPoint1 = (mousePosition - ScreenPosition);
                 secondPoint1.Normalize();
                 secondPoint1 *= ScreenCenter.X * 2;
-                DrawEngine.DrawLine(render, ScreenPosition, ScreenPosition + secondPoint1, Color.Black, 6f);
+                DrawEngine.DrawLine(spriteBatch, ScreenPosition, ScreenPosition + secondPoint1, Color.Black, 6f);
             }
 
             if (viewWeapon != null) {
@@ -235,14 +233,14 @@ namespace FriendsPoint.GameObjects {
                 Vector2 secondPoint = firstPoint + new Vector2(minCord * mouseDirection.X / Math.Abs(mouseDirection.X), minCord * mouseDirection.Y / Math.Abs(mouseDirection.Y));
                 Vector2 thirdPoint = secondPoint + (mousePosition - secondPoint);
 
-                DrawEngine.DrawLine(render, firstPoint, secondPoint, Color.Black, 6f);
-                DrawEngine.DrawLine(render, secondPoint, thirdPoint, Color.Black, 6f);
+                DrawEngine.DrawLine(spriteBatch, firstPoint, secondPoint, Color.Black, 6f);
+                DrawEngine.DrawLine(spriteBatch, secondPoint, thirdPoint, Color.Black, 6f);
 
-                DrawEngine.DrawRect(render, thirdPoint, new Rectangle(0, 0, 80, 20), new Vector2(150, 20) / 2, Color.Black, 0, 1, 0.8f);
+                DrawEngine.DrawRect(spriteBatch, thirdPoint, new Rectangle(0, 0, 80, 20), new Vector2(150, 20) / 2, Color.Black, 0, 1, 0.8f);
                 if (AdditionalHitboxRadius + viewWeapon.AdditionRadius >= (viewWeapon.Position - Position).Length() / Scale) {
-                    DrawEngine.DrawText(render, thirdPoint - new Vector2(190, 0), Vector2.Zero, $"Take {viewWeapon.Name}", Color.White);
+                    DrawEngine.DrawText(spriteBatch, thirdPoint - new Vector2(190, 0), Vector2.Zero, $"Take {viewWeapon.Name}", Color.White);
                 } else {
-                    DrawEngine.DrawText(render, thirdPoint - new Vector2(190, 0), Vector2.Zero, $"Take {viewWeapon.Name}", Color.Gray);
+                    DrawEngine.DrawText(spriteBatch, thirdPoint - new Vector2(190, 0), Vector2.Zero, $"Take {viewWeapon.Name}", Color.Gray);
                 }
 
             }

@@ -28,15 +28,13 @@ namespace FriendsPoint
             fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
 
             player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 7, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
-
-            player.render = render;
+            player.spriteBatch = render;
 
             System.Diagnostics.Debug.WriteLine(windowSize);
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             objects = new List<GameObject>();                                                                           // Инициализирую список всех элементов
             droppedWeapons = new List<(Weapon, Vector2)>();
-            debugPixel = new Texture2D(GraphicsDevice, 1, 1);
-            debugPixel.SetData(new[] { Color.Red });                                                                    
+            
             objects.Add(map);
             objects.Add(player);
             graphics.ApplyChanges();
@@ -67,10 +65,7 @@ namespace FriendsPoint
         // Код загрузки моделей и контента
         protected override void LoadContent()
         {
-            black1 = new Texture2D(GraphicsDevice, 1, 1);
-            black1.SetData(new[] { Color.White });
 
-            player.blackTexture = black1;
             player.Texture = Content.Load<Texture2D>("players/soldierRF");          // Назначаю текстуру игрока
             map.Texture = Content.Load<Texture2D>("floor");                         // Назначаю текстуру карты
         }
