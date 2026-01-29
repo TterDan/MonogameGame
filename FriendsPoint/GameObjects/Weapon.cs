@@ -19,7 +19,7 @@ namespace FriendsPoint.GameObjects {
         public float spreadMultiplier;
         public float cartrigesInMagazine;
         public float totalCartriges;
-
+        public Vector2 handleOffset;
         public float moveSpeedMultiplier;
 
         public Vector2 currentSpeed;
@@ -27,7 +27,7 @@ namespace FriendsPoint.GameObjects {
         public int AdditionRadius;
         public Texture2D AdditionalHitboxTexture;
 
-        public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets) {
+        public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset) {
             Name = name;
             Type = type;
             Texture = texture;
@@ -46,7 +46,7 @@ namespace FriendsPoint.GameObjects {
             spreadMultiplier = gunSets[7];
             cartrigesInMagazine = gunSets[8];
             totalCartriges = gunSets[9];
-
+            handleOffset = Offset;
             TextureScale = Scale * 0.45f;
         }
         public void move() {

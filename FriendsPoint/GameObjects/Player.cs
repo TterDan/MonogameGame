@@ -114,15 +114,16 @@ namespace FriendsPoint.GameObjects {
             }
             ShotDrawTimer = 0;
         }
-        public bool TakeWeapon(List<GameObject> objects) {
+        public bool TakeWeapon(List<GameObject> objects, List<(Weapon, Vector2)> droppedWeapons) {
             for (int i = 0; i < objects.Count; i++) {
                 if (objects[i] is Weapon weapon) {
                     //System.Diagnostics.Debug.WriteLine((ScreenPosition - weapon.ScreenPosition).Length());
                     if (AdditionalHitboxRadius + weapon.AdditionRadius >= (weapon.Position - Position).Length() / Scale) {
                         float wpnDifference = WeaponDegress(weapon.Position);
-                        if (Keyboard.GetState().IsKeyDown(Keys.E) && currentWeapon.Name == "Fist") {
+                        if (currentWeapon.Name == "Fist") {
                             currentWeapon = weapon;
                             objects.RemoveAt(i);
+
                             i--;
                         }
                         return true;
@@ -202,8 +203,8 @@ namespace FriendsPoint.GameObjects {
 
 
             Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, currentWeapon.Radius * 2, currentWeapon.Radius * 2);
-            Vector2 WeaponOffset1 = -new Vector2(36, 55);                              // Координаты для смещения оружия от игрока в его руке
-            Vector2 WeaponOffset2 = -new Vector2(36, -55);
+            Vector2 WeaponOffset1 = -new Vector2(currentWeapon.handleOffset.X, currentWeapon.handleOffset.Y);                              // Координаты для смещения оружия от игрока в его руке
+            Vector2 WeaponOffset2 = -new Vector2(currentWeapon.handleOffset.X, -currentWeapon.handleOffset.Y);
             float fixedRotation = Rotation + MathF.PI / 2;
             float cosRotation = MathF.Cos(fixedRotation);
             float sinRotation = MathF.Sin(fixedRotation);

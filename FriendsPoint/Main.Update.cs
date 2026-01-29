@@ -25,10 +25,8 @@ namespace FriendsPoint
                 }
             }
             Camera.ChangeOffset();
-
             player.currentFireTime += gameTime.ElapsedGameTime.TotalMilliseconds;
             player.ShotDrawTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
-
             base.Update(gameTime);
         }
         protected void weaponMove() {
@@ -37,6 +35,7 @@ namespace FriendsPoint
                     var (weapon, dir) = droppedWeapons[i];
                     weapon.Speed -= 0.1f;
                     weapon.Position += Vector2.Normalize(dir) * weapon.Speed;
+                    weapon.Rotation += 0.1f;
                     weapon.isflying = true;
                     for (int j = 0; j < objects.Count; j++) {
                         if (objects[j] is Enemy enemy) {

@@ -1,111 +1,151 @@
 [
-  {
+{
     "Name": "Rifle",
     "Type": "Gun",
-    "Path": "mp5"
-  },
-  {
+    "Path": "mp5",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Pistol",
     "Type": "Gun",
-    "Path": "glock"
-  },
-  {
+    "Path": "glock",
+    "OffsetX": 56,
+    "OffsetY":  40
+},
+{
     "Name": "Sniper_rifle",
     "Type": "Gun",
-    "Path": "sniper"
-  },
-  {
+    "Path": "sniper",
+    "OffsetX": 56,
+    "OffsetY":  45
+},
+{
     "Name": "Minigun",
     "Type": "Gun",
-    "Path": "deagle"
-  },
-  {
+    "Path": "deagle",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Shotgun",
     "Type": "Gun",
-    "Path": "shotgun"
-  },
-  {
+    "Path": "shotgun",
+    "OffsetX": 80,
+    "OffsetY": 45
+},
+{
     "Name": "Slingshot",
     "Type": "Gun",
-    "Path": "deagle"
-  },
-  {
+    "Path": "deagle",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Rpg",
     "Type": "Gun",
-    "Path": "rpg"
-  },
+    "Path": "rpg",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
 
 
 
-  {
+{
     "Name": "Bat",
     "Type": "Melee",
-    "Path": "bat"
-  },
-  {
+    "Path": "bat",
+    "OffsetX": 90,
+    "OffsetY": 45
+},
+{
     "Name": "Knuckle",
     "Type": "Melee",
-    "Path": "knuckles"
-  },
-  {
+    "Path": "knuckles",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Pipe",
     "Type": "Melee",
-    "Path": "pipe"
-  },
-  {
+    "Path": "pipe",
+    "OffsetX": 76,
+    "OffsetY": 50
+},
+{
     "Name": "Knife",
     "Type": "Melee",
-    "Path": "knife"
-  },
-  {
+    "Path": "knife",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Chainsaw",
     "Type": "Melee",
-    "Path": "saw"
-  },
-  {
+    "Path": "saw",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Bottle",
     "Type": "Melee",
-    "Path": "deagle"
-  },
-  {
+    "Path": "deagle",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Fist",
     "Type": "Melee",
-    "Path": "fist"
-  },
+    "Path": "fist",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
 
 
 
-  {
+{
     "Name": "Explosive_grenade",
     "Type": "Throwing",
-    "Path": "he"
-  },
-  {
+    "Path": "he",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Smoke_grenade",
     "Type": "Throwing",
-    "Path": "deagle"
-  },
-  {
+    "Path": "deagle",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Molotov_Grenade",
     "Type": "Throwing",
-    "Path": "deagle"
-  },
-  {
+    "Path": "deagle",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Flash_Grenade",
     "Type": "Throwing",
-    "Path": "deagle"
-  },
+    "Path": "deagle",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
 
 
 
-  {
+{
     "Name": "Mine",
     "Type": "Placing",
-    "Path": "deagle"
-  },
-  {
+    "Path": "deagle",
+    "OffsetX": 56,
+    "OffsetY": 45
+},
+{
     "Name": "Ridgepole",
     "Type": "Placing",
-    "Path": "deagle"
-  }
+    "Path": "deagle",
+    "OffsetX": 56,
+    "OffsetY": 45
+}
 ]

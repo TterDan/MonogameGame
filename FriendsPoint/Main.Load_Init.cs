@@ -25,7 +25,7 @@ namespace FriendsPoint
             render = new SpriteBatch(GraphicsDevice);      
             // Инициализирую спрайтбатч
             Texture2D fistTexture = Content.Load<Texture2D>("weapons/fist");
-            fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0});
+            fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0}, new Vector2(56, 45));
 
             player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 7, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
             player.spriteBatch = render;
@@ -55,7 +55,7 @@ namespace FriendsPoint
                 System.Diagnostics.Debug.WriteLine(weaponsArray.Count);
                 string pathToImg = weaponsArray[rndWeapon]["Path"].ToString();
                 Texture2D weaponTexture = Content.Load<Texture2D>($"weapons/{pathToImg}");
-                Weapon wpn = new Weapon(GraphicsDevice, weaponTexture, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 30, 50, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 });
+                Weapon wpn = new Weapon(GraphicsDevice, weaponTexture, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 30, 50, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 }, new Vector2(((float)weaponsArray[rndWeapon]["OffsetX"]), ((float)weaponsArray[rndWeapon]["OffsetY"])));
                 objects.Add(wpn);
             }
 

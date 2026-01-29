@@ -57,6 +57,8 @@ namespace FriendsPoint
 
             if (keyboard.IsKeyDown(Keys.D))
                 direction.X = 1;
+            if (keyboard.IsKeyDown(Keys.E))
+                player.TakeWeapon(objects, droppedWeapons);
 
             if (direction != Vector2.Zero) {
                 direction.Normalize();              // Нормализую вектор, т.е. делаю так, чтобы игрок не был быстрее, когда двигается по горизонтали
