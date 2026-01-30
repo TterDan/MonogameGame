@@ -1,10 +1,3 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Threading;
-using static System.Net.Mime.MediaTypeNames;
-using FriendsPoint.GameObjects;
 
 namespace FriendsPoint
 {
@@ -18,7 +11,7 @@ namespace FriendsPoint
 
             for (int i = 0; i < objects.Count; i++) {
                 if (objects[i] is Enemy enemy) {
-                    enemy.move(player.Position - enemy.Position);
+                    enemy.move(player.Position - enemy.Position, player.Radius + enemy.Radius);
                 }
                 if (objects[i] is Weapon weapon) {
                     weapon.move();
@@ -30,31 +23,27 @@ namespace FriendsPoint
             base.Update(gameTime);
         }
         protected void weaponMove() {
-            if (droppedWeapons.Count > 0) {
-                for (int i = 0; i < droppedWeapons.Count; i++) {
-                    var (weapon, dir) = droppedWeapons[i];
-                    weapon.Speed -= 0.1f;
-                    weapon.Position += Vector2.Normalize(dir) * weapon.Speed;
-                    weapon.Rotation += 0.1f;
-                    weapon.isflying = true;
-                    for (int j = 0; j < objects.Count; j++) {
-                        if (objects[j] is Enemy enemy) {
-                            if (enemy.Radius + weapon.Radius * 2 >= (enemy.ScreenPosition - weapon.ScreenPosition).Length() && weapon.isflying) {
-                                enemy.Health -= weapon.HitDamage;
-                                weapon.isflying = false;
-                                weapon.Speed = 0;
-                                if (enemy.Health <= 0)
-                                    objects.RemoveAt(j);
-                            }
+            for (int i = 0; i < droppedWeapons.Count; i++) {
+                var (weapon, dir) = droppedWeapons[i];
+                weapon.Speed -= 0.5f;
+                weapon.Position += dir * weapon.Speed;
+                weapon.Rotation += 0.1f;
+                weapon.isflying = true;
+                for (int j = 0; j < objects.Count; j++) {
+                    if (objects[j] is Enemy enemy) {
+                        if (enemy.Radius + weapon.Radius * 2 >= (enemy.ScreenPosition - weapon.ScreenPosition).Length() && weapon.isflying) {
+                            weapon.isflying = false;
+                            weapon.Speed = 0;
+                            float calculatedDamage = (weapon.HitDamage * weapon.Speed / weapon.DropSpeed);
+                            enemy.TakeDamage(calculatedDamage, objects, j);
                         }
                     }
-                    if (weapon.Speed <= 0) {
-                        weapon.isflying = false;
-                        weapon.Speed = 10f;
-                        droppedWeapons.RemoveAt(i);
-                    }
-
                 }
+                if (weapon.Speed <= 0) {
+                    weapon.isflying = false;
+                    droppedWeapons.RemoveAt(i);
+                }
+
             }
         }
     }

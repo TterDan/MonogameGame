@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-
+﻿
 namespace FriendsPoint.GameObjects {
     public class Weapon : CircleHBoxObj {                                                          // Класс оружия, наследует класс GameObject
         public string Name;
@@ -21,6 +18,7 @@ namespace FriendsPoint.GameObjects {
         public float totalCartriges;
         public Vector2 handleOffset;
         public float moveSpeedMultiplier;
+        public float DropSpeed = 20f;
 
         public Vector2 currentSpeed;
 
@@ -56,10 +54,10 @@ namespace FriendsPoint.GameObjects {
         }
 
         public override void Draw(SpriteBatch render) {
-            DrawEngine.DrawTexture(render, Texture, ScreenPosition, null, null, Rotation, 0.5f, 0.12f);
-            DrawEngine.DrawCircle(render, ScreenPosition, DrawRect.Value, new Vector2(DrawRect.Value.Width / 2, DrawRect.Value.Height / 2), Radius, Color.Black, Rotation, 1, 0.11f);
+            DrawEngine.DrawTexture(render, Texture, ScreenPosition, null, null, 0.12f, Rotation, 0.5f);
+            DrawEngine.DrawCircle(render, ScreenPosition, Radius, DrawRect, new Vector2(DrawRect.Width / 2, DrawRect.Height / 2), Color.Black, 0.11f);
             Rectangle AdditionDrawRect = new Rectangle(0, 0, AdditionRadius * 2, AdditionRadius * 2);
-            DrawEngine.DrawCircle(render, ScreenPosition, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), AdditionRadius, Color.Black * 0.5f, Rotation, 1, 0.1f);
+            DrawEngine.DrawCircle(render, ScreenPosition, AdditionRadius, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), Color.Black * 0.5f, 0.1f);
         }
     }
 }

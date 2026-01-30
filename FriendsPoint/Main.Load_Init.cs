@@ -1,12 +1,3 @@
-using FriendsPoint.GameObjects;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json.Nodes;
-using System.Threading;
 namespace FriendsPoint
 {
     public partial class Main           // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
@@ -29,15 +20,14 @@ namespace FriendsPoint
 
             player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 7, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
             player.spriteBatch = render;
+                        player.Fist = fist;
 
-            System.Diagnostics.Debug.WriteLine(windowSize);
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             objects = new List<GameObject>();                                                                           // Инициализирую список всех элементов
             droppedWeapons = new List<(Weapon, Vector2)>();
             
             objects.Add(map);
             objects.Add(player);
-            graphics.ApplyChanges();
             rnd = new System.Random();
             weaponsArray = JsonNode.Parse(File.ReadAllText("../../../WeaponData.json")).AsArray();
             for (int i = 0; i < 2; i++) {                                                                                // Добавляю несколько врагов на карту для теста
@@ -51,8 +41,7 @@ namespace FriendsPoint
             }
             for(int i = 0; i < 5; i++)
             {
-                int rndWeapon = rnd.Next(0, weaponsArray.Count);
-                System.Diagnostics.Debug.WriteLine(weaponsArray.Count);
+                int rndWeapon = rnd.Next(1, weaponsArray.Count);
                 string pathToImg = weaponsArray[rndWeapon]["Path"].ToString();
                 Texture2D weaponTexture = Content.Load<Texture2D>($"weapons/{pathToImg}");
                 Weapon wpn = new Weapon(GraphicsDevice, weaponTexture, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 30, 50, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 }, new Vector2(((float)weaponsArray[rndWeapon]["OffsetX"]), ((float)weaponsArray[rndWeapon]["OffsetY"])));

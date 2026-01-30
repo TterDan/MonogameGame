@@ -1,19 +1,10 @@
-﻿using FriendsPoint;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-//using System.Numerics;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FriendsPoint.GameObjects {
     public class Player : CircleHBoxObj {          // Класс игрока, наследует класс GameObject
+
+        public Weapon Fist;
 
         public float MoveSpeed;
         Vector2 CurrentSpeed = Vector2.Zero;
@@ -106,7 +97,6 @@ namespace FriendsPoint.GameObjects {
                     float CosAngle = AB / (moduleA * moduleB);
                     float Angle = MathF.Acos(CosAngle);
                     float LengthBetweenDirectionAndEnemy = moduleB * MathF.Sin(Angle);
-                    Rectangle RectEnemy = new Rectangle((int)enemy.ScreenPosition.X - enemy.Radius, (int)enemy.ScreenPosition.Y - enemy.Radius, enemy.Radius * 2, enemy.Radius * 2);
                     if (LengthBetweenDirectionAndEnemy < enemy.Radius && CosAngle > 0) {
                         enemy.TakeDamage(currentWeapon.Damage, objects, j);
                     }
@@ -114,23 +104,51 @@ namespace FriendsPoint.GameObjects {
             }
             ShotDrawTimer = 0;
         }
-        public bool TakeWeapon(List<GameObject> objects, List<(Weapon, Vector2)> droppedWeapons) {
+        public void TakeWeapon(List<GameObject> objects, List<(Weapon, Vector2)> droppedWeapons) {
             for (int i = 0; i < objects.Count; i++) {
                 if (objects[i] is Weapon weapon) {
                     //System.Diagnostics.Debug.WriteLine((ScreenPosition - weapon.ScreenPosition).Length());
-                    if (AdditionalHitboxRadius + weapon.AdditionRadius >= (weapon.Position - Position).Length() / Scale) {
-                        float wpnDifference = WeaponDegress(weapon.Position);
-                        if (currentWeapon.Name == "Fist") {
+                    if (AdditionalHitboxRadius + weapon.AdditionRadius >= (weapon.Position - Position).Length() / DrawEngine.GameScale) {
+
+                        Vector2 weaponDirection = weapon.ScreenPosition - ScreenPosition;
+                        float AB = mouseDirection.X * weaponDirection.X + mouseDirection.Y * weaponDirection.Y;
+                        float moduleA = mouseDirection.Length();
+                        float moduleB = weaponDirection.Length();
+                        float CosAngle = AB / (moduleA * moduleB);
+                        float Angle = MathF.Acos(CosAngle);
+                        float LengthBetweenDirectionAndEnemy = moduleB * MathF.Sin(Angle);
+                        if (LengthBetweenDirectionAndEnemy <= weapon.AdditionRadius * DrawEngine.GameScale && CosAngle > 0) {
+                            float wpnDifference = WeaponDegress(weapon.Position);
+
+                            if (currentWeapon.Name != "Fist") {
+                                currentWeapon.Speed = 10f;
+                                objects.Add(currentWeapon);
+                                droppedWeapons.Add((currentWeapon, Vector2.Normalize(mouseDirection)));
+                                Console.Log("Weapon dropped");
+                            }
+                            foreach (var weaponDrop in droppedWeapons) {
+                                if (weaponDrop.Item1 == weapon) {
+                                    droppedWeapons.Remove(weaponDrop);
+                                    break;
+                                }
+                            }
                             currentWeapon = weapon;
                             objects.RemoveAt(i);
-
                             i--;
+                            return;
                         }
-                        return true;
                     }
                 }
             }
-            return false;
+            return;
+        }
+
+        public void DropWeapon(List<GameObject> objects, List<(Weapon, Vector2)> droppedWeapons) {
+            currentWeapon.Speed = currentWeapon.DropSpeed;
+            objects.Add(currentWeapon);
+            droppedWeapons.Add((currentWeapon, Vector2.Normalize(mouseDirection)));
+            currentWeapon = Fist;
+            Console.Log("Weapon dropped");
         }
 
         public float WeaponDegress(Vector2 position) {
@@ -195,10 +213,10 @@ namespace FriendsPoint.GameObjects {
             }
         }
         public override void Draw(SpriteBatch spriteBatch) {
-            DrawEngine.DrawTexture(spriteBatch, Texture, ScreenPosition, null, null, Rotation, 0.35f, 0.52f);
-            DrawEngine.DrawCircle(spriteBatch, ScreenPosition, DrawRect.Value, new Vector2(DrawRect.Value.Width / 2, DrawRect.Value.Height / 2), Radius, Color.Black, 0, 1, 0.51f);
+            DrawEngine.DrawTexture(spriteBatch, Texture, ScreenPosition, null, null, 0.52f, Rotation, 0.35f);
+            DrawEngine.DrawCircle(spriteBatch, ScreenPosition, Radius, DrawRect, new Vector2(DrawRect.Width / 2, DrawRect.Height / 2), Color.Black, 0.51f);
             Rectangle AdditionDrawRect = new Rectangle(0, 0, AdditionalHitboxRadius * 2, AdditionalHitboxRadius * 2);
-            DrawEngine.DrawCircle(spriteBatch, ScreenPosition, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), AdditionalHitboxRadius, Color.Black * 0.5f, 0, 1, 0.505f);
+            DrawEngine.DrawCircle(spriteBatch, ScreenPosition, AdditionalHitboxRadius, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), Color.Black * 0.5f, 0.505f);
 
 
 
@@ -212,12 +230,12 @@ namespace FriendsPoint.GameObjects {
             Vector2 WeaponPos2 = new Vector2(cosRotation * WeaponOffset2.X - sinRotation * WeaponOffset2.Y, sinRotation * WeaponOffset2.X + cosRotation * WeaponOffset2.Y);      // Математика для определения смещения оружия от игрока в его руке
             currentWeapon.Position = Position;
             if (currentWeapon.Name == "Fist") {
-                DrawEngine.DrawTexture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, Rotation, 0.40f, 0.54f, SpriteEffects.FlipVertically);
-                DrawEngine.DrawTexture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos2, null, null, Rotation, 0.40f, 0.54f);
+                DrawEngine.DrawTexture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, 0.40f, Rotation, 0.54f, SpriteEffects.FlipVertically);
+                DrawEngine.DrawTexture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos2, null, null, 0.40f, Rotation, 0.54f);
             } else {
-                DrawEngine.DrawTexture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, Rotation - MathF.PI / 2, 0.45f, 0.54f);
+                DrawEngine.DrawTexture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, null, null, 0.45f, Rotation - MathF.PI / 2, 0.54f);
             }
-            DrawEngine.DrawCircle(spriteBatch, ScreenPosition + WeaponPos1, weaponRect, new Vector2(weaponRect.Width / 2, weaponRect.Height / 2), currentWeapon.Radius, Color.Black, 0.53f);
+            DrawEngine.DrawCircle(spriteBatch, ScreenPosition + WeaponPos1, currentWeapon.Radius, weaponRect, new Vector2(weaponRect.Width / 2, weaponRect.Height / 2), Color.Black, 0.53f);
 
             if (currentShotDrawTime >= ShotDrawTimer) {
                 Vector2 secondPoint1 = (mousePosition - ScreenPosition);
@@ -234,14 +252,14 @@ namespace FriendsPoint.GameObjects {
                 Vector2 secondPoint = firstPoint + new Vector2(minCord * mouseDirection.X / Math.Abs(mouseDirection.X), minCord * mouseDirection.Y / Math.Abs(mouseDirection.Y));
                 Vector2 thirdPoint = secondPoint + (mousePosition - secondPoint);
 
-                DrawEngine.DrawLine(spriteBatch, firstPoint, secondPoint, Color.Black, 6f);
-                DrawEngine.DrawLine(spriteBatch, secondPoint, thirdPoint, Color.Black, 6f);
+                DrawEngine.DrawLine(spriteBatch, firstPoint, secondPoint, Color.Black, 1f, 6f);
+                DrawEngine.DrawLine(spriteBatch, secondPoint, thirdPoint, Color.Black, 1f, 6f);
 
-                DrawEngine.DrawRect(spriteBatch, thirdPoint, new Rectangle(0, 0, 80, 20), new Vector2(150, 20) / 2, Color.Black, 0, 1, 0.8f);
-                if (AdditionalHitboxRadius + viewWeapon.AdditionRadius >= (viewWeapon.Position - Position).Length() / Scale) {
-                    DrawEngine.DrawText(spriteBatch, thirdPoint - new Vector2(190, 0), Vector2.Zero, $"Take {viewWeapon.Name}", Color.White);
+                DrawEngine.DrawRect(spriteBatch, thirdPoint, new Rectangle(0, 0, 80, 20), new Vector2(150, 20) / 2, Color.Black, 0.99f);
+                if (AdditionalHitboxRadius + viewWeapon.AdditionRadius >= (viewWeapon.Position - Position).Length() / DrawEngine.GameScale) {
+                    DrawEngine.DrawText(spriteBatch, thirdPoint - new Vector2(190, 0), $"Take {viewWeapon.Name}", Vector2.Zero, Color.White);
                 } else {
-                    DrawEngine.DrawText(spriteBatch, thirdPoint - new Vector2(190, 0), Vector2.Zero, $"Take {viewWeapon.Name}", Color.Gray);
+                    DrawEngine.DrawText(spriteBatch, thirdPoint - new Vector2(190, 0), $"Take {viewWeapon.Name}", Vector2.Zero, Color.Gray);
                 }
 
             }

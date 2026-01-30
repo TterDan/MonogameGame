@@ -1,40 +1,29 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text.Json.Nodes;
-using System.Threading;
-using FriendsPoint.GameObjects;
+﻿
 namespace FriendsPoint
 {
     public partial class Main : Game
     {
         // Начальные переменные
-        private GraphicsDeviceManager graphics;
+        private GraphicsDeviceManager GraphicsDeviceManager;
         private SpriteBatch render;         // Спрайтбатч
         private Player player;              // Экземпляр игрока
         private Map map;                    // Экземпляр карты
         private Vector2 windowSize;         // Размеры окна
         private List<GameObject> objects;   // Множество всех объектов на карте
         private List<(Weapon, Vector2)> droppedWeapons;
-        private Texture2D debugPixel;       // Текстура для отладки
-        private SpriteFont font;            // Экземпляр интерфейса
+        private SpriteFont font;            // Шрифт для отрисовки текста
         private Weapon fist;
         private JsonArray weaponsArray;
         private Random rnd;
-
-        Texture2D black1;
-
         public Main()
         {
-            graphics = new GraphicsDeviceManager(this);
+            GraphicsDeviceManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
-            graphics.IsFullScreen = false;
+            GraphicsDeviceManager.PreferredBackBufferWidth = 1920;
+            GraphicsDeviceManager.PreferredBackBufferHeight = 1080;
+            GraphicsDeviceManager.IsFullScreen = false;
         }
     }
 }

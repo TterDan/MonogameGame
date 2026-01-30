@@ -1,12 +1,3 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FriendsPoint.GameObjects {
     public class Enemy : CircleHBoxObj {                                                          // Класс врага, наследует класс GameObject
@@ -43,17 +34,18 @@ namespace FriendsPoint.GameObjects {
 
         }
 
-        public void move(Vector2 moveDirection) {
-            System.Diagnostics.Debug.WriteLine(moveDirection);
-            moveDirection.Normalize();
-            moveDirection -= currentSpeed;
-            currentSpeed = Vector2.Lerp(currentSpeed, Vector2.Zero, 0.1f);
-            Position += moveDirection * MoveSpeed;
-            ScreenPosition += moveDirection * MoveSpeed;
+        public void move(Vector2 moveDirection, float length) {
+            if (moveDirection.Length() > length * DrawEngine.GameScale) {
+                moveDirection.Normalize();
+                moveDirection -= currentSpeed;
+                currentSpeed = Vector2.Lerp(currentSpeed, Vector2.Zero, 0.1f);
+                Position += moveDirection * MoveSpeed;
+                ScreenPosition += moveDirection * MoveSpeed;
+            }
         }
 
         public override void Draw(SpriteBatch render) {
-            DrawEngine.DrawCircle(render, ScreenPosition, DrawRect.Value, new Vector2(DrawRect.Value.Width / 2, DrawRect.Value.Height / 2), Radius, Color.Red, 0, 1, 0.5f);
+            DrawEngine.DrawCircle(render, ScreenPosition, Radius, DrawRect, new Vector2(DrawRect.Width / 2, DrawRect.Height / 2), Color.Red, 0);
         }
     }
 }

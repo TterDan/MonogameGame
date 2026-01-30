@@ -1,9 +1,3 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Diagnostics;
-using System.Xml.Linq;
 
 namespace FriendsPoint.GameObjects {
     public class Map : SquareHBoxObj {                                                          // Класс карты, наследует класс GameObject
@@ -16,7 +10,7 @@ namespace FriendsPoint.GameObjects {
         }
         
         public override void Draw(SpriteBatch render) {
-            DrawEngine.DrawTexture(render, Texture, ScreenPosition, null, null, 0, 1, 0);
+            DrawEngine.DrawTexture(render, Texture, ScreenPosition, null, null, 0, 0, 1f);
         }
     }
 }

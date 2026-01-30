@@ -1,8 +1,4 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Threading;
-using FriendsPoint.GameObjects;
+
 namespace FriendsPoint
 {
     public partial class Main                       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
@@ -11,6 +7,7 @@ namespace FriendsPoint
         protected MouseState mouse;
         protected bool mouseState = false;
         public bool isOemTildePressed = false;
+        public bool isEPressed = false;
         protected void Input()
         {
             player.rotate(getMouse().Position, objects);     // В метод даю ввод с мыши
@@ -57,9 +54,15 @@ namespace FriendsPoint
 
             if (keyboard.IsKeyDown(Keys.D))
                 direction.X = 1;
-            if (keyboard.IsKeyDown(Keys.E))
-                player.TakeWeapon(objects, droppedWeapons);
-
+            if (keyboard.IsKeyDown(Keys.E)) {
+                if (isEPressed == false) {
+                    player.TakeWeapon(objects, droppedWeapons);
+                }
+                isEPressed = true;
+            }
+            if (keyboard.IsKeyUp(Keys.E)) {
+                isEPressed = false;
+            }
             if (direction != Vector2.Zero) {
                 direction.Normalize();              // Нормализую вектор, т.е. делаю так, чтобы игрок не был быстрее, когда двигается по горизонтали
             }
@@ -70,9 +73,8 @@ namespace FriendsPoint
             }
             if (keyboard.IsKeyDown(Keys.G) && player.currentWeapon.Name != "Fist")
             {
-                objects.Add(player.currentWeapon);
-                droppedWeapons.Add((player.currentWeapon, player.mouseDirection));
-                player.currentWeapon = fist;
+                player.DropWeapon(objects, droppedWeapons);
+                Console.Log("Weapon dropped11");
             }
             return direction;
         }

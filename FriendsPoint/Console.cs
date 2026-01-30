@@ -1,11 +1,3 @@
-using FriendsPoint.GameObjects;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Xml.Linq;
 
 public class Log {
     public string Message;
@@ -61,11 +53,11 @@ static public class Console {                                                   
     static public void DrawConsole(SpriteBatch SpriteBatch) {
         float oneX = WindowSize.X / 100;
         float oneY = WindowSize.Y / 100;
-        DrawEngine.DrawRect(SpriteBatch, new Vector2(oneX, oneY), new Rectangle(0, 0, (int)oneX * 20, (int)oneY * 14), Vector2.Zero, Color.DarkGray * 0.6f, 0, 1f, 0.95f);
-        DrawEngine.DrawText(SpriteBatch, new Vector2(oneX*2, oneY*4/3), Vector2.Zero, "Console", Color.White, 0, 1f, 1f);
+        DrawEngine.DrawRect(SpriteBatch, new Vector2(oneX, oneY), new Rectangle(0, 0, (int)oneX * 20, (int)oneY * 14), Vector2.Zero, Color.DarkGray * 0.6f, 0.95f);
+        DrawEngine.DrawText(SpriteBatch, new Vector2(oneX*2, oneY*4/3), "Console", Vector2.Zero, Color.White);
         for (int i = 0; i < Logs.Count; i++) {
             string message = $"{Logs[i].DateTime} | {Logs[i].Key} : {Logs[i].Message}";
-            DrawEngine.DrawText(SpriteBatch, new Vector2(oneX*2, (float)(oneY*(3 + i*1.5))), Vector2.Zero, message, Logs[i].MesColor, 0, 1f, 1f);
+            DrawEngine.DrawText(SpriteBatch, new Vector2(oneX*2, (float)(oneY*(3 + i*1.5))), message, Vector2.Zero, Logs[i].MesColor);
         }
     }
 }

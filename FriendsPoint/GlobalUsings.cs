@@ -1,0 +1,14 @@
+﻿global using Microsoft.Xna.Framework;
+global using Microsoft.Xna.Framework.Graphics;
+global using Microsoft.Xna.Framework.Input;
+global using System;
+global using System.Collections.Generic;
+global using System.Text.Json.Nodes;
+global using System.Threading;
+global using System.Diagnostics;
+global using System.Reflection;
+global using System.Xml.Linq;
+global using System.IO;
+
+global using FriendsPoint.GameObjects;
+global using FriendsPoint.DrawEngineModules;

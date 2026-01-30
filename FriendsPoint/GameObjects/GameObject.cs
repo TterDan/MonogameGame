@@ -1,11 +1,5 @@
 ﻿using FriendsPoint;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
 
 namespace FriendsPoint.GameObjects {
     abstract public class GameObject        // Абстрактный класс для всех игровых объектов, нужен чтобы не писать каждый раз в объектах функции отрисовки и базовые поля.
@@ -23,14 +17,14 @@ namespace FriendsPoint.GameObjects {
         public float TextureOpacity = 1.0f;
 
         public float TextureScale = 1.7f;
-        public float Scale = 1.7f;
+        public float Scale = 1f;
 
         public float Rotation = 0f;
         public float Speed = 7f;
 
         public bool isflying = false;
 
-        public Rectangle? DrawRect = null;
+        public Rectangle DrawRect;
 
         public Microsoft.Xna.Framework.Color TextureColor = Color.White;
         public Microsoft.Xna.Framework.Color HitboxTextureColor = Color.White;
