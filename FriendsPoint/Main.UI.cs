@@ -3,6 +3,7 @@ namespace FriendsPoint
 {
     public partial class Main 
     {
+        public List<Button> Buttons = new List<Button>(); 
         public virtual void DrawUI(SpriteBatch render, Rectangle? sourceRectangle = null)
         {
             for (int j = 0; j < objects.Count; j++) {
