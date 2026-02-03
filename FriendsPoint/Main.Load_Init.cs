@@ -16,7 +16,7 @@ namespace FriendsPoint
             render = new SpriteBatch(GraphicsDevice);      
             // Инициализирую спрайтбатч
             Texture2D fistTexture = Content.Load<Texture2D>("weapons/fist");
-            fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0}, new Vector2(56, 45));
+            fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0}, new Vector2(56, 45), 0, 0);
 
             player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 7, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
             player.spriteBatch = render;
@@ -39,12 +39,12 @@ namespace FriendsPoint
                 );
                 objects.Add(enemy);
             }
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < 10; i++)
             {
                 int rndWeapon = rnd.Next(1, weaponsArray.Count);
                 string pathToImg = weaponsArray[rndWeapon]["Path"].ToString();
                 Texture2D weaponTexture = Content.Load<Texture2D>($"weapons/{pathToImg}");
-                Weapon wpn = new Weapon(GraphicsDevice, weaponTexture, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 30, 50, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 }, new Vector2(((float)weaponsArray[rndWeapon]["OffsetX"]), ((float)weaponsArray[rndWeapon]["OffsetY"])));
+                Weapon wpn = new Weapon(GraphicsDevice, weaponTexture, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 30, 50, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 }, new Vector2(((float)weaponsArray[rndWeapon]["OffsetX"]), ((float)weaponsArray[rndWeapon]["OffsetY"])), ((float)weaponsArray[rndWeapon]["RecoilStrength"]), ((float)weaponsArray[rndWeapon]["RecoilStrengthForCamera"]));
                 objects.Add(wpn);
             }
 

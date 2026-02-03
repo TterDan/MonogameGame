@@ -18,7 +18,9 @@ namespace FriendsPoint.GameObjects {
         public int AdditionalHitboxRadius;          // Дополнительный хитбокс, нужный для оценки расстояния подбора оружия, движения врагов
         public Texture2D AdditionalHitboxTexture;
         public SpriteBatch spriteBatch;
-
+        public bool isShooting;
+        public Vector2 currentOffset;
+        public Vector2 recoilOffset;
 
         public double currentFireTime = 0;
         public double ShotDrawTimer = 70;
@@ -72,7 +74,6 @@ namespace FriendsPoint.GameObjects {
                         normalizedDirection.Normalize();
                         normalizedDirection *= 10.0f;
                         enemy.currentSpeed += normalizedDirection;
-
                         enemy.TakeDamage(currentWeapon.Damage, objects, j);
                     }
                 }
@@ -88,6 +89,15 @@ namespace FriendsPoint.GameObjects {
             }
         }
         public void Shot(List<GameObject> objects, Vector2 direction) {
+            isShooting = true;
+            Vector2 mouseDirectionNormalized = mouseDirection;
+            mouseDirectionNormalized.Normalize();
+            mouseDirectionNormalized *= 500f;
+            Vector2 mouseDirectionForCamera = new Vector2(mousePosition.X - ScreenCenter.X, mousePosition.Y - ScreenCenter.Y) + mouseDirectionNormalized;
+            Camera.ShotOffset(mouseDirectionForCamera, currentWeapon.RecoilStrengthForCamera);
+            Vector2 recoilTarget = new Vector2(currentWeapon.RecoilStrength, 0f);
+            recoilOffset = Vector2.Lerp(recoilOffset, recoilTarget, 0.4f);
+
             for (int j = 0; j < objects.Count; j++) {
                 if (objects[j] is Enemy enemy) {
                     Vector2 enemyDirection = enemy.ScreenPosition - ScreenPosition;
@@ -122,6 +132,7 @@ namespace FriendsPoint.GameObjects {
 
                             if (currentWeapon.Name != "Fist") {
                                 currentWeapon.Speed = 10f;
+                                currentWeapon.Rotation = 0f;
                                 objects.Add(currentWeapon);
                                 droppedWeapons.Add((currentWeapon, Vector2.Normalize(mouseDirection)));
                                 Console.Log("Weapon dropped");
@@ -213,16 +224,19 @@ namespace FriendsPoint.GameObjects {
             }
         }
         public override void Draw(SpriteBatch spriteBatch) {
+            if (!isShooting)
+            {
+                recoilOffset = Vector2.Lerp(recoilOffset, Vector2.Zero, 0.05f);
+            }
+            currentOffset = currentWeapon.handleOffset + recoilOffset;
+            isShooting = false;
             DrawEngine.DrawTexture(spriteBatch, Texture, ScreenPosition, null, null, 0.52f, Rotation, 0.35f);
             DrawEngine.DrawCircle(spriteBatch, ScreenPosition, Radius, DrawRect, new Vector2(DrawRect.Width / 2, DrawRect.Height / 2), Color.Black, 0.51f);
             Rectangle AdditionDrawRect = new Rectangle(0, 0, AdditionalHitboxRadius * 2, AdditionalHitboxRadius * 2);
             DrawEngine.DrawCircle(spriteBatch, ScreenPosition, AdditionalHitboxRadius, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), Color.Black * 0.5f, 0.505f);
-
-
-
             Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, currentWeapon.Radius * 2, currentWeapon.Radius * 2);
-            Vector2 WeaponOffset1 = -new Vector2(currentWeapon.handleOffset.X, currentWeapon.handleOffset.Y);                              // Координаты для смещения оружия от игрока в его руке
-            Vector2 WeaponOffset2 = -new Vector2(currentWeapon.handleOffset.X, -currentWeapon.handleOffset.Y);
+            Vector2 WeaponOffset1 = -new Vector2(currentOffset.X, currentOffset.Y);                              // Координаты для смещения оружия от игрока в его руке
+            Vector2 WeaponOffset2 = -new Vector2(currentOffset.X, -currentOffset.Y);
             float fixedRotation = Rotation + MathF.PI / 2;
             float cosRotation = MathF.Cos(fixedRotation);
             float sinRotation = MathF.Sin(fixedRotation);

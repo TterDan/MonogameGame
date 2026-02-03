@@ -8,6 +8,7 @@ namespace FriendsPoint
             for (int j = 0; j < objects.Count; j++) {
                 if (objects[j] is Enemy enemy) {
                     render.DrawString(font, $"HP: {enemy.Health}", new Vector2(enemy.ScreenPosition.X, enemy.ScreenPosition.Y), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
+                    
                 }
             }
         }

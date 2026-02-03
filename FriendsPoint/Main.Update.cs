@@ -27,14 +27,14 @@ namespace FriendsPoint
                 var (weapon, dir) = droppedWeapons[i];
                 weapon.Speed -= 0.5f;
                 weapon.Position += dir * weapon.Speed;
-                weapon.Rotation += 0.1f;
+                weapon.Rotation += (weapon.Speed * 0.2f) * 0.1f;
                 weapon.isflying = true;
                 for (int j = 0; j < objects.Count; j++) {
                     if (objects[j] is Enemy enemy) {
                         if (enemy.Radius + weapon.Radius * 2 >= (enemy.ScreenPosition - weapon.ScreenPosition).Length() && weapon.isflying) {
                             weapon.isflying = false;
-                            weapon.Speed = 0;
                             float calculatedDamage = (weapon.HitDamage * weapon.Speed / weapon.DropSpeed);
+                            weapon.Speed = 0;
                             enemy.TakeDamage(calculatedDamage, objects, j);
                         }
                     }

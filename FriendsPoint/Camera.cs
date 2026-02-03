@@ -22,6 +22,10 @@ static public class Camera {                                                    
     static public void ChangeMouseOffset(Vector2 direction) {
         MouseOffset = Vector2.Lerp(MouseOffset, MaxMouseOffset * direction, MouseOffsetSpeed);
     }
+    static public void ShotOffset(Vector2 direction, float recoilStrengthForCamera)
+    {
+        MouseOffset = Vector2.Lerp(MouseOffset, recoilStrengthForCamera * -direction, 0.05f);
+    }
     static public void ChangeWalkOffset(Vector2 direction) {
         WalkOffset = Vector2.Lerp(WalkOffset, MaxWalkOffset * direction, WalkOffsetSpeed);
     }

@@ -4,7 +4,9 @@
     "Type": "Melee",
     "Path": "fist",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
 
 
@@ -15,50 +17,64 @@
     "Type": "Gun",
     "Path": "mp5",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": -20,
+    "RecoilStrengthForCamera": 0.2
   },
   {
     "Name": "Pistol",
     "Type": "Gun",
     "Path": "glock",
     "OffsetX": 56,
-    "OffsetY": 40
+    "OffsetY": 40,
+    "RecoilStrength": -10,
+    "RecoilStrengthForCamera": 0.1
   },
   {
     "Name": "Sniper_rifle",
     "Type": "Gun",
     "Path": "sniper",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": -50,
+    "RecoilStrengthForCamera": 0.5
   },
   {
     "Name": "Minigun",
     "Type": "Gun",
     "Path": "deagle",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": -40,
+    "RecoilStrengthForCamera": 0.2
   },
   {
     "Name": "Shotgun",
     "Type": "Gun",
     "Path": "shotgun",
     "OffsetX": 80,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": -50,
+    "RecoilStrengthForCamera": 0.4
   },
   {
     "Name": "Slingshot",
     "Type": "Gun",
     "Path": "deagle",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
-  {
-    "Name": "Rpg",
-    "Type": "Gun",
-    "Path": "rpg",
-    "OffsetX": 56,
-    "OffsetY": 45
-  },
+    {
+        "Name": "Rpg",
+        "Type": "Gun",
+        "Path": "rpg",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": -60,
+        "RecoilStrengthForCamera": 0.8
+    },
 
 
 
@@ -67,42 +83,54 @@
     "Type": "Melee",
     "Path": "bat",
     "OffsetX": 90,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
   {
     "Name": "Knuckle",
     "Type": "Melee",
     "Path": "knuckles",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
   {
     "Name": "Pipe",
     "Type": "Melee",
     "Path": "pipe",
     "OffsetX": 76,
-    "OffsetY": 50
+    "OffsetY": 50,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
   {
     "Name": "Knife",
     "Type": "Melee",
     "Path": "knife",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
   {
     "Name": "Chainsaw",
     "Type": "Melee",
     "Path": "saw",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
   {
     "Name": "Bottle",
     "Type": "Melee",
     "Path": "deagle",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
 
 
@@ -112,28 +140,36 @@
     "Type": "Throwing",
     "Path": "he",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
   {
     "Name": "Smoke_grenade",
     "Type": "Throwing",
     "Path": "deagle",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
   {
     "Name": "Molotov_Grenade",
     "Type": "Throwing",
     "Path": "deagle",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
   {
     "Name": "Flash_Grenade",
     "Type": "Throwing",
     "Path": "deagle",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
 
 
@@ -143,13 +179,17 @@
     "Type": "Placing",
     "Path": "deagle",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   },
   {
     "Name": "Ridgepole",
     "Type": "Placing",
     "Path": "deagle",
     "OffsetX": 56,
-    "OffsetY": 45
+    "OffsetY": 45,
+    "RecoilStrength": 0,
+    "RecoilStrengthForCamera": 0
   }
 ]
