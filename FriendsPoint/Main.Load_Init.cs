@@ -7,7 +7,6 @@ namespace FriendsPoint
         {
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
             DrawEngine.GameFont = font;
-            DrawEngine.SpriteBatch = render;
             DrawEngine.GraphicsDevice = GraphicsDevice;
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             Console.WindowSize = windowSize;
