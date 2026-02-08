@@ -6,7 +6,7 @@ namespace FriendsPoint.GameObjects {
     {
         public Vector2 ScreenPosition; // Соответственно базовые поля
         public Vector2 Position;
-
+        public GlobalPatterns pattern = new GlobalPatterns();
         public float TextureLayer = 0.9f;
         public float Layer = 0.8f;
 

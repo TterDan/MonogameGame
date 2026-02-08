@@ -1,4 +1,6 @@
 
+using Microsoft.Xna.Framework.Graphics;
+
 namespace FriendsPoint
 {
     public partial class Main       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс

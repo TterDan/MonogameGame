@@ -20,12 +20,20 @@ namespace FriendsPoint
                 Exit();
 
             if (mouse.LeftButton == ButtonState.Pressed && mouseState == false)
+            {
+                player.isShooting = false;
                 player.UseWeapon(objects);
                 mouseState = true;
+            }
+
+            if(mouseState == true && player.currentWeapon.Type == "Automatic")
+                player.UseWeapon(objects);
 
             if (mouse.LeftButton == ButtonState.Released)
+            {
                 mouseState = false;
-            //System.Diagnostics.Debug.WriteLine(mouse.Position);
+            }
+                
             return mouse;
         }
         protected Vector2 getKeyboard()             // Получение ввода с клавиатуры
@@ -74,7 +82,8 @@ namespace FriendsPoint
             if (keyboard.IsKeyDown(Keys.G) && player.currentWeapon.Name != "Fist")
             {
                 player.DropWeapon(objects, droppedWeapons);
-                Console.Log("Weapon dropped11");
+                mouseState = false;
+                player.shotcount = 0;
             }
             return direction;
         }

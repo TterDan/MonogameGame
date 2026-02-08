@@ -1,195 +1,276 @@
 [
-  {
-    "Name": "Fist",
-    "Type": "Melee",
-    "Path": "fist",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
+    {
+        "Name": "Fist",
+        "Type": "Melee",
+        "Path": "fist",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 0,
+        "TrunkOffsetY": 0
+    },
 
-
-
-
-  {
-    "Name": "Rifle",
-    "Type": "Gun",
-    "Path": "mp5",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": -20,
-    "RecoilStrengthForCamera": 0.2
-  },
-  {
-    "Name": "Pistol",
-    "Type": "Gun",
-    "Path": "glock",
-    "OffsetX": 56,
-    "OffsetY": 40,
-    "RecoilStrength": -10,
-    "RecoilStrengthForCamera": 0.1
-  },
-  {
-    "Name": "Sniper_rifle",
-    "Type": "Gun",
-    "Path": "sniper",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": -50,
-    "RecoilStrengthForCamera": 0.5
-  },
-  {
-    "Name": "Minigun",
-    "Type": "Gun",
-    "Path": "deagle",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": -40,
-    "RecoilStrengthForCamera": 0.2
-  },
-  {
-    "Name": "Shotgun",
-    "Type": "Gun",
-    "Path": "shotgun",
-    "OffsetX": 80,
-    "OffsetY": 45,
-    "RecoilStrength": -50,
-    "RecoilStrengthForCamera": 0.4
-  },
-  {
-    "Name": "Slingshot",
-    "Type": "Gun",
-    "Path": "deagle",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
+    {
+        "Name": "Deagle",
+        "Type": "Semi-automatic",
+        "Path": "Deagle",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": -20,
+        "RecoilStrengthForCamera": 0.2,
+        "PatternIndex": 1, 
+        "TrunkOffsetX": 120,
+        "TrunkOffsetY": -30
+    },
+    {
+        "Name": "Ak",
+        "Type": "Automatic",
+        "Path": "ak",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": -20,
+        "RecoilStrengthForCamera": 0.2,
+        "PatternIndex": 1, 
+        "TrunkOffsetX": 120,
+        "TrunkOffsetY": -30
+    },
+    {
+        "Name": "Rifle",
+        "Type": "Automatic",
+        "Path": "mp5",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": -20,
+        "RecoilStrengthForCamera": 0.2,
+        "PatternIndex": 1, 
+        "TrunkOffsetX": 120,
+        "TrunkOffsetY": -23
+    },
+    {
+        "Name": "Pistol",
+        "Type": "Semi-automatic",
+        "Path": "glock",
+        "OffsetX": 56,
+        "OffsetY": 40,
+        "RecoilStrength": -10,
+        "RecoilStrengthForCamera": 0.2,
+        "PatternIndex": 2,
+        "TrunkOffsetX": 95,
+        "TrunkOffsetY": -18
+    },
+    {
+        "Name": "Sniper_rifle",
+        "Type": "Semi-automatic",
+        "Path": "sniper",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": -50,
+        "RecoilStrengthForCamera": 0.5,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 95,
+        "TrunkOffsetY": -35
+    },
+    {
+        "Name": "Minigun",
+        "Type": "Automatic",
+        "Path": "deagle",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": -40,
+        "RecoilStrengthForCamera": 0.2,
+        "PatternIndex": 3, 
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Shotgun",
+        "Type": "SemiAuto",
+        "Path": "shotgun",
+        "OffsetX": 80,
+        "OffsetY": 45,
+        "RecoilStrength": -50,
+        "RecoilStrengthForCamera": 0.4,
+        "PatternIndex": 4,
+        "TrunkOffsetX": 155,
+        "TrunkOffsetY": -30
+    },
+    {
+        "Name": "Slingshot",
+        "Type": "Semi-automatic",
+        "Path": "slingshot",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
     {
         "Name": "Rpg",
-        "Type": "Gun",
+        "Type": "Semi-automatic",
         "Path": "rpg",
         "OffsetX": 56,
         "OffsetY": 45,
         "RecoilStrength": -60,
-        "RecoilStrengthForCamera": 0.8
+        "RecoilStrengthForCamera": 0.8,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 170,
+        "TrunkOffsetY": -30
     },
 
 
 
-  {
-    "Name": "Bat",
-    "Type": "Melee",
-    "Path": "bat",
-    "OffsetX": 90,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
-  {
-    "Name": "Knuckle",
-    "Type": "Melee",
-    "Path": "knuckles",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
-  {
-    "Name": "Pipe",
-    "Type": "Melee",
-    "Path": "pipe",
-    "OffsetX": 76,
-    "OffsetY": 50,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
-  {
-    "Name": "Knife",
-    "Type": "Melee",
-    "Path": "knife",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
-  {
-    "Name": "Chainsaw",
-    "Type": "Melee",
-    "Path": "saw",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
-  {
-    "Name": "Bottle",
-    "Type": "Melee",
-    "Path": "deagle",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
+    {
+        "Name": "Bat",
+        "Type": "Melee",
+        "Path": "bat",
+        "OffsetX": 90,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Knuckle",
+        "Type": "Melee",
+        "Path": "knuckles",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Pipe",
+        "Type": "Melee",
+        "Path": "pipe",
+        "OffsetX": 76,
+        "OffsetY": 50,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Knife",
+        "Type": "Melee",
+        "Path": "knife",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Chainsaw",
+        "Type": "Melee",
+        "Path": "saw",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Bottle",
+        "Type": "Melee",
+        "Path": "deagle",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
 
 
 
-  {
-    "Name": "Explosive_grenade",
-    "Type": "Throwing",
-    "Path": "he",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
-  {
-    "Name": "Smoke_grenade",
-    "Type": "Throwing",
-    "Path": "deagle",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
-  {
-    "Name": "Molotov_Grenade",
-    "Type": "Throwing",
-    "Path": "deagle",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
-  {
-    "Name": "Flash_Grenade",
-    "Type": "Throwing",
-    "Path": "deagle",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
+    {
+        "Name": "Explosive_grenade",
+        "Type": "Throwing",
+        "Path": "he",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Smoke_grenade",
+        "Type": "Throwing",
+        "Path": "smoke",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Molotov_Grenade",
+        "Type": "Throwing",
+        "Path": "molotov",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Flash_Grenade",
+        "Type": "Throwing",
+        "Path": "flash",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
 
 
 
-  {
-    "Name": "Mine",
-    "Type": "Placing",
-    "Path": "deagle",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  },
-  {
-    "Name": "Ridgepole",
-    "Type": "Placing",
-    "Path": "deagle",
-    "OffsetX": 56,
-    "OffsetY": 45,
-    "RecoilStrength": 0,
-    "RecoilStrengthForCamera": 0
-  }
+    {
+        "Name": "Mine",
+        "Type": "Placing",
+        "Path": "mine",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    },
+    {
+        "Name": "Ridgepole",
+        "Type": "Placing",
+        "Path": "ridgepole_item",
+        "OffsetX": 56,
+        "OffsetY": 45,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 90,
+        "TrunkOffsetY": 35
+    }
 ]

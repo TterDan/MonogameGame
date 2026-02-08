@@ -3,12 +3,14 @@ namespace FriendsPoint
 {
     public partial class Main                                   // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
+        double timer = 0;
         // Код обновлений
         protected override void Update(GameTime gameTime)
         {
             Input();
             weaponMove();
-
+            semiCheck(gameTime);
+            
             for (int i = 0; i < objects.Count; i++) {
                 if (objects[i] is Enemy enemy) {
                     enemy.move(player.Position - enemy.Position, player.Radius + enemy.Radius);
@@ -21,6 +23,22 @@ namespace FriendsPoint
             player.currentFireTime += gameTime.ElapsedGameTime.TotalMilliseconds;
             player.ShotDrawTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime);
+        }
+        protected void semiCheck(GameTime gameTime)
+        {
+            if (player.shotcount > 0)
+            {
+                if (!player.isShooting)
+                    timer += gameTime.ElapsedGameTime.TotalSeconds;
+                else
+                    timer = 0f;
+
+                if (timer >= 1.0f)
+                {
+                    player.shotcount = 0;
+                    timer = 0f;
+                }
+            }
         }
         protected void weaponMove() {
             for (int i = 0; i < droppedWeapons.Count; i++) {

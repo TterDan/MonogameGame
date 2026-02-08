@@ -21,13 +21,14 @@ namespace FriendsPoint.GameObjects {
         public float DropSpeed = 20f;
         public float RecoilStrength;
         public float RecoilStrengthForCamera;
-
+        public float PatternIndex;
+        public Vector2 TrunkOffset;
         public Vector2 currentSpeed;
 
         public int AdditionRadius;
         public Texture2D AdditionalHitboxTexture;
 
-        public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, float recoilStrength, float recoilStrengthForCamera) {
+        public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, float recoilStrength, float recoilStrengthForCamera, float patIndex, Vector2 trunkOffset) {
             Name = name;
             Type = type;
             Texture = texture;
@@ -50,6 +51,8 @@ namespace FriendsPoint.GameObjects {
             TextureScale = Scale * 0.45f;
             RecoilStrength = recoilStrength;
             RecoilStrengthForCamera = recoilStrengthForCamera;
+            PatternIndex = patIndex;
+            TrunkOffset = trunkOffset;
         }
         public void move() {
             currentSpeed = Vector2.Lerp(currentSpeed, Vector2.Zero, 0.2f);
