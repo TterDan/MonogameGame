@@ -1,4 +1,6 @@
 
+using System.Linq;
+
 namespace FriendsPoint
 {
     public partial class Main                                   // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
@@ -10,7 +12,8 @@ namespace FriendsPoint
             Input();
             weaponMove();
             semiCheck(gameTime);
-            
+            enemySpawn();
+
             for (int i = 0; i < objects.Count; i++) {
                 if (objects[i] is Enemy enemy) {
                     enemy.move(player.Position - enemy.Position, player.Radius + enemy.Radius);
@@ -63,6 +66,27 @@ namespace FriendsPoint
                 }
 
             }
+        }
+
+        public void enemySpawn()
+        {
+            DrawEngine.GraphicsDevice = GraphicsDevice;
+            int enemyExist = objects.Count(e => e is Enemy);
+
+            if (enemyExist < 3)
+            {
+                for (int i = 0; i < 3 - enemyExist; i++)
+                {                                                                  // Добавляю несколько врагов на карту для теста
+                    Enemy enemy = new Enemy(
+                        GraphicsDevice,
+                        new Vector2(200 + i * 100, 200),
+                        30,
+                        3f
+                    );
+                    objects.Add(enemy);
+                }
+            }
+
         }
     }
 }

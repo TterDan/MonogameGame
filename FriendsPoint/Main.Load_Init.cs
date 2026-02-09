@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace FriendsPoint
 {
     public partial class Main           // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
@@ -30,15 +32,7 @@ namespace FriendsPoint
             objects.Add(player);
             rnd = new System.Random();
             weaponsArray = JsonNode.Parse(File.ReadAllText("../../../WeaponData.json")).AsArray();
-            for (int i = 0; i < 2; i++) {                                                                                // Добавляю несколько врагов на карту для теста
-                Enemy enemy = new Enemy(
-                    GraphicsDevice,
-                    new Vector2(200 + i * 100, 200),
-                    30,
-                    3f
-                );
-                objects.Add(enemy);
-            }
+            
             for(int i = 0; i < 20; i++)
             {
                 int rndWeapon = rnd.Next(1, weaponsArray.Count);

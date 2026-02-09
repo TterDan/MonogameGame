@@ -15,13 +15,13 @@ namespace FriendsPoint.GameObjects {
             DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
         }
 
-        public void hit() {
+        public void Hit() {
 
         }
 
         public void Die(List<GameObject> objects, int objectIndex) {
             objects.RemoveAt(objectIndex);
-            // Код при смерти во врага
+            // Код при смерти врага
         }
 
         public void TakeDamage(float damage, List<GameObject> objects, int objectIndex) {
