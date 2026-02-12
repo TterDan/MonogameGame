@@ -9,6 +9,5 @@ global using System.Diagnostics;
 global using System.Reflection;
 global using System.Xml.Linq;
 global using System.IO;
-
 global using FriendsPoint.GameObjects;
 global using FriendsPoint.DrawEngineModules;

@@ -13,9 +13,7 @@ static public class Camera {                                                    
     static public float WalkOffsetSpeed = 0.10f;
 
     static public Vector2 CameraOffset = Vector2.Zero;
-
-    static public float Zoom = 0f;                                        // ≈сли вдруг когда нибудь € смогу реализовать зум камеры, то будет кайф, в данный момент € хз как просто добавил поле дл€ зума (точнее € могу на изи узнать как это сделать но мне лень (точнее не узнать а разобратьс€ самому))
-
+    static public float Zoom = 0f;
     static public void ChangeShiftOffset(Vector2 direction) {
         ShiftOffset = Vector2.Lerp(ShiftOffset, MaxShiftOffset * direction, ShiftOffsetSpeed);
     }
@@ -32,5 +30,4 @@ static public class Camera {                                                    
     static public void ChangeOffset() {
         CameraOffset = -WalkOffset + MouseOffset + ShiftOffset;
     }
-
 }

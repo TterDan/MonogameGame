@@ -3,7 +3,6 @@ namespace FriendsPoint.DrawEngineModules {
     public partial class DrawEngine {                                                          // Статический класс камеры
         static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Rectangle drawRectangle, Vector2 centerPosition, Color color, float layer = 1f, float rotation = 0f, float scale = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
             scale *= GameScale;
-
             Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
             texture.SetData(new[] { Color.Black });
 
@@ -37,16 +36,13 @@ namespace FriendsPoint.DrawEngineModules {
                 layer                   // Слой
             );
         }
-
         static public void DrawTexture(SpriteBatch spriteBatch, Texture2D texture, Vector2 position, Rectangle? nullableDrawRectangle, Color? nullableColor, float layer = 1f, float rotation = 0f, float scale = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
             if (texture == null) {
                 System.Diagnostics.Debug.WriteLine("Error");
                 return;
             }
-
             Color color = nullableColor ?? Color.White;
             Rectangle drawRectangle;
-
             if (nullableDrawRectangle == null) {
                 drawRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             } else {

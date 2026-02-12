@@ -86,7 +86,7 @@
     },
     {
         "Name": "Shotgun",
-        "Type": "SemiAuto",
+        "Type": "Semi-automatic",
         "Path": "shotgun",
         "OffsetX": 80,
         "OffsetY": 45,

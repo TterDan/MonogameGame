@@ -2,10 +2,8 @@
 namespace FriendsPoint.DrawEngineModules {
     public partial class DrawEngine {                                                          // Статический класс камеры
         static public void DrawLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, float layer = 1f, float thickness = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
-
             Texture2D lineTexture = new Texture2D(GraphicsDevice, 1, 1);
             lineTexture.SetData(new[] { Color.White });
-
             Vector2 delta = end - start;
             float length = delta.Length();
             float angle = MathF.Atan2(delta.Y, delta.X);
@@ -23,11 +21,9 @@ namespace FriendsPoint.DrawEngineModules {
             );
         }
         static public void DrawLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float layer = 1f, float thickness = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
-
             Color color = Color.Black;
             Texture2D lineTexture = new Texture2D(GraphicsDevice, 1, 1);
             lineTexture.SetData(new[] { Color.White });
-
             Vector2 delta = end - start;
             float length = delta.Length();
             float angle = MathF.Atan2(delta.Y, delta.X);

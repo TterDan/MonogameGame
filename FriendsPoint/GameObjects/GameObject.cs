@@ -15,17 +15,13 @@ namespace FriendsPoint.GameObjects {
 
         public float HitboxOpacity = 1.0f;
         public float TextureOpacity = 1.0f;
-
         public float TextureScale = 1.7f;
         public float Scale = 1f;
-
         public float Rotation = 0f;
         public float Speed = 7f;
-
         public bool isflying = false;
 
         public Rectangle DrawRect;
-
         public Microsoft.Xna.Framework.Color TextureColor = Color.White;
         public Microsoft.Xna.Framework.Color HitboxTextureColor = Color.White;
 

@@ -4,7 +4,6 @@ namespace FriendsPoint.GameObjects {
         public string Name;
         public string Type;
         public Rectangle Rect;
-
         // Настройки оружия
         public float Damage;
         public float HitDamage;
@@ -24,10 +23,8 @@ namespace FriendsPoint.GameObjects {
         public float PatternIndex;
         public Vector2 TrunkOffset;
         public Vector2 currentSpeed;
-
         public int AdditionRadius;
         public Texture2D AdditionalHitboxTexture;
-
         public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, float recoilStrength, float recoilStrengthForCamera, float patIndex, Vector2 trunkOffset) {
             Name = name;
             Type = type;
@@ -59,7 +56,6 @@ namespace FriendsPoint.GameObjects {
             Position -= currentSpeed;
             ScreenPosition -= currentSpeed;
         }
-
         public override void Draw(SpriteBatch render) {
             DrawEngine.DrawTexture(render, Texture, ScreenPosition, null, null, 0.12f, Rotation, 0.5f);
             DrawEngine.DrawCircle(render, ScreenPosition, Radius, DrawRect, new Vector2(DrawRect.Width / 2, DrawRect.Height / 2), Color.Black, 0.11f);

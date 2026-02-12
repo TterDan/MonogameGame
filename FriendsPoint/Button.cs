@@ -29,7 +29,6 @@ public class Button {
     public void Use() {
 
     }
-
     public void Click() {
         if (Type == "Button") {
             Use();
@@ -37,7 +36,6 @@ public class Button {
             state = (state == true) ? false : true;
         }
     }
-
     public void Draw(SpriteBatch spriteBatch) {
         DrawEngine.DrawRect(spriteBatch, Position, new Rectangle(0, 0, (int)Size.X, (int)Size.Y), Color.DarkGray);
     }

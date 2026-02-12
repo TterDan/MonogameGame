@@ -4,7 +4,6 @@ public class Log {
     public string DateTime;
     public string Key;
     public Color MesColor;
-
     public Log(string message, string dateTime, string key, Color mesColor) {
         Message = message;
         DateTime = dateTime;
@@ -17,14 +16,12 @@ static public class Console {                                                   
     static public List<Log> RepeatLogs = new List<Log> { };
     static public Vector2 WindowSize;
     static public bool IsConsoleOpen = false;
-
     static public void Log(string message, Color color, string type = "non-repeat", string key = "Log") {
         DoLog(message, color, type, key);
     }
     static public void Log(string message, string type = "non-repeat", string key = "Log") {
         DoLog(message, Color.White, type, key);
     }
-
     static public void DoLog(string message, Color color, string type, string key) {
         if (type == "non-repeat") {
             string dateTime = DateTime.Now.ToString("HH:mm:ss");
@@ -54,7 +51,6 @@ static public class Console {                                                   
             }
         }
     }
-
     static public void ClerConsole() {
         RepeatLogs.Clear();
         NonRepeatLogs.Clear();
