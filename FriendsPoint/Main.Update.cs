@@ -97,7 +97,7 @@ namespace FriendsPoint
                     Enemy enemy = new Enemy(
                         GraphicsDevice,
                         new Vector2(200 + i * 100, 200),
-                        30,
+                        60,
                         3f
                     );
                     Enemies.Add(enemy);

@@ -30,10 +30,14 @@ namespace FriendsPoint
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
-            IsFixedTimeStep = false;
             GraphicsDeviceManager.PreferredBackBufferWidth = 1920;
             GraphicsDeviceManager.PreferredBackBufferHeight = 1080;
             GraphicsDeviceManager.IsFullScreen = false;
+
+            IsFixedTimeStep = true;
+            TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 100.0);
+
+            GraphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
         }
     }
 }

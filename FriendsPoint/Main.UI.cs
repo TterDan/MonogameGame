@@ -15,7 +15,7 @@ namespace FriendsPoint
         public void CursorUI() // Думаю удобно будет для каждого элемента интерфейса делать свой метод, в котором с ним будет удобно взаимодействовать, чтобы не засирать Draw.     Нет, arishem, всем все равно
         {
             render.Draw(Cursor, new Vector2(player.mousePosition.X - 33, player.mousePosition.Y - 26), null, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.9f);
-            DrawEngine.DrawText(render, new Vector2(10, 10), $"FPS: {FramesPerSecond}");
+            DrawEngine.Text(render, new Vector2(10, 10), $"FPS: {FramesPerSecond}");
         }
     }
 }

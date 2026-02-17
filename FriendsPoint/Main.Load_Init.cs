@@ -13,16 +13,27 @@ namespace FriendsPoint
             ScreenCenter = new Vector2(windowSize.X / 2, windowSize.Y / 2);
             Console.WindowSize = windowSize;
 
-            render = new SpriteBatch(GraphicsDevice);      
+            render = new SpriteBatch(GraphicsDevice);
+
+            BasicBlackCircleTexture = Circle(300, Color.Black);
+            BasicHalfBlackCircleTexture = Circle(300, Color.Black * 0.5f);
+            BasicRedCircleTexture = Circle(300, Color.Red);
+
+            Player.HitboxTexture = BasicBlackCircleTexture;
+            Player.AdditionHitboxTexture = BasicHalfBlackCircleTexture;
+            Enemy.HitboxTexture = BasicRedCircleTexture;
+            Weapon.HitboxTexture = BasicBlackCircleTexture;
+            Weapon.AdditionHitboxTexture = BasicHalfBlackCircleTexture;
+
             // Инициализирую спрайтбатч
             Texture2D fistTexture = Content.Load<Texture2D>("weapons/fist");
             Cursor = Content.Load<Texture2D>("interface/cursor");
-            fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 20, 50, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0}, new Vector2(56, 45), 0, 0, 0, Vector2.Zero);
+            fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 40, 70, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0}, new Vector2(56, 45), 0, 0, 0, Vector2.Zero);
 
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             OtherGameObjects.Add(map);
 
-            player = new Player(GraphicsDevice, Vector2.Zero, 35, 60, 7, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
+            player = new Player(GraphicsDevice, Vector2.Zero, 70, 120, 7, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
             Players.Add(player);
             player.spriteBatch = render;
             player.Fist = fist;
@@ -36,7 +47,7 @@ namespace FriendsPoint
                 int rndWeapon = rnd.Next(1, weaponsArray.Count);
                 string pathToImg = weaponsArray[rndWeapon]["Path"].ToString();
                 Texture2D weaponTexture = Content.Load<Texture2D>($"weapons/{pathToImg}");
-                Weapon wpn = new Weapon(GraphicsDevice, weaponTexture, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 30, 50, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 }, new Vector2(((float)weaponsArray[rndWeapon]["OffsetX"]), ((float)weaponsArray[rndWeapon]["OffsetY"])), ((float)weaponsArray[rndWeapon]["RecoilStrength"]), ((float)weaponsArray[rndWeapon]["RecoilStrengthForCamera"]), ((float)weaponsArray[rndWeapon]["PatternIndex"]), new Vector2(((float)weaponsArray[rndWeapon]["TrunkOffsetX"]), ((float)weaponsArray[rndWeapon]["TrunkOffsetY"])));
+                Weapon wpn = new Weapon(GraphicsDevice, weaponTexture, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 60, 105, new List<float> { 40, 15, 1, 3, 4000, 130, 20, 0, 15, 45 }, new Vector2(((float)weaponsArray[rndWeapon]["OffsetX"]), ((float)weaponsArray[rndWeapon]["OffsetY"])), ((float)weaponsArray[rndWeapon]["RecoilStrength"]), ((float)weaponsArray[rndWeapon]["RecoilStrengthForCamera"]), ((float)weaponsArray[rndWeapon]["PatternIndex"]), new Vector2(((float)weaponsArray[rndWeapon]["TrunkOffsetX"]), ((float)weaponsArray[rndWeapon]["TrunkOffsetY"])));
                 Weapons.Add(wpn);
             }
             base.Initialize();
@@ -47,5 +58,6 @@ namespace FriendsPoint
             player.Texture = Content.Load<Texture2D>("players/albert");          // Назначаю текстуру игрока
             map.Texture = Content.Load<Texture2D>("floor");                         // Назначаю текстуру карты
         }
+
     }
 }

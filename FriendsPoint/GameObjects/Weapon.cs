@@ -23,8 +23,7 @@ namespace FriendsPoint.GameObjects {
         public float PatternIndex;
         public Vector2 TrunkOffset;
         public Vector2 currentSpeed;
-        public int AdditionRadius;
-        public Texture2D AdditionalHitboxTexture;
+
         public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, float recoilStrength, float recoilStrengthForCamera, float patIndex, Vector2 trunkOffset) {
             Name = name;
             Type = type;
@@ -33,7 +32,6 @@ namespace FriendsPoint.GameObjects {
             Layer = 1.0f;
             Radius = radius;
             AdditionRadius = additionRadius;
-            DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
             Damage = gunSets[0];
             HitDamage = gunSets[1];
             UserFireKnockback = gunSets[2];
@@ -57,10 +55,10 @@ namespace FriendsPoint.GameObjects {
             ScreenPosition -= currentSpeed;
         }
         public override void Draw(SpriteBatch render) {
-            DrawEngine.DrawTexture(render, Texture, ScreenPosition, null, null, 0.12f, Rotation, 0.5f);
-            DrawEngine.DrawCircle(render, ScreenPosition, Radius, DrawRect, new Vector2(DrawRect.Width / 2, DrawRect.Height / 2), Color.Black, 0.11f);
-            Rectangle AdditionDrawRect = new Rectangle(0, 0, AdditionRadius * 2, AdditionRadius * 2);
-            DrawEngine.DrawCircle(render, ScreenPosition, AdditionRadius, AdditionDrawRect, new Vector2(AdditionDrawRect.Width / 2, AdditionDrawRect.Height / 2), Color.Black * 0.5f, 0.1f);
+            DrawEngine.Texture(render, Texture, ScreenPosition, 0.12f, Rotation, 1f);
+            DrawEngine.Circle(render, HitboxTexture, ScreenPosition, Radius, 0.11f, 0f, 1f / (300 / Radius));
+            DrawEngine.RectFigure(render, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow);
+            //DrawEngine.Circle(render, AdditionHitboxTexture, ScreenPosition, AdditionRadius, 0.1f, 0f, 1f / (300 / AdditionRadius));
         }
     }
 }

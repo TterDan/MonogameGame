@@ -11,7 +11,8 @@ namespace FriendsPoint.GameObjects {
         public float Layer = 0.8f;
 
         public Texture2D Texture;
-        public Texture2D HitboxTexture;
+        public static Texture2D HitboxTexture;
+        public static Texture2D AdditionHitboxTexture;
 
         public float HitboxOpacity = 1.0f;
         public float TextureOpacity = 1.0f;

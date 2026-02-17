@@ -5,6 +5,7 @@ namespace FriendsPoint.GameObjects {
         public float MoveSpeed;
         public Vector2 BeatForceVelocity = Vector2.Zero;
         public Rectangle Rect;
+
         public Enemy(GraphicsDevice GraphicsDevice, Vector2 position, int radius, float moveSpeed) {
             Layer = 0.5f;
             ScreenPosition = position;
@@ -29,7 +30,7 @@ namespace FriendsPoint.GameObjects {
             // Код при попадании во врага
         }
         public void move(Vector2 moveDirection, float length) {
-            if (moveDirection.Length() < length * DrawEngine.GameScale) {
+            if (moveDirection.Length() < length) {
                 moveDirection = Vector2.Zero;
             } else {
                 moveDirection.Normalize();
@@ -40,7 +41,7 @@ namespace FriendsPoint.GameObjects {
             ScreenPosition += moveDirection * MoveSpeed;
         }
         public override void Draw(SpriteBatch render) {
-            DrawEngine.DrawCircle(render, ScreenPosition, Radius, DrawRect, new Vector2(DrawRect.Width / 2, DrawRect.Height / 2), Color.Red, 0);
+            DrawEngine.Circle(render, HitboxTexture, ScreenPosition, Radius, 0, 0f, 1f / (300 / Radius));
         }
     }
 }

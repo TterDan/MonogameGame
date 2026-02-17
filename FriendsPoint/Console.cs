@@ -1,4 +1,3 @@
-
 public class Log {
     public string Message;
     public string DateTime;
@@ -16,11 +15,16 @@ static public class Console {                                                   
     static public List<Log> RepeatLogs = new List<Log> { };
     static public Vector2 WindowSize;
     static public bool IsConsoleOpen = false;
-    static public void Log(string message, Color color, string type = "non-repeat", string key = "Log") {
-        DoLog(message, color, type, key);
+
+    static public void Log<T>(T message, Color color, string type = "non-repeat", string key = "Log") {
+        if (message is int || message is float || message is double || message is string || message is char || message is long) {
+            DoLog($"{message}", color, type, key);
+        }
     }
-    static public void Log(string message, string type = "non-repeat", string key = "Log") {
-        DoLog(message, Color.White, type, key);
+    static public void Log<T>(T message, string type = "non-repeat", string key = "Log") {
+        if (message is int || message is float || message is double || message is string || message is char || message is long) {
+            DoLog($"{message}", Color.White, type, key);
+        }
     }
     static public void DoLog(string message, Color color, string type, string key) {
         if (type == "non-repeat") {
@@ -58,15 +62,15 @@ static public class Console {                                                   
     static public void DrawConsole(SpriteBatch SpriteBatch) {
         float oneX = WindowSize.X / 100;
         float oneY = WindowSize.Y / 100;
-        DrawEngine.DrawRect(SpriteBatch, new Vector2(oneX, oneY), new Rectangle(0, 0, (int)oneX * 20, (int)(oneY * 14.5)), Vector2.Zero, Color.DarkGray * 0.6f, 0.95f);
-        DrawEngine.DrawText(SpriteBatch, new Vector2(oneX*2, oneY*4/3), "Console", Vector2.Zero, Color.White);
+        DrawEngine.RectFigure(SpriteBatch, new Vector2(oneX, oneY), new Rectangle(0, 0, (int)oneX * 50, (int)(oneY * 35)), Vector2.Zero, Color.Black * 0.8f, 0.95f);
+        DrawEngine.Text(SpriteBatch, new Vector2(oneX*2, oneY*4/3), "Console", Vector2.Zero, Color.White);
         for (int i = 0; i < RepeatLogs.Count; i++) {
             string message = $"{RepeatLogs[i].DateTime} | {RepeatLogs[i].Key} : {RepeatLogs[i].Message}";
-            DrawEngine.DrawText(SpriteBatch, new Vector2(oneX*2, (float)(oneY*(3 + i*1.5))), message, Vector2.Zero, RepeatLogs[i].MesColor);
+            DrawEngine.Text(SpriteBatch, new Vector2(oneX*2, (float)(oneY*(3 + i*1.5))), message, Vector2.Zero, RepeatLogs[i].MesColor);
         }
         for (int i = 0; i < NonRepeatLogs.Count; i++) {
             string message = $"{NonRepeatLogs[i].DateTime} | {NonRepeatLogs[i].Key} : {NonRepeatLogs[i].Message}";
-            DrawEngine.DrawText(SpriteBatch, new Vector2(oneX * 2, (float)(oneY * (3 + (i + RepeatLogs.Count) * 1.5))), message, Vector2.Zero, NonRepeatLogs[i].MesColor);
+            DrawEngine.Text(SpriteBatch, new Vector2(oneX * 2, (float)(oneY * (3 + (i + RepeatLogs.Count) * 1.5))), message, Vector2.Zero, NonRepeatLogs[i].MesColor);
         }
     }
 }

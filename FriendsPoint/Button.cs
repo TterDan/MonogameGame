@@ -37,6 +37,6 @@ public class Button {
         }
     }
     public void Draw(SpriteBatch spriteBatch) {
-        DrawEngine.DrawRect(spriteBatch, Position, new Rectangle(0, 0, (int)Size.X, (int)Size.Y), Color.DarkGray);
+        DrawEngine.RectFigure(spriteBatch, Position, new Rectangle(0, 0, (int)Size.X, (int)Size.Y), new Vector2(Size.X, Size.Y), Color.DarkGray);
     }
 }
