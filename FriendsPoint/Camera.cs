@@ -2,15 +2,15 @@
 static public class Camera {                                                          // Статический класс камеры
     static public float MaxShiftOffset = 180f;
     static public Vector2 ShiftOffset = Vector2.Zero;
-    static public float ShiftOffsetSpeed = 0.15f;
+    static public float ShiftOffsetSpeed = 0.1f;
 
     static public float MaxMouseOffset = 0.1f;
     static public Vector2 MouseOffset = Vector2.Zero;
-    static public float MouseOffsetSpeed = 0.4f;
+    static public float MouseOffsetSpeed = 0.1f;
 
-    static public float MaxWalkOffset = 50f;
+    static public float MaxWalkOffset = 70f;
     static public Vector2 WalkOffset = Vector2.Zero;
-    static public float WalkOffsetSpeed = 0.10f;
+    static public float WalkOffsetSpeed = 0.045f;
 
     static public Vector2 CameraOffset = Vector2.Zero;
     static public float Zoom = 0f;

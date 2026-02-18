@@ -7,7 +7,7 @@ namespace FriendsPoint
         public FillStyle BasicFillStyle = new FillStyle(Color.Yellow);
         public StrokeStyle BasicStrokeStyle = new StrokeStyle(Color.Black, 6f, 0f, "3", new Vector2(0f, 0f), new Vector2(0f, 0f));
 
-        public Texture2D Circle(int radius, Color color) {
+        public Texture2D Circle(int radius) {
             int diameter = radius * 2;
             Rectangle drawRectangle = new Rectangle(0, 0, diameter, diameter);
             Vector2 centerPosition = new Vector2(radius, radius);
@@ -19,7 +19,7 @@ namespace FriendsPoint
                     int index = y * diameter + x;
                     Vector2 pos = new Vector2(x, y);
                     if (Vector2.Distance(pos, center) <= radius)
-                        data[index] = color;
+                        data[index] = Color.White;
                     else
                         data[index] = Color.Transparent;
                 }
@@ -27,8 +27,6 @@ namespace FriendsPoint
             texture.SetData(data);
             return texture;
         }
-        public Texture2D BasicBlackCircleTexture;
-        public Texture2D BasicHalfBlackCircleTexture;
-        public Texture2D BasicRedCircleTexture;
+        public Texture2D CircleTexture;
     }
 }

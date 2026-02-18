@@ -39,7 +39,6 @@ namespace FriendsPoint
             if (keyboard.IsKeyDown(Keys.OemTilde)) {
                 if (isOemTildePressed == false) {
                     Console.IsConsoleOpen = (Console.IsConsoleOpen == true) ? false : true;
-                    Console.Log("Console gets opened/closed");
                     isOemTildePressed = true;
                 }
             }

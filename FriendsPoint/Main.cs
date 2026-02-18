@@ -15,7 +15,7 @@ namespace FriendsPoint
         private Weapon fist;
         private JsonArray weaponsArray;
         private Random rnd;
-        private Texture2D Cursor;
+        private static Texture2D Cursor;
 
         private List<GameObject> Players;
         private List<GameObject> Weapons;
@@ -35,7 +35,7 @@ namespace FriendsPoint
             GraphicsDeviceManager.IsFullScreen = false;
 
             IsFixedTimeStep = true;
-            TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 100.0);
+            TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 144.0);
 
             GraphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
         }

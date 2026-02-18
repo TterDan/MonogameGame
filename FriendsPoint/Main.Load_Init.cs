@@ -7,24 +7,17 @@ namespace FriendsPoint
         protected override void Initialize()
         {
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
-            DrawEngine.GameFont = font;
-            DrawEngine.GraphicsDevice = GraphicsDevice;
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             ScreenCenter = new Vector2(windowSize.X / 2, windowSize.Y / 2);
-            Console.WindowSize = windowSize;
-            Console.oneX = windowSize.X / 100;
-            Console.oneY = windowSize.Y / 100;
+            Console.Init(windowSize);
+            DrawEngine.Init(font, GraphicsDevice);
+
+
             render = new SpriteBatch(GraphicsDevice);
 
-            BasicBlackCircleTexture = Circle(300, Color.Black);
-            BasicHalfBlackCircleTexture = Circle(300, Color.Black * 0.5f);
-            BasicRedCircleTexture = Circle(300, Color.Red);
+            CircleTexture = Circle(300);
 
-            Player.HitboxTexture = BasicBlackCircleTexture;
-            Player.AdditionHitboxTexture = BasicHalfBlackCircleTexture;
-            Enemy.HitboxTexture = BasicRedCircleTexture;
-            Weapon.HitboxTexture = BasicBlackCircleTexture;
-            Weapon.AdditionHitboxTexture = BasicHalfBlackCircleTexture;
+            CircleHBoxObj.CircleTexture = CircleTexture;
 
             // Инициализирую спрайтбатч
             Texture2D fistTexture = Content.Load<Texture2D>("weapons/fist");
@@ -34,7 +27,7 @@ namespace FriendsPoint
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             OtherGameObjects.Add(map);
 
-            player = new Player(GraphicsDevice, Vector2.Zero, 70, 120, 7, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
+            player = new Player(GraphicsDevice, Vector2.Zero, 70, 120, 4f, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
             Players.Add(player);
             player.spriteBatch = render;
             player.Fist = fist;

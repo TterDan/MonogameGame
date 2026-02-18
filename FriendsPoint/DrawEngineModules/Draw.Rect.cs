@@ -2,16 +2,11 @@
 namespace FriendsPoint.DrawEngineModules {
     public partial class DrawEngine {
 
-
-
-        
         static public void RectFigure(SpriteBatch spriteBatch, Vector2 position, Rectangle drawRectangle, Vector2 centerPosition, Color color, float layer = 1f, float rotation = 0f, float scale = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
             scale *= GameScale;
-            Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
-            texture.SetData(new[] { color });
 
             spriteBatch.Draw(
-                texture,                //Текстура
+                TexturePixel,                //Текстура
                 position,               // Положение 
                 drawRectangle,          // Область текстуры для отрисовки
                 color,                  // Цвет

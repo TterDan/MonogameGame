@@ -7,7 +7,23 @@ namespace FriendsPoint
         int FramesPerSecond;
         int FrameCounter;
         double ElapsedTime;
+        double timer = 0;
+        long delta;
+        long lastAllocated = 0;
         protected override void Update(GameTime gameTime) {
+
+            timer += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (timer >= 0.25) {
+                long allocated = GC.GetAllocatedBytesForCurrentThread();
+                delta = allocated - lastAllocated;
+
+                lastAllocated = allocated;
+                timer = 0;
+            }
+            Console.Log(GC.GetTotalMemory(false), "Total GC memory");
+            Console.Log(delta, "GC memory adding bytes per second");
+
             Input();
             weaponMove();
             semiCheck(gameTime);
@@ -18,7 +34,6 @@ namespace FriendsPoint
             player.ShotDrawTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime);
             ListCheck();
-
 
         }
 
@@ -73,9 +88,9 @@ namespace FriendsPoint
         protected void weaponMove() {
             for (int i = 0; i < droppedWeapons.Count; i++) {
                 var (weapon, dir) = droppedWeapons[i];
-                weapon.Speed -= 0.5f;
+                weapon.Speed -= 0.35f;
                 weapon.Position += dir * weapon.Speed;
-                weapon.Rotation += weapon.Speed * 0.01f;
+                weapon.Rotation += weapon.Speed * 0.006f;
                 for (int j = 0; j < Enemies.Count; j++) {
                     Enemy enemy = (Enemy)Enemies[i];
                     if (enemy.Radius + weapon.Radius * 2 >= (enemy.ScreenPosition - weapon.ScreenPosition).Length()) {
@@ -93,17 +108,19 @@ namespace FriendsPoint
         {
             DrawEngine.GraphicsDevice = GraphicsDevice;
             int enemyExist = Enemies.Count;
-            if (enemyExist < 3)
-            {
-                for (int i = 0; i < 3 - enemyExist; i++)
-                {
+
+            if (enemyExist < 3) {
+                for (int i = 0; i < 3 - enemyExist; i++) {
                     Enemy enemy = new Enemy(
                         GraphicsDevice,
                         new Vector2(200 + i * 100, 200),
                         60,
-                        3f
+                        2f
                     );
                     Enemies.Add(enemy);
+                }
+                for (int i = 0; i < enemyExist; i++) {
+                    Enemies[i].Layer = 0.2f + (0.1f / enemyExist * i);
                 }
             }
         }

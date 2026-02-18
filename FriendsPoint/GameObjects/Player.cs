@@ -48,23 +48,23 @@ namespace FriendsPoint.GameObjects {
         public void UseWeapon(List<GameObject> enemies, List<GameObject> weapons) {
             Vector2 direction = mousePosition - ScreenPosition;
             if (currentFireTime > currentWeapon.fireRate) {
-                currentFireTime = 0;
-            }
-            if (currentWeapon.Type == "Melee") {
-                Beat(enemies, weapons);
-            } else
-            if (currentWeapon.Type == "Throwing") {
-                Throw(weapons);
-            } else
-            if (currentWeapon.Type == "Semi-automatic" || currentWeapon.Type == "Automatic") {
-                Shot(enemies, Vector2.Normalize(direction));
-            } else
-            if (currentWeapon.Name == "Shotgun") {
-                for (int i = 0; i < 5; i++)
+                if (currentWeapon.Type == "Melee") {
+                    Beat(enemies, weapons);
+                } else
+                if (currentWeapon.Type == "Throwing") {
+                    Throw(weapons);
+                } else
+                if (currentWeapon.Name == "Shotgun") {
+                    for (int i = 0; i < 5; i++)
+                        Shot(enemies, Vector2.Normalize(direction));
+                } else
+                if (currentWeapon.Type == "Semi-automatic" || currentWeapon.Type == "Automatic") {
                     Shot(enemies, Vector2.Normalize(direction));
-            } else
-            if (currentWeapon.Type == "Placing") {
+                } else
+                if (currentWeapon.Type == "Placing") {
 
+                }
+                currentFireTime = 0;
             }
         }
         public void Place() {
@@ -98,7 +98,7 @@ namespace FriendsPoint.GameObjects {
                     float LengthBetweenDirectionAndWeapon = moduleB * MathF.Sin(Angle);
                     if (LengthBetweenDirectionAndWeapon < weapon.AdditionRadius && CosAngle > 0) {
                         Vector2 force = Vector2.Normalize(weaponDirection);
-                        force *= 25f;
+                        force *= 20f;
                         weapon.currentSpeed -= force;
                     }
                 }
@@ -116,12 +116,11 @@ namespace FriendsPoint.GameObjects {
         }
         public void Shot(List<GameObject> enemies, Vector2 direction) {
             shotcount += 1;
-            Camera.ShotOffset(mouseDirectionForCamera, currentWeapon.RecoilStrengthForCamera);
+            Camera.ShotOffset(-mouseDirectionForCamera, currentWeapon.RecoilStrengthForCamera);
             Vector2 recoilTarget = new Vector2(currentWeapon.RecoilStrength, 0f);
-            recoilOffset = Vector2.Lerp(recoilOffset, recoilTarget, 0.4f);
+            recoilOffset = Vector2.Lerp(recoilOffset, recoilTarget, 0.2f);
             Vector2 spread = pattern.getPattern(currentWeapon.PatternIndex, shotcount, CurrentSpeed);
             Vector2 finalDirection = new Vector2(direction.X + spread.X, direction.Y + spread.Y);
-            bullets.Add(finalDirection);
             for (int j = 0; j < enemies.Count; j++) {
                 Enemy enemy = (Enemy)enemies[j];
                 Vector2 enemyDirection = enemy.ScreenPosition - (ScreenPosition + GetTrunkOffset());
@@ -136,6 +135,7 @@ namespace FriendsPoint.GameObjects {
                 }
                 isShooting = false;
             }
+            bullets.Add(finalDirection);
             ShotDrawTimer = 0;
         }
         public void TakeWeapon(List<GameObject> weapons, List<(Weapon, Vector2)> droppedWeapons) {
@@ -144,8 +144,6 @@ namespace FriendsPoint.GameObjects {
             }
             int index = weapons.IndexOf(viewWeapon);
             if (currentWeapon.Name != "Fist") {
-                currentWeapon.Speed = 10f;
-                currentWeapon.Rotation = 0f;
                 weapons.Add(currentWeapon);
                 droppedWeapons.Add((currentWeapon, Vector2.Normalize(mouseDirection)));
                 Console.Log("Weapon dropped");
@@ -163,10 +161,10 @@ namespace FriendsPoint.GameObjects {
         public void DropWeapon(List<GameObject> objects, List<(Weapon, Vector2)> droppedWeapons) {
             currentWeapon.Speed = currentWeapon.DropSpeed;
             currentWeapon.Position = Position;
+            currentWeapon.Speed = 10f;
             objects.Add(currentWeapon);
             droppedWeapons.Add((currentWeapon, Vector2.Normalize(mouseDirection)));
             currentWeapon = Fist;
-            Console.Log("Weapon dropped");
         }
         public float CalculateDegrees(Vector2 position) {
             Vector2 weaponDirection = new Vector2(position.X - Position.X, position.Y - Position.Y);
@@ -214,10 +212,10 @@ namespace FriendsPoint.GameObjects {
             Position += CurrentSpeed;
         }
         public override void Draw(SpriteBatch spriteBatch) {
-            DrawEngine.RectFigure(spriteBatch, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow);
-            DrawEngine.Texture(spriteBatch, Texture, ScreenPosition, 0.52f, Rotation, 0.7f);
-            DrawEngine.Circle(spriteBatch, HitboxTexture, ScreenPosition, Radius, 0.51f, 0f, 1f / (300 / Radius));
-            DrawEngine.Circle(spriteBatch, AdditionHitboxTexture, ScreenPosition, AdditionRadius, 0.505f, 0f, 1f / (300 / AdditionRadius));
+            DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, Radius, Color.Black, 0.34f, 0f, 1f / (300 / Radius));
+            DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, AdditionRadius, Color.Black * 0.65f, 0.05f, 0f, 1f / (300 / AdditionRadius));
+            DrawEngine.Texture(spriteBatch, Texture, ScreenPosition, 0.42f, Rotation, 0.7f);
+            DrawEngine.RectFigure(spriteBatch, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow, 0.43f);
 
             if (!isShooting) {
                 recoilOffset = Vector2.Lerp(recoilOffset, Vector2.Zero, 0.05f);
@@ -233,13 +231,12 @@ namespace FriendsPoint.GameObjects {
             Vector2 WeaponPos2 = new Vector2(cosRotation * WeaponOffset2.X - sinRotation * WeaponOffset2.Y, sinRotation * WeaponOffset2.X + cosRotation * WeaponOffset2.Y);      // Математика для определения смещения оружия от игрока в его руке
 
             if (currentWeapon.Name == "Fist") {
-                DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, 0.40f, Rotation, 1f, SpriteEffects.FlipVertically);
-                DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos2, 0.40f, Rotation, 1f);
+                DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, 0.35f, Rotation);
+                DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos2, 0.35f, Rotation);
             } else {
-              DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, 0.45f, (Rotation) - MathF.PI / 2, 1f);
+              DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, 0.35f, (Rotation) - MathF.PI / 2);
             }
             if (currentShotDrawTime >= ShotDrawTimer) {
-                Vector2 secondPoint1 = (mousePosition - ScreenPosition);
                 if(bullets.Count >= 0)
                 {
                     for (int i = 0; i < bullets.Count; i++)
@@ -259,16 +256,15 @@ namespace FriendsPoint.GameObjects {
                 Vector2 secondPoint = firstPoint + new Vector2(minCord * mouseDirection.X / Math.Abs(mouseDirection.X), minCord * mouseDirection.Y / Math.Abs(mouseDirection.Y));
                 Vector2 thirdPoint = secondPoint + (mousePosition - secondPoint);
 
-                DrawEngine.Line(spriteBatch, firstPoint, secondPoint, Color.Black, 1f, 6f);
-                DrawEngine.Line(spriteBatch, secondPoint, thirdPoint, Color.Black, 1f, 6f);
-                DrawEngine.RectFigure(spriteBatch, thirdPoint, new Rectangle(0, 0, 80, 20), new Vector2(150, 20) / 2, Color.Black, 0.99f);
-                if (AdditionRadius >= (viewWeapon.Position - Position).Length()) {
-                    DrawEngine.Text(spriteBatch, thirdPoint - new Vector2(190, 0), $"Take {viewWeapon.Name}", Vector2.Zero, Color.White);
+                if (AdditionRadius + viewWeapon.Radius >= (viewWeapon.Position - Position).Length()) {
                     CanToTakeWeapon = true;
+                    Main.ViewWeaponUI(spriteBatch, firstPoint, secondPoint, thirdPoint, viewWeapon.Name, Color.White);
                 } else {
-                    DrawEngine.Text(spriteBatch, thirdPoint - new Vector2(190, 0), $"Take {viewWeapon.Name}", Vector2.Zero, Color.Gray);
+                    Main.ViewWeaponUI(spriteBatch, firstPoint, secondPoint, thirdPoint, viewWeapon.Name, Color.Gray);
                     CanToTakeWeapon = false;
                 }
+            } else {
+                Main.CursorUI(spriteBatch, new Vector2(mousePosition.X - 33, mousePosition.Y - 26));
             }
         }
     }

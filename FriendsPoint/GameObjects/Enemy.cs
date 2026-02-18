@@ -7,7 +7,7 @@ namespace FriendsPoint.GameObjects {
         public Rectangle Rect;
 
         public Enemy(GraphicsDevice GraphicsDevice, Vector2 position, int radius, float moveSpeed) {
-            Layer = 0.5f;
+            Layer = 0.2f;
             ScreenPosition = position;
             Position = position;
             MoveSpeed = moveSpeed;
@@ -36,12 +36,12 @@ namespace FriendsPoint.GameObjects {
                 moveDirection.Normalize();
             }
             moveDirection -= BeatForceVelocity;
-            BeatForceVelocity = Vector2.Lerp(BeatForceVelocity, Vector2.Zero, 0.1f);
+            BeatForceVelocity = Vector2.Lerp(BeatForceVelocity, Vector2.Zero, 0.10f);
             Position += moveDirection * MoveSpeed;
             ScreenPosition += moveDirection * MoveSpeed;
         }
         public override void Draw(SpriteBatch render) {
-            DrawEngine.Circle(render, HitboxTexture, ScreenPosition, Radius, 0, 0f, 1f / (300 / Radius));
+            DrawEngine.Circle(render, CircleTexture, ScreenPosition, Radius, Color.Red, Layer, 0f, 1f / (300 / Radius));
         }
     }
 }
