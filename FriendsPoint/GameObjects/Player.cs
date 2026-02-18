@@ -262,8 +262,6 @@ namespace FriendsPoint.GameObjects {
                 DrawEngine.Line(spriteBatch, firstPoint, secondPoint, Color.Black, 1f, 6f);
                 DrawEngine.Line(spriteBatch, secondPoint, thirdPoint, Color.Black, 1f, 6f);
                 DrawEngine.RectFigure(spriteBatch, thirdPoint, new Rectangle(0, 0, 80, 20), new Vector2(150, 20) / 2, Color.Black, 0.99f);
-                Console.Log($"{AdditionRadius} + {(viewWeapon.Position - Position).Length()}", "repeat", "texstt");
-                Console.Log(GC.GetTotalMemory(false), "repeat", "gombo");
                 if (AdditionRadius >= (viewWeapon.Position - Position).Length()) {
                     DrawEngine.Text(spriteBatch, thirdPoint - new Vector2(190, 0), $"Take {viewWeapon.Name}", Vector2.Zero, Color.White);
                     CanToTakeWeapon = true;

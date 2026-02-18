@@ -18,7 +18,10 @@ namespace FriendsPoint
             player.ShotDrawTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime);
             ListCheck();
+
+
         }
+
         protected void ListCheck() {
             Vector2 PScreenPosition = ScreenCenter - Camera.CameraOffset;
             Vector2 PPosition = player.Position;

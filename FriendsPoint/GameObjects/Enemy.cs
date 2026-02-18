@@ -26,7 +26,7 @@ namespace FriendsPoint.GameObjects {
             if (Health <= 0) {
                  Die(enemies, objectIndex);
             }
-            Console.Log("Enemy gets punched", "non-repeat", "Ouch!");
+            Console.Log("Enemy gets punched", "Ouch!");
             // Код при попадании во врага
         }
         public void move(Vector2 moveDirection, float length) {

@@ -1,76 +1,159 @@
+using System.Reflection.Emit;
+using System.Text;
+using static System.Formats.Asn1.AsnWriter;
+
 public class Log {
-    public string Message;
-    public string DateTime;
+    public StringBuilder Message = new StringBuilder(128);
+    public StringBuilder DateTime = new StringBuilder(8);
     public string Key;
-    public Color MesColor;
-    public Log(string message, string dateTime, string key, Color mesColor) {
-        Message = message;
-        DateTime = dateTime;
+    public Color Color;
+    public Log() {
+        Key = "";
+        Color = Color.White;
+    }
+    public void DoLog(string message, string key, DateTime dateTime, Color color) {
+        Message.Clear();
+        Message.Append(message);
+        DateTime.Clear();
+        DateTime.Append(dateTime);
         Key = key;
-        MesColor = mesColor;
+        Color = color;
+    }
+    public void DoLog(int message, string key, DateTime dateTime, Color color) {
+        Message.Clear();
+        Message.Append(message);
+        DateTime.Clear();
+        DateTime.Append(dateTime);
+        Key = key;
+        Color = color;
+    }
+    public void DoLog(float message, string key, DateTime dateTime, Color color) {
+        Message.Clear();
+        Message.Append(message);
+        DateTime.Clear();
+        DateTime.Append(dateTime);
+        Key = key;
+        Color = color;
+    }
+    public void CopyFrom(Log other) {
+        Message.Clear();
+        Message.Append(other.Message);
+
+        DateTime.Clear();
+        DateTime.Append(other.DateTime);
+
+        Key = other.Key;
+        Color = other.Color;
     }
 }
 static public class Console {                                                          // Статический класс консоли
-    static public List<Log> NonRepeatLogs = new List<Log> { };
-    static public List<Log> RepeatLogs = new List<Log> { };
     static public Vector2 WindowSize;
     static public bool IsConsoleOpen = false;
-
-    static public void Log<T>(T message, Color color, string type = "non-repeat", string key = "Log") {
-        if (message is int || message is float || message is double || message is string || message is char || message is long) {
-            DoLog($"{message}", color, type, key);
-        }
+    static public float oneX;
+    static public float oneY;
+    static private readonly Log[] LogsPool = new Log[21];
+    static private int CountOfRepeatLogs = 0;
+    static Console() {
+        for (int i = 0; i < LogsPool.Length; i++)
+            LogsPool[i] = new Log();
     }
-    static public void Log<T>(T message, string type = "non-repeat", string key = "Log") {
-        if (message is int || message is float || message is double || message is string || message is char || message is long) {
-            DoLog($"{message}", Color.White, type, key);
-        }
-    }
-    static public void DoLog(string message, Color color, string type, string key) {
-        if (type == "non-repeat") {
-            string dateTime = DateTime.Now.ToString("HH:mm:ss");
-            Log log = new Log(message, dateTime, key, color);
-            NonRepeatLogs.Add(log);
-        } else if (type == "repeat") {
-            bool isThereKey = false;
-            for (int i = 0; i < RepeatLogs.Count; i++) {
-                if (RepeatLogs[i].Key == key) {
-                    RepeatLogs[i].Message = message;
-                    RepeatLogs[i].DateTime = DateTime.Now.ToString("HH:mm:ss");
-                    isThereKey = true;
-                    break;
+    static public void Log(string message, string key = "Log", Color? color = null) {
+        if (key == "Log") {
+            for (int i = LogsPool.Length - 2; i >= CountOfRepeatLogs; i--) {
+                LogsPool[i + 1].CopyFrom(LogsPool[i]);
+            }
+            LogsPool[CountOfRepeatLogs].DoLog(message, key, DateTime.Now, (color == null ? Color.White : color).Value);
+        } else {
+            for (int i = 0; i < CountOfRepeatLogs; i++) {
+                if (LogsPool[i].Key == key) {
+                    LogsPool[i].DoLog(message, key, DateTime.Now, (color == null ? Color.White : color).Value);
+                    return;
                 }
             }
-            if (isThereKey == false) {
-                string dateTime = DateTime.Now.ToString("HH:mm:ss");
-                Log log = new Log(message, dateTime, key, color);
-                RepeatLogs.Add(log);
+            for (int i = LogsPool.Length - 2; i >= CountOfRepeatLogs; i--) {
+                LogsPool[i + 1].CopyFrom(LogsPool[i]);
             }
-        }
-        if (RepeatLogs.Count + NonRepeatLogs.Count > 24) {
-            if (NonRepeatLogs.Count > 0) {
-                NonRepeatLogs.RemoveAt(0);
-            } else {
-                RepeatLogs.RemoveAt(0);
-            }
+            LogsPool[CountOfRepeatLogs].DoLog(message, key, DateTime.Now, (color == null ? Color.White : color).Value);
+            if (CountOfRepeatLogs < LogsPool.Length - 1)
+                CountOfRepeatLogs++;
         }
     }
-    static public void ClerConsole() {
-        RepeatLogs.Clear();
-        NonRepeatLogs.Clear();
+    static public void Log(int message, string key = "Log", Color? color = null) {
+        if (key == "Log") {
+            for (int i = LogsPool.Length - 2; i >= CountOfRepeatLogs; i--) {
+                LogsPool[i + 1].CopyFrom(LogsPool[i]);
+            }
+            LogsPool[CountOfRepeatLogs].DoLog(message, key, DateTime.Now, (color == null ? Color.White : color).Value);
+        } else {
+            for (int i = 0; i < CountOfRepeatLogs; i++) {
+                if (LogsPool[i].Key == key) {
+                    LogsPool[i].DoLog(message, key, DateTime.Now, (color == null ? Color.White : color).Value);
+                    return;
+                }
+            }
+            for (int i = LogsPool.Length - 2; i >= CountOfRepeatLogs; i--) {
+                LogsPool[i + 1].CopyFrom(LogsPool[i]);
+            }
+            LogsPool[CountOfRepeatLogs].DoLog(message, key, DateTime.Now, (color == null ? Color.White : color).Value);
+            if (CountOfRepeatLogs < LogsPool.Length - 1)
+                CountOfRepeatLogs++;
+        }
     }
-    static public void DrawConsole(SpriteBatch SpriteBatch) {
-        float oneX = WindowSize.X / 100;
-        float oneY = WindowSize.Y / 100;
-        DrawEngine.RectFigure(SpriteBatch, new Vector2(oneX, oneY), new Rectangle(0, 0, (int)oneX * 50, (int)(oneY * 35)), Vector2.Zero, Color.Black * 0.8f, 0.95f);
-        DrawEngine.Text(SpriteBatch, new Vector2(oneX*2, oneY*4/3), "Console", Vector2.Zero, Color.White);
-        for (int i = 0; i < RepeatLogs.Count; i++) {
-            string message = $"{RepeatLogs[i].DateTime} | {RepeatLogs[i].Key} : {RepeatLogs[i].Message}";
-            DrawEngine.Text(SpriteBatch, new Vector2(oneX*2, (float)(oneY*(3 + i*1.5))), message, Vector2.Zero, RepeatLogs[i].MesColor);
+    static public void Log(float message, string key = "Log", Color? color = null) {
+        if (key == "Log") {
+            for (int i = LogsPool.Length - 2; i >= CountOfRepeatLogs; i--) {
+                LogsPool[i + 1].CopyFrom(LogsPool[i]);
+            }
+            LogsPool[CountOfRepeatLogs].DoLog(message, key, DateTime.Now, (color == null ? Color.White : color).Value);
+        } else {
+            for (int i = 0; i < CountOfRepeatLogs; i++) {
+                if (LogsPool[i].Key == key) {
+                    LogsPool[i].DoLog(message, key, DateTime.Now, (color == null ? Color.White : color).Value);
+                    return;
+                }
+            }
+            for (int i = LogsPool.Length - 2; i >= CountOfRepeatLogs; i--) {
+                LogsPool[i + 1].CopyFrom(LogsPool[i]);
+            }
+            LogsPool[CountOfRepeatLogs].DoLog(message, key, DateTime.Now, (color == null ? Color.White : color).Value);
+            if (CountOfRepeatLogs < LogsPool.Length - 1)
+                CountOfRepeatLogs++;
         }
-        for (int i = 0; i < NonRepeatLogs.Count; i++) {
-            string message = $"{NonRepeatLogs[i].DateTime} | {NonRepeatLogs[i].Key} : {NonRepeatLogs[i].Message}";
-            DrawEngine.Text(SpriteBatch, new Vector2(oneX * 2, (float)(oneY * (3 + (i + RepeatLogs.Count) * 1.5))), message, Vector2.Zero, NonRepeatLogs[i].MesColor);
+    }
+    static public void DrawConsole(SpriteBatch spriteBatch) {
+        DrawEngine.RectFigure(
+            spriteBatch,
+            new Vector2(oneX, oneY),
+            new Rectangle(0, 0, (int)oneX * 50, (int)(oneY * 35)),
+            Vector2.Zero,
+            Color.Black * 0.8f,
+            0.95f
+        );
+
+        DrawEngine.Text(spriteBatch, new Vector2(oneX * 2, oneY), "Console", Vector2.Zero, Color.White);
+
+        float y = oneY * 3;
+
+        for (int i = 0; i < LogsPool.Length; i++) {
+            DrawLogLine(spriteBatch, LogsPool[i], y);
+            y += oneY * 1.5f;
         }
+    }
+    static void DrawLogLine(SpriteBatch spriteBatch, Log log, float y) {
+        Vector2 pos = new Vector2(oneX * 2, y);
+
+        spriteBatch.DrawString(DrawEngine.GameFont, log.DateTime, pos, log.Color, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.99f);
+        pos.X += 160;
+
+        spriteBatch.DrawString(DrawEngine.GameFont, "|", pos, log.Color, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.99f);
+        pos.X += 10;
+
+        spriteBatch.DrawString(DrawEngine.GameFont, log.Key, pos, log.Color, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.99f);
+        pos.X += 80;
+
+        spriteBatch.DrawString(DrawEngine.GameFont, ":", pos, log.Color, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.99f);
+        pos.X += 10;
+
+        spriteBatch.DrawString(DrawEngine.GameFont, log.Message, pos, log.Color, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.99f);
     }
 }

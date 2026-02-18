@@ -58,7 +58,6 @@ namespace FriendsPoint.GameObjects {
             DrawEngine.Texture(render, Texture, ScreenPosition, 0.12f, Rotation, 1f);
             DrawEngine.Circle(render, HitboxTexture, ScreenPosition, Radius, 0.11f, 0f, 1f / (300 / Radius));
             DrawEngine.RectFigure(render, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow);
-            //DrawEngine.Circle(render, AdditionHitboxTexture, ScreenPosition, AdditionRadius, 0.1f, 0f, 1f / (300 / AdditionRadius));
         }
     }
 }

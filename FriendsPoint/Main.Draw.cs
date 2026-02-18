@@ -1,14 +1,35 @@
 
+using System.Timers;
+
 namespace FriendsPoint
 {
     public partial class Main       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
         int someTimer = 0;
+        long lastAllocated = 0;
+        double timer = 0;
+        long delta;
+
         protected override void Draw(GameTime gameTime) {
+            timer += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (timer >= 0.3) {
+                long allocated = GC.GetAllocatedBytesForCurrentThread();
+                delta = allocated - lastAllocated;
+
+                lastAllocated = allocated;
+                timer = 0;
+            }
+
             GraphicsDevice.Clear(Color.White);
             render.Begin(
                 SpriteSortMode.FrontToBack
             );
+
+
+            Console.Log(GC.GetTotalMemory(false), "gombo");
+            Console.Log(delta, "flombo");
+
             for (int i = 0; i < Players.Count; i++) {
                 Players[i].Draw(render);
             }
@@ -35,7 +56,6 @@ namespace FriendsPoint
             } else {
                 someTimer = 0;
             }
-            Console.Log(someTimer, "repeat", "Gay");
             DrawUI(render); // Отрисовка интерфейса
             base.Draw(gameTime);
             render.End();

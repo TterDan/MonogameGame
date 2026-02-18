@@ -12,7 +12,8 @@ namespace FriendsPoint
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             ScreenCenter = new Vector2(windowSize.X / 2, windowSize.Y / 2);
             Console.WindowSize = windowSize;
-
+            Console.oneX = windowSize.X / 100;
+            Console.oneY = windowSize.Y / 100;
             render = new SpriteBatch(GraphicsDevice);
 
             BasicBlackCircleTexture = Circle(300, Color.Black);
