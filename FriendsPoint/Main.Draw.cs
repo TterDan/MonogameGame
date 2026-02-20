@@ -5,7 +5,7 @@ namespace FriendsPoint
 {
     public partial class Main       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
-        int someTimer = 0;
+        //int someTimer = 0;
         BasicStyle Rect1 = new BasicStyle(new Vector2(150, 150), new Vector2(100, 100), new Vector2(0, 0), 0f);
         protected override void Draw(GameTime gameTime) {
 

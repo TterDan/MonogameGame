@@ -3,26 +3,29 @@ namespace FriendsPoint.GameObjects {
     public class Weapon : CircleHBoxObj {                                                          // Класс оружия, наследует класс GameObject
         public string Name;
         public string Type;
-        public Rectangle Rect;
         // Настройки оружия
         public float Damage;
         public float HitDamage;
         public float UserFireKnockback;
         public float CameraFireShake;
-        public float reloadTime;
-        public float fireRate;
-        public float spread;
-        public float spreadMultiplier;
-        public float cartrigesInMagazine;
-        public float totalCartriges;
-        public Vector2 handleOffset;
-        public float moveSpeedMultiplier;
-        public float DropSpeed = 20f;
+        public float ReloadTime;
+        public float FireRate;
+        public float Spread;
+        public float SpreadMultiplier;
+        public float CartrigesInMagazine;
+        public float TotalCartriges;
+        public Vector2 HandleOffset;
+        public float MoveSpeedMultiplier;
         public float RecoilStrength;
         public float RecoilStrengthForCamera;
         public float PatternIndex;
         public Vector2 TrunkOffset;
-        public Vector2 currentSpeed;
+
+        private Vector2 HitForce = Vector2.Zero;
+        public float FlyVelocity = 0f;
+        public float FlyDeceleraion = 50f;
+        public float HitForceVelocity = 170f;
+        private float AdditionForceDeceleraion = 1f;
 
         public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, float recoilStrength, float recoilStrengthForCamera, float patIndex, Vector2 trunkOffset) {
             Name = name;
@@ -36,23 +39,25 @@ namespace FriendsPoint.GameObjects {
             HitDamage = gunSets[1];
             UserFireKnockback = gunSets[2];
             CameraFireShake = gunSets[3];
-            reloadTime = gunSets[4];
-            fireRate = gunSets[5];
-            spread = gunSets[6];
-            spreadMultiplier = gunSets[7];
-            cartrigesInMagazine = gunSets[8];
-            totalCartriges = gunSets[9];
-            handleOffset = Offset;
+            ReloadTime = gunSets[4];
+            FireRate = gunSets[5];
+            Spread = gunSets[6];
+            SpreadMultiplier = gunSets[7];
+            CartrigesInMagazine = gunSets[8];
+            TotalCartriges = gunSets[9];
+            HandleOffset = Offset;
             TextureScale = Scale * 0.45f;
             RecoilStrength = recoilStrength;
             RecoilStrengthForCamera = recoilStrengthForCamera;
             PatternIndex = patIndex;
             TrunkOffset = trunkOffset;
         }
-        public void move() {
-            currentSpeed = Vector2.Lerp(currentSpeed, Vector2.Zero, 0.15f);
-            Position -= currentSpeed;
-            ScreenPosition -= currentSpeed;
+        public void AddForce(Vector2 forceVector) {
+            HitForce += forceVector * HitForceVelocity;
+        }
+        public void Move(float deltaTime) {
+            Position += HitForce * deltaTime;
+            HitForce = Vector2.Lerp(HitForce, Vector2.Zero, AdditionForceDeceleraion * deltaTime);
         }
         public override void Draw(SpriteBatch render) {
             DrawEngine.Circle(render, CircleTexture, ScreenPosition, Radius, Color.Black * 0.85f, 0.1f, 0f, 1f / (300 / Radius));

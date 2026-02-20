@@ -1,44 +1,39 @@
 
 namespace FriendsPoint.GameObjects {
     public class Enemy : CircleHBoxObj {                                                          // Класс врага, наследует класс GameObject
-        public float Health = 100f;
-        public float MoveSpeed;
-        public Vector2 BeatForceVelocity = Vector2.Zero;
-        public Rectangle Rect;
+        private float Health = 100f;
+        private float MoveSpeed;
+        private Vector2 HitForce = Vector2.Zero;
+        private float HitForceVelocity = 200f;
+        private float AdditionForceDeceleraion = 1f;
+        private int IsMove = 0;
 
-        public Enemy(GraphicsDevice GraphicsDevice, Vector2 position, int radius, float moveSpeed) {
+        public Enemy(GraphicsDevice GraphicsDevice, Vector2 position, int radius, float moveSpeed, int isMove) {
             Layer = 0.2f;
             ScreenPosition = position;
             Position = position;
             MoveSpeed = moveSpeed;
             Radius = radius;
-            DrawRect = new Rectangle(0, 0, Radius * 2, Radius * 2);
+            IsMove = 0;
         }
-        public void Hit() {
-
+        public float GetHealth() {
+            return Health;
         }
-        public void Die(List<GameObject> enemies, int objectIndex) {
-            enemies.RemoveAt(objectIndex);
-            // Код при смерти врага
-        }
-        public void TakeDamage(float damage, List<GameObject> enemies, int objectIndex) {
+        public bool TakeDamage(float damage, List<GameObject> enemies, int objectIndex) {
             Health -= damage;
             if (Health <= 0) {
-                 Die(enemies, objectIndex);
+                enemies.RemoveAt(objectIndex);
+                return true;
             }
-            Console.Log("Enemy gets punched", "Ouch!");
-            // Код при попадании во врага
+            return false;
         }
-        public void move(Vector2 moveDirection, float length) {
-            if (moveDirection.Length() < length) {
-                moveDirection = Vector2.Zero;
-            } else {
-                moveDirection.Normalize();
-            }
-            moveDirection -= BeatForceVelocity;
-            BeatForceVelocity = Vector2.Lerp(BeatForceVelocity, Vector2.Zero, 0.10f);
-            Position += moveDirection * MoveSpeed;
-            ScreenPosition += moveDirection * MoveSpeed;
+        public void AddForce(Vector2 forceVector) {
+            HitForce += forceVector * HitForceVelocity;
+        }
+        public void Move(Vector2 vectorToPlayer, float sumOfRadiuses, float deltaTime) {
+            Vector2 forceToPlayer = (vectorToPlayer.Length() >= sumOfRadiuses ? Vector2.Normalize(vectorToPlayer) * MoveSpeed : Vector2.Zero) * IsMove;
+            Position += (HitForce + forceToPlayer) * deltaTime;
+            HitForce = Vector2.Lerp(HitForce, Vector2.Zero, AdditionForceDeceleraion * deltaTime);
         }
         public override void Draw(SpriteBatch render) {
             DrawEngine.Circle(render, CircleTexture, ScreenPosition, Radius, Color.Red, Layer, 0f, 1f / (300 / Radius));

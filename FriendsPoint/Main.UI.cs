@@ -13,7 +13,7 @@ namespace FriendsPoint
                 Enemy enemy = (Enemy)Enemies[j];
 
                 DrawEngine.DrawText(render, new Vector2(enemy.ScreenPosition.X, enemy.ScreenPosition.Y), "HP:", Color.White, 0.301f);
-                DrawEngine.DrawText(render, new Vector2(enemy.ScreenPosition.X + 30, enemy.ScreenPosition.Y), enemy.Health, Color.White, 0.301f);
+                DrawEngine.DrawText(render, new Vector2(enemy.ScreenPosition.X + 30, enemy.ScreenPosition.Y), enemy.GetHealth(), Color.White, 0.301f);
             }
 
             DrawEngine.DrawText(render, new Vector2(10, 10), "FPS:", Color.Black, 0.65f);

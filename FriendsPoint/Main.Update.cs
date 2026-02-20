@@ -10,8 +10,10 @@ namespace FriendsPoint
         double timer = 0;
         long delta;
         long lastAllocated = 0;
+        float deltaTime = 0;
         protected override void Update(GameTime gameTime) {
-
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
+            Camera.deltaTime = deltaTime;
             timer += gameTime.ElapsedGameTime.TotalSeconds;
 
             if (timer >= 0.25) {
@@ -30,36 +32,57 @@ namespace FriendsPoint
             enemySpawn();
             FPSCounter(gameTime);
             Camera.ChangeOffset();
-            player.currentFireTime += gameTime.ElapsedGameTime.TotalMilliseconds;
-            player.ShotDrawTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+            player.currentFireTime += 1;
+            player.ShotDrawTimer += 1;
+            ListForCycles();
             base.Update(gameTime);
-            ListCheck();
-
         }
 
-        protected void ListCheck() {
+        protected void ListForCycles() {                                    // Здесь перебираются массивы игровых объектов
             Vector2 PScreenPosition = ScreenCenter - Camera.CameraOffset;
             Vector2 PPosition = player.Position;
             player.ScreenPosition = PScreenPosition;
             for (int i = 1; i < Players.Count; i++) {
                 Player player = (Player)Players[i];
                 player.ScreenPosition = PScreenPosition + (player.Position - PPosition);
+                player.setConstants(deltaTime);
             }
             for (int i = 0; i < Weapons.Count; i++) {
                 Weapon weapon = (Weapon)Weapons[i];
+                weapon.Move(deltaTime);
                 weapon.ScreenPosition = PScreenPosition + (weapon.Position - PPosition);
-                weapon.move();
             }
             for (int i = 0; i < Enemies.Count; i++) {
                 Enemy enemy = (Enemy)Enemies[i];
+                enemy.Move(player.Position - enemy.Position, player.Radius + enemy.Radius, deltaTime);
                 enemy.ScreenPosition = PScreenPosition + (enemy.Position - PPosition);
-                enemy.move(player.Position - enemy.Position, player.Radius + enemy.Radius);
             }
             for (int i = 0; i < OtherGameObjects.Count; i++) {
                 GameObject gameObj = (GameObject)OtherGameObjects[i];
                 gameObj.ScreenPosition = PScreenPosition + (gameObj.Position - PPosition);
             }
         }
+        protected void weaponMove() {
+            for (int i = 0; i < droppedWeapons.Count; i++) {
+                var (weapon, dir) = droppedWeapons[i];
+                weapon.FlyVelocity -= weapon.FlyDeceleraion * deltaTime;
+                weapon.Position += dir * weapon.FlyVelocity * deltaTime;
+                weapon.Rotation += weapon.FlyVelocity * deltaTime * 0.02f;
+                Console.Log(dir, "113");
+                for (int j = 0; j < Enemies.Count; j++) {
+                    Enemy enemy = (Enemy)Enemies[j];
+                    if (enemy.Radius + weapon.Radius * 2 >= (enemy.ScreenPosition - weapon.ScreenPosition).Length()) {
+                        float calculatedDamage = (weapon.HitDamage * weapon.FlyVelocity / weapon.HitForceVelocity);
+                        weapon.FlyVelocity = 0;
+                        enemy.TakeDamage(calculatedDamage, Enemies, j);
+                    }
+                }
+                if (weapon.FlyVelocity <= 0) {
+                    droppedWeapons.RemoveAt(i);
+                }
+            }
+        }
+
         protected void FPSCounter(GameTime gameTime) {
             ElapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
             FrameCounter++;
@@ -85,25 +108,6 @@ namespace FriendsPoint
                 }
             }
         }
-        protected void weaponMove() {
-            for (int i = 0; i < droppedWeapons.Count; i++) {
-                var (weapon, dir) = droppedWeapons[i];
-                weapon.Speed -= 0.35f;
-                weapon.Position += dir * weapon.Speed;
-                weapon.Rotation += weapon.Speed * 0.006f;
-                for (int j = 0; j < Enemies.Count; j++) {
-                    Enemy enemy = (Enemy)Enemies[i];
-                    if (enemy.Radius + weapon.Radius * 2 >= (enemy.ScreenPosition - weapon.ScreenPosition).Length()) {
-                        float calculatedDamage = (weapon.HitDamage * weapon.Speed / weapon.DropSpeed);
-                        weapon.Speed = 0;
-                        enemy.TakeDamage(calculatedDamage, Enemies, j);
-                    }
-                }
-                if (weapon.Speed <= 0) {
-                    droppedWeapons.RemoveAt(i);
-                }
-            }
-        }
         public void enemySpawn()
         {
             DrawEngine.GraphicsDevice = GraphicsDevice;
@@ -115,7 +119,8 @@ namespace FriendsPoint
                         GraphicsDevice,
                         new Vector2(200 + i * 100, 200),
                         60,
-                        2f
+                        35f,
+                        0
                     );
                     Enemies.Add(enemy);
                 }

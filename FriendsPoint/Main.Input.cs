@@ -9,8 +9,8 @@ namespace FriendsPoint
         public bool isEPressed = false;
         protected void Input()
         {
-            player.rotate(getMouse().Position, Weapons);     // В метод даю ввод с мыши
-            player.move(getKeyboard(), Players, Weapons, Enemies, OtherGameObjects);    // В метод даю ввод с клавиатуры и все обьекты на карте, чтобы их смещать
+            player.Rotate(getMouse().Position, Weapons);     // В метод даю ввод с мыши
+            player.Move(getKeyboard(), Players, Weapons, Enemies, OtherGameObjects, deltaTime);    // В метод даю ввод с клавиатуры и все обьекты на карте, чтобы их смещать
         }
         protected MouseState getMouse()             // Получение ввода с мыши
         {
@@ -20,11 +20,11 @@ namespace FriendsPoint
             if (mouse.LeftButton == ButtonState.Pressed && mouseState == false)
             {
                 player.isShooting = false;
-                player.UseWeapon(Enemies, Weapons);
+                player.UseWeapon(Enemies, Weapons, deltaTime);
                 mouseState = true;
             }
             if(mouseState == true && player.currentWeapon.Type == "Automatic")
-                player.UseWeapon(Enemies, Weapons);
+                player.UseWeapon(Enemies, Weapons, deltaTime);
 
             if (mouse.LeftButton == ButtonState.Released)
             {

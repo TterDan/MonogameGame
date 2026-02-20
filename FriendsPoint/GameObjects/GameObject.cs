@@ -17,7 +17,6 @@ namespace FriendsPoint.GameObjects {
         public float TextureScale = 1.7f;
         public float Scale = 1f;
         public float Rotation = 0f;
-        public float Speed = 7f;
         public bool isflying = false;
 
         public Rectangle DrawRect;

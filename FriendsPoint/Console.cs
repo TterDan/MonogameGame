@@ -57,7 +57,8 @@ static public class Console {                                                   
     }
     static public StringBuilder TextBuffer = new StringBuilder(64);
 
-    static public void BeforeLog(StringBuilder message, string key, Color color) {
+    static public void BeforeLog(StringBuilder message, string key, Color? colorNullable) {
+        Color color = (colorNullable == null ? Color.White : colorNullable.Value);
         if (key == "Log") {
             for (int i = LogsPool.Length - 2; i >= CountOfRepeatLogs; i--) {
                 LogsPool[i + 1].CopyFrom(LogsPool[i]);
@@ -79,22 +80,36 @@ static public class Console {                                                   
         }
     }
     static public void Log(string message, string key = "Log", Color? color = null) {
-        color = (color == null ? Color.White : color);
-        TextBuffer.Clear();
-        TextBuffer.Append(message);
-        BeforeLog(TextBuffer, key, color.Value);
+        TextBuffer.Clear().Append(message);
+        BeforeLog(TextBuffer, key, color);
     }
     static public void Log(int message, string key = "Log", Color? color = null) {
-        color = (color == null ? Color.White : color);
-        TextBuffer.Clear();
-        TextBuffer.Append(message);
-        BeforeLog(TextBuffer, key, color.Value);
+        TextBuffer.Clear().Append(message);
+        BeforeLog(TextBuffer, key, color);
     }
     static public void Log(float message, string key = "Log", Color? color = null) {
-        color = (color == null ? Color.White : color);
-        TextBuffer.Clear();
-        TextBuffer.Append(message);
-        BeforeLog(TextBuffer, key, color.Value);
+        TextBuffer.Clear().Append(message);
+        BeforeLog(TextBuffer, key, color);
+    }
+    static public void Log(double message, string key = "Log", Color? color = null) {
+        TextBuffer.Clear().Append(message);
+        BeforeLog(TextBuffer, key, color);
+    }
+    static public void Log(long message, string key = "Log", Color? color = null) {
+        TextBuffer.Clear().Append(message);
+        BeforeLog(TextBuffer, key, color);
+    }
+    static public void Log(char message, string key = "Log", Color? color = null) {
+        TextBuffer.Clear().Append(message);
+        BeforeLog(TextBuffer, key, color);
+    }
+    static public void Log(Rectangle message, string key = "Log", Color? color = null) {
+        TextBuffer.Clear().Append(message);
+        BeforeLog(TextBuffer, key, color);
+    }
+    static public void Log(Vector2 message, string key = "Log", Color? color = null) {
+        TextBuffer.Clear().Append(message);
+        BeforeLog(TextBuffer, key, color);
     }
     static public void DrawConsole(SpriteBatch spriteBatch) {
         DrawEngine.RectFigure(

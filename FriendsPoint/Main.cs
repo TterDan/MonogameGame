@@ -34,8 +34,8 @@ namespace FriendsPoint
             GraphicsDeviceManager.PreferredBackBufferHeight = 1080;
             GraphicsDeviceManager.IsFullScreen = false;
 
-            IsFixedTimeStep = true;
-            TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 144.0);
+            IsFixedTimeStep = false;
+            //TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 144.0);
 
             GraphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
         }

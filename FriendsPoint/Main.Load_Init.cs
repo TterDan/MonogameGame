@@ -27,7 +27,7 @@ namespace FriendsPoint
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             OtherGameObjects.Add(map);
 
-            player = new Player(GraphicsDevice, Vector2.Zero, 70, 120, 4f, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
+            player = new Player(GraphicsDevice, Vector2.Zero, 70, 120, 50f, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
             Players.Add(player);
             player.spriteBatch = render;
             player.Fist = fist;
