@@ -18,6 +18,8 @@ namespace FriendsPoint
 
             DrawEngine.DrawText(render, new Vector2(10, 10), "FPS:", Color.Black, 0.65f);
             DrawEngine.DrawText(render, new Vector2(50, 10), FramesPerSecond, Color.Black, 0.65f);
+            if(player.currentWeapon.Type != "Melee")
+                DrawEngine.DrawText(render, new Vector2(10, 1000), $"Cartriges: {player.currentWeapon.CartrigesInMagazine} / {player.currentWeapon.TotalCartriges}", Color.Black, 0.65f);
         }
         static public void ViewWeaponUI(SpriteBatch spriteBatch, Vector2 firstPoint, Vector2 secondPoint, Vector2 thirdPoint, string name, Color color) {
             ViewWeaponTextBuffer.Clear();

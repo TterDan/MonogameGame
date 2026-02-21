@@ -45,6 +45,10 @@ namespace FriendsPoint
             if (keyboard.IsKeyUp(Keys.OemTilde)) {
                 isOemTildePressed = false;
             }
+            if (keyboard.IsKeyDown(Keys.R))
+            {
+                player.Reload();
+            }
             if (keyboard.IsKeyDown(Keys.W))
                 direction.Y = -1;
             else

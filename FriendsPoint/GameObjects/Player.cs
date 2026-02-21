@@ -29,8 +29,8 @@ namespace FriendsPoint.GameObjects {
         public Vector2 mouseDirectionForCamera;
         public List<Vector2> bullets;
         public bool CanToTakeWeapon = false;
-
-
+        float deltaTimeForRecoil;
+        public bool isReloading = false;
         public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, int additionRadius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon, SpriteFont Font) {
             Position = startPosition;
             MoveSpeed = moveSpeed;
@@ -51,26 +51,48 @@ namespace FriendsPoint.GameObjects {
         }
         public void UseWeapon(List<GameObject> enemies, List<GameObject> weapons, float deltaTime) {
             Vector2 direction = mousePosition - ScreenPosition;
+            deltaTimeForRecoil = deltaTime;
             if (currentFireTime > currentWeapon.FireRate) {
                 bullets.Clear();
-                if (currentWeapon.Type == "Melee") {
+                if (currentWeapon.Type == "Melee")
+                {
                     Beat(enemies, weapons);
-                } else
-                if (currentWeapon.Type == "Throwing") {
-                    Throw(weapons);
-                } else
-                if (currentWeapon.Name == "Shotgun") {
-                    for (int i = 0; i < 5; i++)
-                        Shot(enemies, Vector2.Normalize(direction), deltaTime);
-                } else
-                if (currentWeapon.Type == "Semi-automatic" || currentWeapon.Type == "Automatic") {
-                    Shot(enemies, Vector2.Normalize(direction), deltaTime);
-                } else
-                if (currentWeapon.Type == "Placing") {
-
                 }
+                else
+
+                if (currentWeapon.CartrigesInMagazine > 0)
+                {
+                    currentWeapon.CartrigesInMagazine--;
+                    if (currentWeapon.Type == "Throwing")
+                    {
+                        Throw(weapons);
+                    }
+                    else
+                    if (currentWeapon.Name == "Shotgun")
+                    {
+                        for (int i = 0; i < 5; i++)
+                            Shot(enemies, Vector2.Normalize(direction), deltaTime);
+                    }
+                    else
+                    if (currentWeapon.Type == "Semi-automatic" || currentWeapon.Type == "Automatic")
+                    {
+                        Shot(enemies, Vector2.Normalize(direction), deltaTime);
+                    }
+                    else
+                    if (currentWeapon.Type == "Placing")
+                    {
+
+                    }
+                }
+                else
+                    Reload();
                 currentFireTime = 0;
             }
+        }
+        
+        public void Reload()
+        {
+            isReloading = true; 
         }
         public void Place() {
 
@@ -119,13 +141,14 @@ namespace FriendsPoint.GameObjects {
             return trunkPos;
         }
         public void Shot(List<GameObject> enemies, Vector2 direction, float deltaTime) {
-            shotcount += 1;
+            shotcount++;
             Camera.ShotOffset(-mouseDirectionForCamera, currentWeapon.RecoilStrengthForCamera);
             Vector2 recoilTarget = new Vector2(currentWeapon.RecoilStrength, 0f);
             recoilOffset = Vector2.Lerp(recoilOffset, recoilTarget, 0.2f);
-            Vector2 spread = pattern.getPattern(currentWeapon.PatternIndex, shotcount, CurrentSpeed * deltaTime);
+            Vector2 spread = pattern.getPattern(currentWeapon.PatternIndex, shotcount, (CurrentSpeed * deltaTime) * 10);
             Vector2 finalDirection = new Vector2(direction.X + spread.X, direction.Y + spread.Y);
-            for (int j = 0; j < enemies.Count; j++) {
+            for (int j = 0; j < enemies.Count; j++)
+            {
                 Enemy enemy = (Enemy)enemies[j];
                 Vector2 enemyDirection = enemy.ScreenPosition - (ScreenPosition + GetTrunkOffset());
                 float AB = finalDirection.X * enemyDirection.X + finalDirection.Y * enemyDirection.Y;
@@ -134,8 +157,10 @@ namespace FriendsPoint.GameObjects {
                 float CosAngle = AB / (moduleA * moduleB);
                 float Angle = MathF.Acos(CosAngle);
                 float LengthBetweenDirectionAndEnemy = moduleB * MathF.Sin(Angle);
-                if (LengthBetweenDirectionAndEnemy < enemy.Radius && CosAngle > 0) {
-                    if (enemy.TakeDamage(currentWeapon.Damage, enemies, j) == true) {
+                if (LengthBetweenDirectionAndEnemy < enemy.Radius && CosAngle > 0)
+                {
+                    if (enemy.TakeDamage(currentWeapon.Damage, enemies, j) == true)
+                    {
                         j--;
                     }
                 }
@@ -144,6 +169,7 @@ namespace FriendsPoint.GameObjects {
             bullets.Add(Vector2.Normalize(finalDirection) * 10000f);
             ShotDrawTimer = 0;
         }
+        
         public void TakeWeapon(List<GameObject> weapons, List<(Weapon, Vector2)> droppedWeapons) {
             if (CanToTakeWeapon == false || viewWeapon == null) {
                 return;
@@ -219,7 +245,7 @@ namespace FriendsPoint.GameObjects {
             DrawEngine.RectFigure(spriteBatch, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow, 0.43f);
 
             if (!isShooting) {
-                recoilOffset = Vector2.Lerp(recoilOffset, Vector2.Zero, 0.05f);
+                recoilOffset = Vector2.Lerp(recoilOffset, Vector2.Zero, 0.5f * deltaTimeForRecoil);
             }
             currentOffset = currentWeapon.HandleOffset + recoilOffset;
             Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, currentWeapon.Radius * 2, currentWeapon.Radius * 2);

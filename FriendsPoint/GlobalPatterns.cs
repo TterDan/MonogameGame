@@ -20,8 +20,9 @@ namespace FriendsPoint
         {
             float multipiler = 0;
             int speed = (int)playerSpeed.Length();
+            Console.Log(speed);
             if (speed > 1)
-                multipiler = rnd.Next(-speed, speed) * 0.03f; ;
+                multipiler = rnd.Next(-speed, speed) * 0.028f;
             if (index == 0 && speed <= 1)
             {
                 return Vector2.Zero;

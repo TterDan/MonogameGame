@@ -11,6 +11,8 @@ namespace FriendsPoint
         long delta;
         long lastAllocated = 0;
         float deltaTime = 0;
+        float reloadTimer = 0;
+        double gameTimer;
         protected override void Update(GameTime gameTime) {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
             Camera.deltaTime = deltaTime;
@@ -31,11 +33,31 @@ namespace FriendsPoint
             semiCheck(gameTime);
             enemySpawn();
             FPSCounter(gameTime);
+            Reloading(deltaTime);
             Camera.ChangeOffset();
             player.currentFireTime += 1;
             player.ShotDrawTimer += 1;
             ListForCycles();
             base.Update(gameTime);
+        }
+
+        protected void Reloading(float deltatime)
+        {
+            if (player.isReloading)
+            {
+                if (player.currentWeapon.TotalCartriges > 0 && player.currentWeapon.CartrigesInMagazine < player.currentWeapon.ReloadCount)
+                {
+                    reloadTimer += deltatime;
+                    if (reloadTimer >= player.currentWeapon.ReloadTime)
+                    {
+                        player.currentWeapon.TotalCartriges -= player.currentWeapon.ReloadCount;
+                        player.currentWeapon.TotalCartriges += player.currentWeapon.CartrigesInMagazine;
+                        player.currentWeapon.CartrigesInMagazine += player.currentWeapon.ReloadCount - player.currentWeapon.CartrigesInMagazine;
+                        player.isReloading = false;
+                        reloadTimer = 0;
+                    }
+                }
+            }
         }
 
         protected void ListForCycles() {                                    // Здесь перебираются массивы игровых объектов

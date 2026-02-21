@@ -26,6 +26,7 @@ namespace FriendsPoint.GameObjects {
         public float FlyDeceleraion = 50f;
         public float HitForceVelocity = 170f;
         private float AdditionForceDeceleraion = 1f;
+        public float ReloadCount;
 
         public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, float recoilStrength, float recoilStrengthForCamera, float patIndex, Vector2 trunkOffset) {
             Name = name;
@@ -45,6 +46,7 @@ namespace FriendsPoint.GameObjects {
             SpreadMultiplier = gunSets[7];
             CartrigesInMagazine = gunSets[8];
             TotalCartriges = gunSets[9];
+            ReloadCount = CartrigesInMagazine;
             HandleOffset = Offset;
             TextureScale = Scale * 0.45f;
             RecoilStrength = recoilStrength;
