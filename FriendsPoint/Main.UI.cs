@@ -7,6 +7,7 @@ namespace FriendsPoint
     {
         public List<Button> Buttons = new List<Button>();
         static public StringBuilder ViewWeaponTextBuffer = new StringBuilder(32);
+        static public StringBuilder CartrigesBuffer = new StringBuilder(48);
         public virtual void DrawUI(SpriteBatch render, Rectangle? sourceRectangle = null)
         {
             for (int j = 0; j < Enemies.Count; j++) {
@@ -18,8 +19,6 @@ namespace FriendsPoint
 
             DrawEngine.DrawText(render, new Vector2(10, 10), "FPS:", Color.Black, 0.65f);
             DrawEngine.DrawText(render, new Vector2(50, 10), FramesPerSecond, Color.Black, 0.65f);
-            if(player.currentWeapon.Type != "Melee")
-                DrawEngine.DrawText(render, new Vector2(10, 1000), $"Cartriges: {player.currentWeapon.CartrigesInMagazine} / {player.currentWeapon.TotalCartriges}", Color.Black, 0.65f);
         }
         static public void ViewWeaponUI(SpriteBatch spriteBatch, Vector2 firstPoint, Vector2 secondPoint, Vector2 thirdPoint, string name, Color color) {
             ViewWeaponTextBuffer.Clear();
@@ -33,7 +32,25 @@ namespace FriendsPoint
             DrawEngine.DrawText(spriteBatch, thirdPoint + new Vector2(-65, -4), "Take", color, 0.522f, 1.3f);
             DrawEngine.DrawText(spriteBatch, thirdPoint + new Vector2(-05, -4), name, color, 0.522f, 1.3f);
         }
-        static public void CursorUI(SpriteBatch spriteBatch, Vector2 position) // Думаю удобно будет для каждого элемента интерфейса делать свой метод, в котором с ним будет удобно взаимодействовать, чтобы не засирать Draw.     Нет, arishem, всем все равно
+        static public void CartrigesInMagazineUI(SpriteBatch sprite,float cartrigesInMagazine, float TotalCartriges)
+        {
+            CartrigesBuffer.Clear();
+            CartrigesBuffer.Append("Cartriges:");
+            CartrigesBuffer.Append("Reloading");
+            CartrigesBuffer.Append(cartrigesInMagazine);
+            CartrigesBuffer.Append(" / ");
+            CartrigesBuffer.Append(TotalCartriges);
+            float offset = 0;
+            if (cartrigesInMagazine < 10)
+                offset = -8;
+            if (cartrigesInMagazine >= 100)
+                offset = 10;
+            DrawEngine.DrawText(sprite, new Vector2(10, 1000), "Cartriges:", Color.Black, 0.65f);
+            DrawEngine.DrawText(sprite, new Vector2(85, 1000), cartrigesInMagazine, Color.Black, 0.65f);
+            DrawEngine.DrawText(sprite, new Vector2(100 + offset, 1000), " / ", Color.Black, 0.65f);
+            DrawEngine.DrawText(sprite, new Vector2(110 + offset, 1000), TotalCartriges, Color.Black, 0.65f);
+        }
+        static public void CursorUI(SpriteBatch spriteBatch, Vector2 position) // Думаю удобно будет для каждого элемента интерфейса делать свой метод, в котором с ним будет удобно взаимодействовать, чтобы не засирать Draw.     Нет, arishem, всем все равно // Tterkaa уволен.
         {
             spriteBatch.Draw(Cursor, position, null, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.53f);
         }

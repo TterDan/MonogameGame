@@ -23,7 +23,6 @@ namespace FriendsPoint.GameObjects {
         public double ShotDrawTimer = 0;
         public double currentShotDrawTime = 50;
         public Vector2 bulletLine;
-        public float coolDown;
         public Weapon viewWeapon;
         public SpriteFont font;
         public Vector2 mouseDirectionForCamera;
@@ -31,6 +30,7 @@ namespace FriendsPoint.GameObjects {
         public bool CanToTakeWeapon = false;
         float deltaTimeForRecoil;
         public bool isReloading = false;
+        public bool isCoolDown = false;
         public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, int additionRadius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon, SpriteFont Font) {
             Position = startPosition;
             MoveSpeed = moveSpeed;
@@ -52,47 +52,51 @@ namespace FriendsPoint.GameObjects {
         public void UseWeapon(List<GameObject> enemies, List<GameObject> weapons, float deltaTime) {
             Vector2 direction = mousePosition - ScreenPosition;
             deltaTimeForRecoil = deltaTime;
-            if (currentFireTime > currentWeapon.FireRate) {
-                bullets.Clear();
-                if (currentWeapon.Type == "Melee")
+            if (!isCoolDown)
+            {
+                if (currentFireTime > currentWeapon.FireRate)
                 {
-                    Beat(enemies, weapons);
-                }
-                else
-
-                if (currentWeapon.CartrigesInMagazine > 0)
-                {
-                    currentWeapon.CartrigesInMagazine--;
-                    if (currentWeapon.Type == "Throwing")
+                    bullets.Clear();
+                    if (currentWeapon.Type == "Melee")
                     {
-                        Throw(weapons);
+                        Beat(enemies, weapons);
                     }
                     else
-                    if (currentWeapon.Name == "Shotgun")
+
+                    if (currentWeapon.CartrigesInMagazine > 0)
                     {
-                        for (int i = 0; i < 5; i++)
+                        currentWeapon.CartrigesInMagazine--;
+                        if (currentWeapon.Type == "Throwing")
+                        {
+                            Throw(weapons);
+                        }
+                        else
+                        if (currentWeapon.Name == "Shotgun")
+                        {
+                            for (int i = 0; i < 5; i++)
+                                Shot(enemies, Vector2.Normalize(direction), deltaTime);
+                        }
+                        else
+                        if (currentWeapon.Type == "Semi-automatic" || currentWeapon.Type == "Automatic")
+                        {
                             Shot(enemies, Vector2.Normalize(direction), deltaTime);
-                    }
-                    else
-                    if (currentWeapon.Type == "Semi-automatic" || currentWeapon.Type == "Automatic")
-                    {
-                        Shot(enemies, Vector2.Normalize(direction), deltaTime);
-                    }
-                    else
-                    if (currentWeapon.Type == "Placing")
-                    {
+                        }
+                        else
+                        if (currentWeapon.Type == "Placing")
+                        {
 
+                        }
                     }
+                    else
+                        Reload();
+                    currentFireTime = 0;
                 }
-                else
-                    Reload();
-                currentFireTime = 0;
             }
         }
         
         public void Reload()
         {
-            isReloading = true; 
+             isReloading = true;
         }
         public void Place() {
 
@@ -164,7 +168,6 @@ namespace FriendsPoint.GameObjects {
                         j--;
                     }
                 }
-                isShooting = false;
             }
             bullets.Add(Vector2.Normalize(finalDirection) * 10000f);
             ShotDrawTimer = 0;
@@ -222,9 +225,11 @@ namespace FriendsPoint.GameObjects {
             mouseDirectionForCamera = new Vector2(mousePosition.X - ScreenCenter.X, mousePosition.Y - ScreenCenter.Y) + mouseDirectionNormalized;
             Camera.ChangeMouseOffset(mouseDirectionForCamera);
             Rotation = (float)Math.Atan2(mouseDirection.Y, mouseDirection.X) + MathHelper.PiOver2;
-            for (int i = 0; i < weapons.Count; i++) {
+            for (int i = 0; i < weapons.Count; i++)
+            {
                 Weapon weapon = (Weapon)weapons[i];
-                if (weapon.Radius >= (weapon.ScreenPosition - mousePosition).Length()) {
+                if (weapon.Radius >= (weapon.ScreenPosition - mousePosition).Length())
+                {
                     viewWeapon = weapon;
                     return;
                 }
@@ -243,7 +248,6 @@ namespace FriendsPoint.GameObjects {
             DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, AdditionRadius, Color.Black * 0.65f, 0.05f, 0f, 1f / (300 / AdditionRadius));
             DrawEngine.Texture(spriteBatch, Texture, ScreenPosition, 0.42f, Rotation, 0.7f);
             DrawEngine.RectFigure(spriteBatch, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow, 0.43f);
-
             if (!isShooting) {
                 recoilOffset = Vector2.Lerp(recoilOffset, Vector2.Zero, 0.5f * deltaTimeForRecoil);
             }
@@ -272,6 +276,8 @@ namespace FriendsPoint.GameObjects {
             }
             Console.Log(currentShotDrawTime, "5959");
             Console.Log(ShotDrawTimer, "59159");
+            if(currentWeapon.Type != "Melee")
+                Main.CartrigesInMagazineUI(spriteBatch,currentWeapon.CartrigesInMagazine, currentWeapon.TotalCartriges);
             if (viewWeapon != null) {
                 float minCord = MathF.Abs(mouseDirection.X) > MathF.Abs(mouseDirection.Y) ? mouseDirection.Y : mouseDirection.X;
                 minCord = MathF.Abs(minCord);

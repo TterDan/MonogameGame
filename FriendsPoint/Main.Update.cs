@@ -1,4 +1,6 @@
 
+using System.Reflection.Metadata;
+
 namespace FriendsPoint
 {
     public partial class Main                                   // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
@@ -12,7 +14,7 @@ namespace FriendsPoint
         long lastAllocated = 0;
         float deltaTime = 0;
         float reloadTimer = 0;
-        double gameTimer;
+        float coolDownTimer = 0;
         protected override void Update(GameTime gameTime) {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
             Camera.deltaTime = deltaTime;
@@ -33,6 +35,7 @@ namespace FriendsPoint
             semiCheck(gameTime);
             enemySpawn();
             FPSCounter(gameTime);
+            CoolDown(deltaTime);
             Reloading(deltaTime);
             Camera.ChangeOffset();
             player.currentFireTime += 1;
@@ -41,8 +44,26 @@ namespace FriendsPoint
             base.Update(gameTime);
         }
 
+        protected void CoolDown(float deltatime)
+        {
+            if (player.isShooting)
+                player.isCoolDown = true;
+
+            if(player.isCoolDown)
+            {
+                coolDownTimer += deltatime;
+                if (coolDownTimer >= player.currentWeapon.CoolDownTime)
+                {
+                    player.isCoolDown = false;
+                    coolDownTimer = 0;
+                }
+            }
+        }
+
         protected void Reloading(float deltatime)
         {
+            if (player.isShooting)
+                player.isReloading = false;
             if (player.isReloading)
             {
                 if (player.currentWeapon.TotalCartriges > 0 && player.currentWeapon.CartrigesInMagazine < player.currentWeapon.ReloadCount)
@@ -50,9 +71,12 @@ namespace FriendsPoint
                     reloadTimer += deltatime;
                     if (reloadTimer >= player.currentWeapon.ReloadTime)
                     {
-                        player.currentWeapon.TotalCartriges -= player.currentWeapon.ReloadCount;
+                        float rel = player.currentWeapon.ReloadCount;
+                        if (player.currentWeapon.TotalCartriges < rel)
+                            rel = player.currentWeapon.TotalCartriges;
+                        player.currentWeapon.TotalCartriges -= rel;
                         player.currentWeapon.TotalCartriges += player.currentWeapon.CartrigesInMagazine;
-                        player.currentWeapon.CartrigesInMagazine += player.currentWeapon.ReloadCount - player.currentWeapon.CartrigesInMagazine;
+                        player.currentWeapon.CartrigesInMagazine += rel - player.currentWeapon.CartrigesInMagazine;
                         player.isReloading = false;
                         reloadTimer = 0;
                     }
@@ -90,7 +114,6 @@ namespace FriendsPoint
                 weapon.FlyVelocity -= weapon.FlyDeceleraion * deltaTime;
                 weapon.Position += dir * weapon.FlyVelocity * deltaTime;
                 weapon.Rotation += weapon.FlyVelocity * deltaTime * 0.02f;
-                Console.Log(dir, "113");
                 for (int j = 0; j < Enemies.Count; j++) {
                     Enemy enemy = (Enemy)Enemies[j];
                     if (enemy.Radius + weapon.Radius * 2 >= (enemy.ScreenPosition - weapon.ScreenPosition).Length()) {

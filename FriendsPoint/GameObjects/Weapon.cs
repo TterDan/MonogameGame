@@ -27,8 +27,9 @@ namespace FriendsPoint.GameObjects {
         public float HitForceVelocity = 170f;
         private float AdditionForceDeceleraion = 1f;
         public float ReloadCount;
+        public float CoolDownTime;
 
-        public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, float recoilStrength, float recoilStrengthForCamera, float patIndex, Vector2 trunkOffset) {
+        public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, float recoilStrength, float recoilStrengthForCamera, float patIndex, Vector2 trunkOffset, float coolDownTime) {
             Name = name;
             Type = type;
             Texture = texture;
@@ -53,6 +54,7 @@ namespace FriendsPoint.GameObjects {
             RecoilStrengthForCamera = recoilStrengthForCamera;
             PatternIndex = patIndex;
             TrunkOffset = trunkOffset;
+            CoolDownTime = coolDownTime;
         }
         public void AddForce(Vector2 forceVector) {
             HitForce += forceVector * HitForceVelocity;

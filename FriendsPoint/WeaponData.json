@@ -12,7 +12,8 @@
         "TrunkOffsetY": 0,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime":  0.5
     },
 
     {
@@ -21,14 +22,15 @@
         "Path": "Deagle",
         "OffsetX": 56,
         "OffsetY": 45,
-        "RecoilStrength": -150,
+        "RecoilStrength": -70,
         "RecoilStrengthForCamera": 0.7,
-        "PatternIndex": 1,
+        "PatternIndex": 5,
         "TrunkOffsetX": 120,
         "TrunkOffsetY": -30,
         "CartrigesInMagazine": 7,
         "TotalCartriges": 20,
-        "ReloadTime": 10
+        "ReloadTime": 15,
+        "CoolDownTime": 1.1
     },
     {
         "Name": "Ak",
@@ -36,14 +38,15 @@
         "Path": "ak",
         "OffsetX": 56,
         "OffsetY": 45,
-        "RecoilStrength": -110,
+        "RecoilStrength": -60,
         "RecoilStrengthForCamera": 0.9,
         "PatternIndex": 1,
         "TrunkOffsetX": 220,
         "TrunkOffsetY": -30,
         "CartrigesInMagazine": 30,
         "TotalCartriges": 90,
-        "ReloadTime": 10
+        "ReloadTime": 20,
+        "CoolDownTime": 1.35
     },
     {
         "Name": "Rifle",
@@ -51,14 +54,15 @@
         "Path": "mp5",
         "OffsetX": 56,
         "OffsetY": 45,
-        "RecoilStrength": -90,
+        "RecoilStrength": -40,
         "RecoilStrengthForCamera": 0.7,
         "PatternIndex": 1,
         "TrunkOffsetX": 120,
         "TrunkOffsetY": -23,
         "CartrigesInMagazine": 25,
         "TotalCartriges": 90,
-        "ReloadTime": 10
+        "ReloadTime": 15,
+        "CoolDownTime": 0.9
     },
     {
         "Name": "Pistol",
@@ -66,14 +70,15 @@
         "Path": "glock",
         "OffsetX": 56,
         "OffsetY": 40,
-        "RecoilStrength": -150,
+        "RecoilStrength": -40,
         "RecoilStrengthForCamera": 0.5,
         "PatternIndex": 2,
         "TrunkOffsetX": 95,
         "TrunkOffsetY": -18,
         "CartrigesInMagazine": 12,
         "TotalCartriges": 20,
-        "ReloadTime": 10
+        "ReloadTime": 10,
+        "CoolDownTime": 0.8
     },
     {
         "Name": "Sniper_rifle",
@@ -81,14 +86,15 @@
         "Path": "sniper",
         "OffsetX": 56,
         "OffsetY": 45,
-        "RecoilStrength": -280,
+        "RecoilStrength": -180,
         "RecoilStrengthForCamera": 1.7,
         "PatternIndex": 0,
         "TrunkOffsetX": 95,
         "TrunkOffsetY": -35,
         "CartrigesInMagazine": 5,
         "TotalCartriges": 20,
-        "ReloadTime": 10
+        "ReloadTime": 25,
+        "CoolDownTime": 3
     },
     {
         "Name": "Minigun",
@@ -96,14 +102,15 @@
         "Path": "deagle",
         "OffsetX": 56,
         "OffsetY": 45,
-        "RecoilStrength": -170,
+        "RecoilStrength": -120,
         "RecoilStrengthForCamera": 0.8,
         "PatternIndex": 3,
         "TrunkOffsetX": 90,
         "TrunkOffsetY": 35,
-        "CartrigesInMagazine": 100,
+        "CartrigesInMagazine": 200,
         "TotalCartriges": 0,
-        "ReloadTime": 10
+        "ReloadTime": 30,
+        "CoolDownTime": 1.1
     },
     {
         "Name": "Shotgun",
@@ -111,14 +118,15 @@
         "Path": "shotgun",
         "OffsetX": 80,
         "OffsetY": 45,
-        "RecoilStrength": -130,
+        "RecoilStrength": -100,
         "RecoilStrengthForCamera": 0.5,
         "PatternIndex": 4,
         "TrunkOffsetX": 155,
         "TrunkOffsetY": -30,
         "CartrigesInMagazine": 2,
         "TotalCartriges": 20,
-        "ReloadTime": 10
+        "ReloadTime": 18,
+        "CoolDownTime": 1.2
     },
     {
         "Name": "Slingshot",
@@ -133,7 +141,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 1,
         "TotalCartriges": 12,
-        "ReloadTime": 10
+        "ReloadTime": 3,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Rpg",
@@ -148,7 +157,8 @@
         "TrunkOffsetY": -30,
         "CartrigesInMagazine": 1,
         "TotalCartriges": 1,
-        "ReloadTime": 10
+        "ReloadTime": 30,
+        "CoolDownTime": 0
     },
 
 
@@ -166,7 +176,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Knuckle",
@@ -181,7 +192,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Pipe",
@@ -196,7 +208,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Knife",
@@ -211,7 +224,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Chainsaw",
@@ -226,7 +240,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Bottle",
@@ -241,7 +256,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
 
 
@@ -259,7 +275,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Smoke_grenade",
@@ -274,7 +291,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Molotov_Grenade",
@@ -289,7 +307,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Flash_Grenade",
@@ -304,7 +323,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
 
 
@@ -322,7 +342,8 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     },
     {
         "Name": "Ridgepole",
@@ -337,6 +358,7 @@
         "TrunkOffsetY": 35,
         "CartrigesInMagazine": 0,
         "TotalCartriges": 0,
-        "ReloadTime": 0
+        "ReloadTime": 0,
+        "CoolDownTime": 0.5
     }
 ]

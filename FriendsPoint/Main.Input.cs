@@ -19,16 +19,20 @@ namespace FriendsPoint
                 Exit();
             if (mouse.LeftButton == ButtonState.Pressed && mouseState == false)
             {
-                player.isShooting = false;
+                player.isShooting = true;
                 player.UseWeapon(Enemies, Weapons, deltaTime);
                 mouseState = true;
             }
             if(mouseState == true && player.currentWeapon.Type == "Automatic")
+            {
                 player.UseWeapon(Enemies, Weapons, deltaTime);
-
+                if (player.currentWeapon.CartrigesInMagazine <= 0)
+                    player.isShooting = false;
+            }
             if (mouse.LeftButton == ButtonState.Released)
             {
                 mouseState = false;
+                player.isShooting = false;
             }
             return mouse;
         }
@@ -81,6 +85,9 @@ namespace FriendsPoint
                 player.DropWeapon(Weapons, droppedWeapons);
                 mouseState = false;
                 player.shotcount = 0;
+                player.isCoolDown = false;
+                player.isShooting = false;
+                player.isReloading = false;
             }
             return direction;
         }
