@@ -1,4 +1,6 @@
 
+using System.Collections;
+using System.Reflection.Emit;
 using System.Timers;
 
 namespace FriendsPoint
@@ -6,7 +8,6 @@ namespace FriendsPoint
     public partial class Main       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
         int someTimer = 0;
-        BasicStyle Rect1 = new BasicStyle(new Vector2(150, 150), new Vector2(100, 100), new Vector2(0, 0), 0f);
         protected override void Draw(GameTime gameTime) {
 
             GraphicsDevice.Clear(Color.White);
@@ -29,16 +30,15 @@ namespace FriendsPoint
             if (Console.IsConsoleOpen == true) {
                 Console.DrawConsole(render);
             }
-            //someTimer++;
-            //if (someTimer > 150 && someTimer < 300) {
+            DrawEngine.DrawRect(render, new Vector2(100, 500), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleIn, BasicLineStyleSolid, 1f);
+            DrawEngine.DrawRect(render, new Vector2(300, 500), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleSolid, 1f);
+            DrawEngine.DrawRect(render, new Vector2(500, 500), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOut, BasicLineStyleSolid, 1f);
 
-            //    DrawEngine.DrawRect(render, new Vector2(10, 10), Rect1, BasicFillStyle, BasicStrokeStyle);
-            //} else if (someTimer <= 150) {
+            DrawEngine.DrawRect(render, new Vector2(100, 700), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDouble, 1f);
+            DrawEngine.DrawRect(render, new Vector2(300, 700), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDotted, 1f);
+            DrawEngine.DrawRect(render, new Vector2(500, 700), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDashed, 1f);
 
-            //    DrawEngine.DrawRect(render, new Vector2(10, 10), Rect1, BasicFillStyle);
-            //} else {
-            //    someTimer = 0;
-            //}
+            DrawEngine.DrawRect(render, new Vector2(700, 700), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleWavy, 1f);
             DrawUI(render); // Отрисовка интерфейса
             base.Draw(gameTime);
             render.End();

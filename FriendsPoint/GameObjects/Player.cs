@@ -243,7 +243,7 @@ namespace FriendsPoint.GameObjects {
                     {
                         bullets[i].Normalize();
                         bullets[i] *= ScreenCenter.X * 2;
-                        DrawEngine.Line(spriteBatch, ScreenPosition + GetTrunkOffset(), ScreenPosition + bullets[i], Color.Black, 1f, 6f);
+                        DrawEngine.Line(spriteBatch, ScreenPosition + GetTrunkOffset(), ScreenPosition + bullets[i], Color.Black, 6f, 1f);
                         bullets.RemoveAt(i);
                         i--;
                     }
