@@ -1,5 +1,6 @@
 
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 
 namespace FriendsPoint
 {
@@ -15,6 +16,7 @@ namespace FriendsPoint
         float deltaTime = 0;
         float reloadTimer = 0;
         float coolDownTimer = 0;
+        float IsShootingTimer = 0;
         protected override void Update(GameTime gameTime) {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
             Camera.deltaTime = deltaTime;
@@ -31,6 +33,7 @@ namespace FriendsPoint
             Console.Log(delta, "GC memory adding bytes per second");
 
             Input();
+            IsShootingCheck(deltaTime);
             weaponMove();
             semiCheck(gameTime);
             enemySpawn();
@@ -44,10 +47,27 @@ namespace FriendsPoint
             base.Update(gameTime);
         }
 
+        protected void IsShootingCheck(float deltatime)
+        {
+            if (player.isShooting)
+            {
+                player.oldShotCount = player.shotcount;
+                IsShootingTimer += deltatime;
+                if (IsShootingTimer > 0.5)
+                    if (player.oldShotCount == player.shotcount)
+                    {
+                        player.isShooting = false;
+                        player.oldShotCount = 0;
+                        IsShootingTimer = 0f;
+                    }
+            }
+        }
         protected void CoolDown(float deltatime)
         {
             if (player.isShooting)
+            {
                 player.isCoolDown = true;
+            }
 
             if(player.isCoolDown)
             {

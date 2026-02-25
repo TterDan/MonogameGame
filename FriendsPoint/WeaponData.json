@@ -86,7 +86,7 @@
         "Path": "sniper",
         "OffsetX": 56,
         "OffsetY": 45,
-        "RecoilStrength": -180,
+        "RecoilStrength": -80,
         "RecoilStrengthForCamera": 1.7,
         "PatternIndex": 0,
         "TrunkOffsetX": 95,
@@ -99,7 +99,7 @@
     {
         "Name": "Minigun",
         "Type": "Automatic",
-        "Path": "deagle",
+        "Path": "minigun",
         "OffsetX": 56,
         "OffsetY": 45,
         "RecoilStrength": -120,
@@ -118,7 +118,7 @@
         "Path": "shotgun",
         "OffsetX": 80,
         "OffsetY": 45,
-        "RecoilStrength": -100,
+        "RecoilStrength": -70,
         "RecoilStrengthForCamera": 0.5,
         "PatternIndex": 4,
         "TrunkOffsetX": 155,
@@ -150,7 +150,7 @@
         "Path": "rpg",
         "OffsetX": 56,
         "OffsetY": 45,
-        "RecoilStrength": -390,
+        "RecoilStrength": -190,
         "RecoilStrengthForCamera": 1.7,
         "PatternIndex": 0,
         "TrunkOffsetX": 170,
@@ -360,5 +360,21 @@
         "TotalCartriges": 0,
         "ReloadTime": 0,
         "CoolDownTime": 0.5
+    },
+    {
+        "Name": "Cartriges",
+        "Type": "Ammunition",
+        "Path": "deagle",
+        "OffsetX": 0,
+        "OffsetY": 0,
+        "RecoilStrength": 0,
+        "RecoilStrengthForCamera": 0,
+        "PatternIndex": 0,
+        "TrunkOffsetX": 0,
+        "TrunkOffsetY": 0,
+        "CartrigesInMagazine": 0,
+        "TotalCartriges": 0,
+        "ReloadTime": 0,
+        "CoolDownTime": 0
     }
 ]

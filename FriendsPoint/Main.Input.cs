@@ -4,7 +4,7 @@ namespace FriendsPoint
     public partial class Main                       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
         protected MouseState mouse;
-        protected bool mouseState = false;
+        public bool mouseState = false;
         public bool isOemTildePressed = false;
         public bool isEPressed = false;
         protected void Input()
@@ -19,7 +19,6 @@ namespace FriendsPoint
                 Exit();
             if (mouse.LeftButton == ButtonState.Pressed && mouseState == false)
             {
-                player.isShooting = true;
                 player.UseWeapon(Enemies, Weapons, deltaTime);
                 mouseState = true;
             }
@@ -31,8 +30,8 @@ namespace FriendsPoint
             }
             if (mouse.LeftButton == ButtonState.Released)
             {
-                mouseState = false;
                 player.isShooting = false;
+                mouseState = false;
             }
             return mouse;
         }

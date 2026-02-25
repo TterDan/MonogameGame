@@ -1,5 +1,7 @@
 ﻿
+using Microsoft.Xna.Framework.Input;
 using System;
+using System.Reflection;
 
 namespace FriendsPoint.GameObjects {
     public class Player : CircleHBoxObj {          // Класс игрока, наследует класс GameObject
@@ -11,7 +13,7 @@ namespace FriendsPoint.GameObjects {
         public Weapon currentWeapon;            // Текущее оружие игрока
         public Vector2 mouseDirection;
         public Vector2 mousePosition;
-
+        public Random rnd;
         public float Health = 100f;
 
         public SpriteBatch spriteBatch;
@@ -31,6 +33,7 @@ namespace FriendsPoint.GameObjects {
         float deltaTimeForRecoil;
         public bool isReloading = false;
         public bool isCoolDown = false;
+        public float oldShotCount = 0;
         public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, int additionRadius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon, SpriteFont Font) {
             Position = startPosition;
             MoveSpeed = moveSpeed;
@@ -44,6 +47,7 @@ namespace FriendsPoint.GameObjects {
             HitboxOpacity = 0.5f;
             font = Font;
             bullets = new List<Vector2>();
+            rnd = new Random();
         }
         public void setConstants(float deltaTime) {
             currentShotDrawTime *= 200 * deltaTime;
@@ -145,10 +149,9 @@ namespace FriendsPoint.GameObjects {
             return trunkPos;
         }
         public void Shot(List<GameObject> enemies, Vector2 direction, float deltaTime) {
+            isShooting = true;
             shotcount++;
             Camera.ShotOffset(-mouseDirectionForCamera, currentWeapon.RecoilStrengthForCamera);
-            Vector2 recoilTarget = new Vector2(currentWeapon.RecoilStrength, 0f);
-            recoilOffset = Vector2.Lerp(recoilOffset, recoilTarget, 0.2f);
             Vector2 spread = pattern.getPattern(currentWeapon.PatternIndex, shotcount, (CurrentSpeed * deltaTime) * 10);
             Vector2 finalDirection = new Vector2(direction.X + spread.X, direction.Y + spread.Y);
             for (int j = 0; j < enemies.Count; j++)
@@ -178,6 +181,16 @@ namespace FriendsPoint.GameObjects {
                 return;
             }
             int index = weapons.IndexOf(viewWeapon);
+            if (viewWeapon.Type == "Ammunition")
+            {
+                if (currentWeapon.ReloadCount != 0 && currentWeapon.TotalCartriges <= 0)
+                {
+                    weapons.RemoveAt(index);
+                    currentWeapon.TotalCartriges += rnd.Next(1, (int)currentWeapon.ReloadCount);
+                    return;
+                }
+                return;
+            }
             if (currentWeapon.Name != "Fist") {
                 DropWeapon(weapons, droppedWeapons);
             }
@@ -248,9 +261,13 @@ namespace FriendsPoint.GameObjects {
             DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, AdditionRadius, Color.Black * 0.65f, 0.05f, 0f, 1f / (300 / AdditionRadius));
             DrawEngine.Texture(spriteBatch, Texture, ScreenPosition, 0.42f, Rotation, 0.7f);
             DrawEngine.RectFigure(spriteBatch, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow, 0.43f);
-            if (!isShooting) {
-                recoilOffset = Vector2.Lerp(recoilOffset, Vector2.Zero, 0.5f * deltaTimeForRecoil);
+            if (isShooting)
+            {
+                Vector2 recoilTarget = new Vector2(currentWeapon.RecoilStrength, 0f);
+                recoilOffset = Vector2.Lerp(recoilOffset, recoilTarget, 1.5f * deltaTimeForRecoil);
             }
+            if(!isShooting)
+                recoilOffset = Vector2.Lerp(recoilOffset, Vector2.Zero, 0.3f * deltaTimeForRecoil);
             currentOffset = currentWeapon.HandleOffset + recoilOffset;
             Rectangle weaponRect = new Rectangle((int)ScreenPosition.X, (int)ScreenPosition.Y, currentWeapon.Radius * 2, currentWeapon.Radius * 2);
             Vector2 WeaponOffset1 = -new Vector2(currentOffset.X, currentOffset.Y);                              // Координаты для смещения оружия от игрока в его руке

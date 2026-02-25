@@ -29,7 +29,7 @@ namespace FriendsPoint.GameObjects {
         public float ReloadCount;
         public float CoolDownTime;
 
-        public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, float recoilStrength, float recoilStrengthForCamera, float patIndex, Vector2 trunkOffset, float coolDownTime) {
+        public Weapon(GraphicsDevice GraphicsDevice, Texture2D texture, string name, string type, Vector2 position, int radius, int additionRadius, List<float> gunSets, Vector2 Offset, Vector2 trunkOffset) {
             Name = name;
             Type = type;
             Texture = texture;
@@ -40,21 +40,17 @@ namespace FriendsPoint.GameObjects {
             Damage = gunSets[0];
             HitDamage = gunSets[1];
             UserFireKnockback = gunSets[2];
-            CameraFireShake = gunSets[3];
+            RecoilStrengthForCamera = gunSets[3];
             ReloadTime = gunSets[4];
-            FireRate = gunSets[5];
-            Spread = gunSets[6];
-            SpreadMultiplier = gunSets[7];
+            CoolDownTime = gunSets[5];
+            PatternIndex = gunSets[6];
+            RecoilStrength = gunSets[7];
             CartrigesInMagazine = gunSets[8];
             TotalCartriges = gunSets[9];
+            TrunkOffset = trunkOffset;
             ReloadCount = CartrigesInMagazine;
             HandleOffset = Offset;
             TextureScale = Scale * 0.45f;
-            RecoilStrength = recoilStrength;
-            RecoilStrengthForCamera = recoilStrengthForCamera;
-            PatternIndex = patIndex;
-            TrunkOffset = trunkOffset;
-            CoolDownTime = coolDownTime;
         }
         public void AddForce(Vector2 forceVector) {
             HitForce += forceVector * HitForceVelocity;
