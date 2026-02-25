@@ -2,22 +2,92 @@
 
 namespace FriendsPoint.DrawEngineModules {
     public partial class DrawEngine {
-        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, FillStyle fillStyle, StrokeStyle strokeStyle, LineStyle lineStyle, float layer) {
+        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, FillStyle fillStyle, StrokeStyle strokeStyle, LineStyle lineStyle) {
             Vector2 centerPosition = size / 2;
             FillRect(spriteBatch, position, centerPosition, size, fillStyle.Color, layer - 0.00001f);
             StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, layer);
-        }
-        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, FillStyle fillStyle, float layer) {
+        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, FillStyle fillStyle) {
             Vector2 centerPosition = size / 2;
 
             FillRect(spriteBatch, position, centerPosition, size, fillStyle.Color, layer - 0.00001f);
 
-        }
-        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, StrokeStyle strokeStyle, LineStyle lineStyle, float layer) {
+        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, StrokeStyle strokeStyle, LineStyle lineStyle) {
             Vector2 centerPosition = size / 2;
 
             StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, layer);
         }
+
+
+        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, FillStyle fillStyle, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle) {
+            Vector2 centerPosition = size / 2;
+            FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, layer - 0.00002f);
+            FillRect(spriteBatch, position, centerPosition, size, fillStyle.Color, layer - 0.00001f);
+            StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, layer);
+
+
+        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, FillStyle fillStyle, ShadowStyle shadowStyle) {
+            Vector2 centerPosition = size / 2;
+
+            FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, layer - 0.00002f);
+            FillRect(spriteBatch, position, centerPosition, size, fillStyle.Color, layer - 0.00001f);
+
+        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle) {
+            Vector2 centerPosition = size / 2;
+
+            FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, layer - 0.00002f);
+            StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, layer);
+        }
+
+
+
+
+
+        //static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, FillStyle fillStyle, StrokeStyle strokeStyle, LineStyle lineStyle, PostProcessingStyle postProcessingStyle) {
+        //    Vector2 centerPosition = size / 2;
+
+        //    FillRect(spriteBatch, position, centerPosition, size, fillStyle.Color, layer - 0.00001f);
+        //    StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, layer);
+        //} static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, FillStyle fillStyle, PostProcessingStyle postProcessingStyle) {
+        //    Vector2 centerPosition = size / 2;
+
+        //    FillRect(spriteBatch, position, centerPosition, size, fillStyle.Color, layer - 0.00001f);
+
+        //} static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, StrokeStyle strokeStyle, LineStyle lineStyle, PostProcessingStyle postProcessingStyle) {
+        //    Vector2 centerPosition = size / 2;
+
+        //    StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, layer);
+        //}
+
+
+        //static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, FillStyle fillStyle, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle, PostProcessingStyle postProcessingStyle) {
+        //    Vector2 centerPosition = size / 2;
+        //    FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, layer - 0.00002f);
+        //    FillRect(spriteBatch, position, centerPosition, size, fillStyle.Color, layer - 0.00001f);
+        //    StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, layer);
+        //} static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, FillStyle fillStyle, ShadowStyle shadowStyle, PostProcessingStyle postProcessingStyle) {
+        //    Vector2 centerPosition = size / 2;
+
+        //    FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, layer - 0.00002f);
+        //    FillRect(spriteBatch, position, centerPosition, size, fillStyle.Color, layer - 0.00001f);
+
+        //} static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float layer, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle, PostProcessingStyle postProcessingStyle) {
+        //    Vector2 centerPosition = size / 2;
+
+        //    FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, layer - 0.00002f);
+        //    StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, layer);
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
         static public void FillRect(SpriteBatch spriteBatch, Vector2 position, Vector2 centerPosition, Vector2 size, Color fillColor, float layer) {
             DrawEngine.RectFigure(spriteBatch, position, new Rectangle(0, 0, (int)size.X, (int)size.Y), centerPosition, fillColor, layer);
         }
@@ -34,51 +104,66 @@ namespace FriendsPoint.DrawEngineModules {
                 pos2 -= WidthNormal / 2;
                 pos3 += WidthVector / 2;
                 pos4 += WidthNormal / 2;
-                DrawEngine.LinePathRect(spriteBatch, pos1, pos2 - new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
-                DrawEngine.LinePathRect(spriteBatch, pos2, pos3 - new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
-                DrawEngine.LinePathRect(spriteBatch, pos3, pos4 + new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
-                DrawEngine.LinePathRect(spriteBatch, pos4, pos1 + new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
+                float offset = 0;
+                offset += DrawEngine.LinePathRect(spriteBatch, pos1, pos2 - new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
+                offset += DrawEngine.LinePathRect(spriteBatch, pos2, pos3 - new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
+                offset += DrawEngine.LinePathRect(spriteBatch, pos3, pos4 + new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
+                offset += DrawEngine.LinePathRect(spriteBatch, pos4, pos1 + new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
             } else if (positionVariant == "out") {
                 pos1 -= WidthVector;
                 pos2 -= WidthNormal;
                 pos3 += WidthVector;
                 pos4 += WidthNormal;
-                DrawEngine.LinePathRect(spriteBatch, pos1, pos2 - new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
-                DrawEngine.LinePathRect(spriteBatch, pos2, pos3 - new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
-                DrawEngine.LinePathRect(spriteBatch, pos3, pos4 + new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
-                DrawEngine.LinePathRect(spriteBatch, pos4, pos1 + new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
+                float offset = 0;
+                offset += DrawEngine.LinePathRect(spriteBatch, pos1, pos2 - new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
+                offset += DrawEngine.LinePathRect(spriteBatch, pos2, pos3 - new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
+                offset += DrawEngine.LinePathRect(spriteBatch, pos3, pos4 + new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
+                offset += DrawEngine.LinePathRect(spriteBatch, pos4, pos1 + new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
             } else if (positionVariant == "in") {
-                DrawEngine.LinePathRect(spriteBatch, pos1, pos2 - new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
-                DrawEngine.LinePathRect(spriteBatch, pos2, pos3 - new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
-                DrawEngine.LinePathRect(spriteBatch, pos3, pos4 + new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
-                DrawEngine.LinePathRect(spriteBatch, pos4, pos1 + new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer);
+                float offset = 0;
+                offset += DrawEngine.LinePathRect(spriteBatch, pos1, pos2 - new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
+                offset += DrawEngine.LinePathRect(spriteBatch, pos2, pos3 - new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
+                offset += DrawEngine.LinePathRect(spriteBatch, pos3, pos4 + new Vector2(strokeWidth, 0), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
+                offset += DrawEngine.LinePathRect(spriteBatch, pos4, pos1 + new Vector2(0, strokeWidth), strokeWidth, strokeColor, lineStyle, strokeWidth, layer, offset);
             }
         }
 
-        static public void LinePathRect(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width, Color color, LineStyle lineStyle, float strokeWidth, float layer) {
+        static public float LinePathRect(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width, Color color, LineStyle lineStyle, float strokeWidth, float layer, float offset) {
             if (lineStyle.Type == "solid") {
                 DrawEngine.DrawSolidLine(spriteBatch, start, end, width, color, lineStyle, layer);
             } else if (lineStyle.Type == "double") {
-                Vector2 direction = Vector2.Normalize(end - start);                                 // Направление линии
-                Vector2 normal = new Vector2(-direction.Y, direction.X);                            // Нормаль линии
-                Vector2 directionDistanceVector = direction * (lineStyle.LinesDistance + width);    // Расстояние от центров линий
-                Vector2 normalDistanceVector = normal * (lineStyle.LinesDistance + width);          // Увеличение длины линий
+                if (lineStyle.SecondLinePosition == "in") {
+                    Vector2 direction = Vector2.Normalize(end - start);                                 // Направление линии
+                    Vector2 normal = -new Vector2(-direction.Y, direction.X);                            // Нормаль линии
+                    Vector2 directionDistanceVector = direction * (lineStyle.LinesDistance + width);    // Расстояние от центров линий
+                    Vector2 normalDistanceVector = normal * (lineStyle.LinesDistance + width);          // Увеличение длины линий
 
-                DrawEngine.DrawSolidLine(spriteBatch, start, end, width, color, lineStyle, layer);
-                DrawEngine.DrawSolidLine(spriteBatch, start - directionDistanceVector - normalDistanceVector, end + directionDistanceVector - normalDistanceVector, width, color, lineStyle, layer);
+                    DrawEngine.DrawSolidLine(spriteBatch, start, end, width, color, lineStyle, layer);
+                    DrawEngine.DrawSolidLine(spriteBatch, start + directionDistanceVector - normalDistanceVector, end - directionDistanceVector - normalDistanceVector, width, color, lineStyle, layer);
+                } else {
+                    Vector2 direction = Vector2.Normalize(end - start);                                 // Направление линии
+                    Vector2 normal = new Vector2(-direction.Y, direction.X);                            // Нормаль линии
+                    Vector2 directionDistanceVector = direction * (lineStyle.LinesDistance + width);    // Расстояние от центров линий
+                    Vector2 normalDistanceVector = normal * (lineStyle.LinesDistance + width);          // Увеличение длины линий
+
+                    DrawEngine.DrawSolidLine(spriteBatch, start, end, width, color, lineStyle, layer);
+                    DrawEngine.DrawSolidLine(spriteBatch, start - directionDistanceVector - normalDistanceVector, end + directionDistanceVector - normalDistanceVector, width, color, lineStyle, layer);
+                }
             } else if (lineStyle.Type == "dashed") {
 
                 Vector2 direction = end - start;
                 direction += Vector2.Normalize(direction) * strokeWidth;
-                DrawEngine.DrawDashedLine(spriteBatch, start, start + direction, width, color, lineStyle, layer);
+                float offsetNew = DrawEngine.DrawDashedLine(spriteBatch, start, start + direction, width, color, lineStyle, layer, offset);
 
+                return offsetNew;
             } else if (lineStyle.Type == "wavy") {
                 if (lineStyle.isZigZag == false) {
-                    DrawEngine.DrawSineLine(spriteBatch, start, end, width, color, layer, lineStyle.WaveAmplitude, lineStyle.WaveFrequency, 0, 5);
+                    DrawEngine.DrawWavyLine(spriteBatch, start, end, width, color, layer, lineStyle.WaveAmplitude, lineStyle.WaveFrequency, lineStyle.Phase, 5);
                 } else {
-
+                    DrawEngine.DrawZigZagLine(spriteBatch, start, end, width, color, layer, lineStyle.WaveAmplitude, lineStyle.WaveFrequency, lineStyle.Phase, 5);
                 }
             }
+            return 0f;
         }
 
 

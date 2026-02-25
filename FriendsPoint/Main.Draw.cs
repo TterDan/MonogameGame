@@ -14,7 +14,6 @@ namespace FriendsPoint
             render.Begin(
                 SpriteSortMode.FrontToBack
             );
-
             for (int i = 0; i < Players.Count; i++) {
                 Players[i].Draw(render);
             }
@@ -30,15 +29,16 @@ namespace FriendsPoint
             if (Console.IsConsoleOpen == true) {
                 Console.DrawConsole(render);
             }
-            DrawEngine.DrawRect(render, new Vector2(100, 500), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleIn, BasicLineStyleSolid, 1f);
-            DrawEngine.DrawRect(render, new Vector2(300, 500), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleSolid, 1f);
-            DrawEngine.DrawRect(render, new Vector2(500, 500), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOut, BasicLineStyleSolid, 1f);
+            DrawEngine.DrawRect(render, new Vector2(100, 500), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleIn, BasicLineStyleSolid);
+            DrawEngine.DrawRect(render, new Vector2(300, 500), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleSolid);
+            DrawEngine.DrawRect(render, new Vector2(500, 500), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOut, BasicLineStyleSolid);
 
-            DrawEngine.DrawRect(render, new Vector2(100, 700), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDouble, 1f);
-            DrawEngine.DrawRect(render, new Vector2(300, 700), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDotted, 1f);
-            DrawEngine.DrawRect(render, new Vector2(500, 700), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDashed, 1f);
+            DrawEngine.DrawRect(render, new Vector2(100, 700), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDouble);
+            DrawEngine.DrawRect(render, new Vector2(300, 700), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDotted);
+            DrawEngine.DrawRect(render, new Vector2(500, 700), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleIn, BasicLineStyleWavy);
+            DrawEngine.DrawRect(render, new Vector2(100, 900), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDashed);
+            DrawEngine.DrawRect(render, new Vector2(300, 900), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDashedSpacing);
 
-            DrawEngine.DrawRect(render, new Vector2(700, 700), new Vector2(150, 150), BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleWavy, 1f);
             DrawUI(render); // Отрисовка интерфейса
             base.Draw(gameTime);
             render.End();

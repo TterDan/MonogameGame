@@ -11,7 +11,7 @@ namespace FriendsPoint
         long delta;
         long lastAllocated = 0;
         protected override void Update(GameTime gameTime) {
-
+            BasicLineStyleDashedSpacing.Phase += 0.5f;
             timer += gameTime.ElapsedGameTime.TotalSeconds;
 
             if (timer >= 0.25) {

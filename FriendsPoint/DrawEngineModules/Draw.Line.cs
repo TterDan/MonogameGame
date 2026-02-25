@@ -7,7 +7,7 @@ namespace FriendsPoint.DrawEngineModules {
         static public void DrawSolidLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width, Color color, LineStyle lineStyle, float layer = 1f) {
             Line(spriteBatch, start, end, color, width, layer);
         }
-        static public void DrawDashedLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width, Color color, LineStyle lineStyle, float layer = 1f) {
+        static public float DrawDashedLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width, Color color, LineStyle lineStyle, float layer = 1f, float offset = 0f) {
             if (lineStyle.DashedLineType == "num") {
                 int dashesNum = lineStyle.DashesNum;
                 Vector2 direction = end - start;
@@ -20,19 +20,92 @@ namespace FriendsPoint.DrawEngineModules {
                     Vector2 endForDash = startForDash + direction * lineStyle.DashesWidth;
                     Line(spriteBatch, startForDash, endForDash, color, width, layer);
                 }
+                return 0f;
             } else {
-
+                Vector2 direction = end - start;
+                Vector2 normalizedDirection = Vector2.Normalize(direction);
+                float step = lineStyle.DashesSpacing;
+                Console.Log(start - end, "End");
+                Vector2 startForDash = Vector2.Zero;
+                float Phase = offset + lineStyle.Phase;
+                Phase = Phase % lineStyle.DashesSpacing;
+                for (float i = -lineStyle.DashesWidth + Phase + width; i <= direction.Length() - width; i += step) {
+                    startForDash = start + i * normalizedDirection;
+                    Vector2 endForDash = startForDash + normalizedDirection * lineStyle.DashesWidth;
+                    if ((start - endForDash).Length() > (start - end).Length()) {
+                        endForDash -= normalizedDirection * (end - endForDash).Length();
+                    }
+                    if (i < 0) {
+                        startForDash -= normalizedDirection * i;
+                    }
+                    Line(spriteBatch, startForDash, endForDash, color, width, layer);
+                }
+                Console.Log((startForDash - end).Length() - width, "StartForDash");
+                return direction.Length() % step;
             }
         }
-        static public void DrawWavyLine() {
+        static public void DrawWavyLine(
+            SpriteBatch spriteBatch,
+            Vector2 start,
+            Vector2 end,
+            float width,
+            Color color,
+            float layer,
+            float amplitude,
+            float frequency,
+            float phase = 0f,
+            float step = 0.01f) {
+            Vector2 dir = end - start;
+            float length = dir.Length();
+            dir.Normalize();
 
+            Vector2 normal = new Vector2(-dir.Y, dir.X);
+
+            Vector2 prev = start + normal * width / 2;
+            for (float x = 0; x <= length; x += step) {
+                float y = MathF.Sin(x * frequency + phase) * amplitude;
+                Vector2 cur = prev + dir * step + normal * y;
+                Line(spriteBatch, prev, cur, color, width, layer, true);
+                prev = cur;
+            }
+        }
+        static public void DrawZigZagLine(SpriteBatch spriteBatch,
+            Vector2 start,
+            Vector2 end,
+            float width,
+            Color color,
+            float layer,
+            float amplitude,
+            float frequency,
+            float phase = 0f,
+            float step = 0.01f) {
+            Vector2 dir = end - start;
+            float length = dir.Length();
+            dir.Normalize();
+
+            Vector2 normal = new Vector2(-dir.Y, dir.X);
+
+            float zigStep = MathF.PI / frequency;
+            float sign = MathF.Sin(phase) >= 0 ? 1f : -1f;
+
+            Vector2 prev = start + normal * sign * amplitude;
+
+            for (float x = zigStep; x <= length; x += zigStep) {
+                sign = -sign; // чередуем вверх / вниз
+                Vector2 cur = start + dir * x + normal * sign * amplitude;
+                Line(spriteBatch, prev, cur, color, width, layer, true);
+                prev = cur;
+            }
         }
 
-        static public void Line(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, float width, float layer = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
+        static public void Line(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, float width, float layer = 1f, bool isCentered = false, SpriteEffects spriteEffect = SpriteEffects.None) {
             Vector2 delta = end - start;
             float length = delta.Length();
             float angle = MathF.Atan2(delta.Y, delta.X);
-
+            if (isCentered) {
+                Vector2 normal = Vector2.Normalize(new Vector2(-delta.Y, delta.X));
+                start -= normal * width / 2;
+            }
             spriteBatch.Draw(
                 TexturePixel,
                 start,
@@ -84,35 +157,6 @@ namespace FriendsPoint.DrawEngineModules {
                 3 * uu * t * p1 +
                 3 * u * tt * p2 +
                 ttt * p3;
-        }
-
-        static public void DrawSineLine(
-            SpriteBatch spriteBatch,
-            Vector2 start,
-            Vector2 end,
-            float width,
-            Color color,
-            float layer,
-            float amplitude,
-            float frequency,
-            float phase = 0f,
-            float step = 5f) {
-            Vector2 dir = end - start;
-            float length = dir.Length();
-            dir.Normalize();
-
-            Vector2 normal = new Vector2(-dir.Y, dir.X);
-
-            Vector2 prev = start;
-
-            for (float x = 0; x <= length; x += step) {
-                float y = MathF.Sin(x * frequency + phase) * amplitude;
-                Vector2 current = start + dir * x + normal * y;
-                current += Vector2.Normalize(current) * 5f;
-
-                Line(spriteBatch, prev, current, color, width, layer);
-                prev = current - Vector2.Normalize(current) * 5f;
-            }
         }
     }
 }
