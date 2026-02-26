@@ -7,41 +7,35 @@ namespace FriendsPoint
 {
     public partial class Main       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
     {
-        int someTimer = 0;
+        float rot = 0;
+        float basScale = 1f;
         protected override void Draw(GameTime gameTime) {
 
             GraphicsDevice.Clear(Color.White);
-            render.Begin(
+            SpriteBatch.Begin(
                 SpriteSortMode.FrontToBack
             );
             for (int i = 0; i < Players.Count; i++) {
-                Players[i].Draw(render);
+                Players[i].Draw(SpriteBatch);
             }
             for (int i = 0; i < Weapons.Count; i++) {
-                Weapons[i].Draw(render);
+                Weapons[i].Draw(SpriteBatch);
             }
             for (int i = 0; i < Enemies.Count; i++) {
-                Enemies[i].Draw(render);
+                Enemies[i].Draw(SpriteBatch);
             }
             for (int i = 0; i < OtherGameObjects.Count; i++) {
-                OtherGameObjects[i].Draw(render);
+                OtherGameObjects[i].Draw(SpriteBatch);
             }
             if (Console.IsConsoleOpen == true) {
-                Console.DrawConsole(render);
+                Console.DrawConsole(SpriteBatch);
             }
-            DrawEngine.DrawRect(render, new Vector2(100, 500), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleIn, BasicLineStyleSolid);
-            DrawEngine.DrawRect(render, new Vector2(300, 500), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleSolid);
-            DrawEngine.DrawRect(render, new Vector2(500, 500), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOut, BasicLineStyleSolid);
-
-            DrawEngine.DrawRect(render, new Vector2(100, 700), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDouble);
-            DrawEngine.DrawRect(render, new Vector2(300, 700), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDotted);
-            DrawEngine.DrawRect(render, new Vector2(500, 700), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleIn, BasicLineStyleWavy);
-            DrawEngine.DrawRect(render, new Vector2(100, 900), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDashed);
-            DrawEngine.DrawRect(render, new Vector2(300, 900), new Vector2(150, 150), 1f, BasicFillStyle, BasicStrokeStyleOn, BasicLineStyleDashedSpacing);
-
-            DrawUI(render); // Отрисовка интерфейса
+            //rot += 0.02f;
+            //basScale += 0.01f;
+            DrawEngine.DrawRect(SpriteBatch, new Vector2(100, 500), new Vector2(300, 150), rot, basScale, 1f, BasicFillStyle, BasicStrokeStyleIn, BasicLineStyleSolid);
+            DrawUI(SpriteBatch); // Отрисовка интерфейса
             base.Draw(gameTime);
-            render.End();
+            SpriteBatch.End();
         }
     }
 }

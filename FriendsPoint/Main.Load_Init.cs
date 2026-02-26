@@ -13,9 +13,9 @@ namespace FriendsPoint
             DrawEngine.Init(font, GraphicsDevice);
 
 
-            render = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            CircleTexture = Circle(300);
+            CircleTexture = CreateCircleTexture(300);
 
             CircleHBoxObj.CircleTexture = CircleTexture;
 
@@ -29,7 +29,7 @@ namespace FriendsPoint
 
             player = new Player(GraphicsDevice, Vector2.Zero, 70, 120, 4f, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
             Players.Add(player);
-            player.spriteBatch = render;
+            player.spriteBatch = SpriteBatch;
             player.Fist = fist;
 
             droppedWeapons = new List<(Weapon, Vector2)>();

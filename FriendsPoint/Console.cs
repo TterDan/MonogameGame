@@ -113,6 +113,8 @@ static public class Console {                                                   
             new Rectangle(0, 0, (int)oneX * 50, (int)(oneY * 35)),
             Vector2.Zero,
             Color.Black * 0.8f,
+             0f,
+             1f,
             0.7f
         );
 

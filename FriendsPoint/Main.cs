@@ -5,7 +5,8 @@ namespace FriendsPoint
     {
         // Начальные переменные
         private GraphicsDeviceManager GraphicsDeviceManager;
-        private SpriteBatch render;         // Спрайтбатч
+        private SpriteBatch SpriteBatch;         // Спрайтбатч
+
         private Player player;              // Экземпляр игрока
         private Map map;                    // Экземпляр карты
         private Vector2 windowSize;         // Размеры окна
@@ -21,8 +22,17 @@ namespace FriendsPoint
         private List<GameObject> Weapons;
         private List<GameObject> Enemies;
         private List<GameObject> OtherGameObjects;
+        BlendState maskBlend;
+        Texture2D maskTexture;
         public Main()
         {
+            maskBlend = new BlendState {
+                ColorSourceBlend = Blend.Zero,
+                ColorDestinationBlend = Blend.SourceColor,
+                AlphaSourceBlend = Blend.Zero,
+                AlphaDestinationBlend = Blend.SourceAlpha
+            };
+            //maskTexture = CreateRoundedRectMask(width, height, radius);
             Players = new List<GameObject>();
             Weapons = new List<GameObject>();
             Enemies = new List<GameObject>();
