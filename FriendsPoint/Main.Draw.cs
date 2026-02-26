@@ -32,7 +32,7 @@ namespace FriendsPoint
             }
             //rot += 0.02f;
             //basScale += 0.01f;
-            DrawEngine.DrawRect(SpriteBatch, new Vector2(100, 500), new Vector2(300, 150), rot, basScale, 1f, BasicFillStyle, BasicStrokeStyleIn, BasicLineStyleSolid);
+            DrawEngine.DrawRect(SpriteBatch, new Vector2(100, 500), new Vector2(400, 150), rot, basScale, 1f, Color.Blue, BasicStrokeStyleIn, BasicLineStyleSolid);
             DrawUI(SpriteBatch); // Отрисовка интерфейса
             base.Draw(gameTime);
             SpriteBatch.End();

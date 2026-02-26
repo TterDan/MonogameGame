@@ -214,7 +214,7 @@ namespace FriendsPoint.GameObjects {
         public override void Draw(SpriteBatch spriteBatch) {
             DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, Radius, Color.Black, 0.34f, 0f, 1f / (300 / Radius));
             DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, AdditionRadius, Color.Black * 0.65f, 0.05f, 0f, 1f / (300 / AdditionRadius));
-            DrawEngine.Texture(spriteBatch, Texture, ScreenPosition, 0.42f, Rotation, 0.7f);
+            DrawEngine.DrawTexture(spriteBatch, ScreenPosition, Texture, Rotation, 0.42f, 0.7f);
             DrawEngine.RectFigure(spriteBatch, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow, 0f, 1f, 0.43f);
 
             if (!isShooting) {
@@ -231,10 +231,10 @@ namespace FriendsPoint.GameObjects {
             Vector2 WeaponPos2 = new Vector2(cosRotation * WeaponOffset2.X - sinRotation * WeaponOffset2.Y, sinRotation * WeaponOffset2.X + cosRotation * WeaponOffset2.Y);      // Математика для определения смещения оружия от игрока в его руке
 
             if (currentWeapon.Name == "Fist") {
-                DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, 0.35f, Rotation);
-                DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos2, 0.35f, Rotation);
+                DrawEngine.DrawTexture(spriteBatch, ScreenPosition + WeaponPos1, currentWeapon.Texture, Rotation, 1f, 0.35f);
+                DrawEngine.DrawTexture(spriteBatch, ScreenPosition + WeaponPos2, currentWeapon.Texture, Rotation, 1f, 0.35f);
             } else {
-              DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, 0.35f, (Rotation) - MathF.PI / 2);
+              DrawEngine.DrawTexture(spriteBatch, ScreenPosition + WeaponPos1, currentWeapon.Texture, (Rotation) - MathF.PI / 2, 1f, 0.35f);
             }
             if (currentShotDrawTime >= ShotDrawTimer) {
                 if(bullets.Count >= 0)

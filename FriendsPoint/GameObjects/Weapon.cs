@@ -56,7 +56,7 @@ namespace FriendsPoint.GameObjects {
         }
         public override void Draw(SpriteBatch render) {
             DrawEngine.Circle(render, CircleTexture, ScreenPosition, Radius, Color.Black * 0.85f, 0.1f, 0f, 1f / (300 / Radius));
-            DrawEngine.Texture(render, Texture, ScreenPosition, 0.11f, Rotation);
+            DrawEngine.DrawTexture(render, ScreenPosition, Texture, Rotation, 1f, 0.11f);
             DrawEngine.RectFigure(render, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow, 0f, 1f, 0.12f);
         }
     }

@@ -4,7 +4,6 @@ namespace FriendsPoint
     public partial class Main : Game
     {
         // Стили, здесь создавайте стили рисования, а затем применяйте в отрисовке элемента;
-        public FillStyle BasicFillStyle = new FillStyle(Color.Blue);
         public StrokeStyle BasicStrokeStyleOn = new StrokeStyle(Color.Black, 5f, "on");
         public StrokeStyle BasicStrokeStyleIn = new StrokeStyle(Color.Black, 15f, "in");
         public StrokeStyle BasicStrokeStyleOut = new StrokeStyle(Color.Black, 15f, "out");

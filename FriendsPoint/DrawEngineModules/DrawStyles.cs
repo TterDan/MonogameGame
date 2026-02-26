@@ -41,12 +41,6 @@ public class StrokeStyle : Style {
         PositionVariant = strokePositionVariant;
     }
 }
-public class FillStyle : Style {
-    public Color Color;                 // Цвет обводки
-    public FillStyle(Color fillColor) {
-        Color = fillColor;
-    }
-}
 
 //public class BasicStyle : Style {
 //    public Vector2 Position;                // Позиция
