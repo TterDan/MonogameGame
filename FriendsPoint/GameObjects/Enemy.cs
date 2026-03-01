@@ -3,15 +3,16 @@ namespace FriendsPoint.GameObjects {
     public class Enemy : CircleHBoxObj {                                                          // Класс врага, наследует класс GameObject
         private float Health = 100f;
         private float MoveSpeed;
+        Random rndPosition = new Random();
         private Vector2 HitForce = Vector2.Zero;
         private float HitForceVelocity = 200f;
         private float AdditionForceDeceleraion = 1f;
         private int IsMove = 0;
 
-        public Enemy(GraphicsDevice GraphicsDevice, Vector2 position, int radius, float moveSpeed, int isMove) {
+        public Enemy(GraphicsDevice GraphicsDevice, Vector2 rndPosition, int radius, float moveSpeed, int isMove) {
             Layer = 0.2f;
-            ScreenPosition = position;
-            Position = position;
+            ScreenPosition = rndPosition;
+            Position = new Vector2(Random.Shared.Next(-960, 960), Random.Shared.Next(-540, 540));
             MoveSpeed = moveSpeed;
             Radius = radius;
             IsMove = 0;
