@@ -33,11 +33,9 @@ namespace FriendsPoint
             if (Console.IsConsoleOpen == true) {
                 Console.DrawConsole(SpriteBatch);
             }
-            rot += 0.01f;
-            //basScale += 0.01f;
-            angle += MathF.PI / 180;
-            round = Math.Abs(MathF.Sin(angle)) * 100;
-            DrawEngine.DrawRoundRect(SpriteBatch, new Vector2(500, 500), new Vector2(150, 150), 50, 0, basScale, 1f, Color.Blue, BasicStrokeStyleIn, BasicLineStyleSolid);
+            cntrPos += new Vector2(1, 1);
+            rot += MathF.PI / 180;
+            DrawEngine.DrawRoundRect(SpriteBatch, new Vector2(500, 500), new Vector2(150, 150), cntrPos, 50, rot, basScale, 1f, Color.Blue * 0.5f, BasicStrokeStyleIn, BasicLineStyleSolid);
             DrawUI(SpriteBatch); // Отрисовка интерфейса
             base.Draw(gameTime);
             SpriteBatch.End();
