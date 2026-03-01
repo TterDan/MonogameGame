@@ -14,7 +14,7 @@ namespace FriendsPoint
         public LineStyle BasicLineStyleDotted = new LineStyle("dashed", 15f, 5, 0f);
         public LineStyle BasicLineStyleDouble = new LineStyle("double", 10f, "in", 0f);
 
-        public Texture2D CreateCircleTexture1(int radius) {
+        public Texture2D CreateCircleTexture(int radius) {
             int diameter = radius * 2;
             Texture2D texture = new Texture2D(GraphicsDevice, diameter, diameter);
             Color[] data = new Color[diameter * diameter];
@@ -49,7 +49,7 @@ namespace FriendsPoint
             texture.SetData(data);
             return texture;
         }
-        public Texture2D CreateCircleTexture(int radius) {
+        public Texture2D CreateHalfCircleTexture(int radius) {
             int diameter = radius * 2;
             Texture2D texture = new Texture2D(GraphicsDevice, diameter, radius);
             Color[] data = new Color[diameter * radius];

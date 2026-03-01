@@ -9,6 +9,9 @@ namespace FriendsPoint
     {
         float rot = 0;
         float basScale = 1f;
+        float round = 0;
+        float angle = 0;
+        Vector2 cntrPos = new Vector2(0, 0);
         protected override void Draw(GameTime gameTime) {
 
             GraphicsDevice.Clear(Color.White);
@@ -30,9 +33,11 @@ namespace FriendsPoint
             if (Console.IsConsoleOpen == true) {
                 Console.DrawConsole(SpriteBatch);
             }
-            //rot += 0.02f;
+            rot += 0.01f;
             //basScale += 0.01f;
-            DrawEngine.DrawRect(SpriteBatch, new Vector2(100, 500), new Vector2(400, 150), rot, basScale, 1f, Color.Blue, BasicStrokeStyleIn, BasicLineStyleSolid);
+            angle += MathF.PI / 180;
+            round = Math.Abs(MathF.Sin(angle)) * 100;
+            DrawEngine.DrawRoundRect(SpriteBatch, new Vector2(500, 500), new Vector2(150, 150), 50, 0, basScale, 1f, Color.Blue, BasicStrokeStyleIn, BasicLineStyleSolid);
             DrawUI(SpriteBatch); // Отрисовка интерфейса
             base.Draw(gameTime);
             SpriteBatch.End();

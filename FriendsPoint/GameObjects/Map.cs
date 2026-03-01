@@ -9,7 +9,7 @@ namespace FriendsPoint.GameObjects {
             Position = position;
         }
         public override void Draw(SpriteBatch render) {
-            DrawEngine.RectTexture(render, Texture, ScreenPosition, 0f, 1.5f, Layer);
+            DrawEngine.RectTexture(render, Texture, ScreenPosition, Vector2.Zero, 0f, 1.5f, Layer);
         }
     }
 }

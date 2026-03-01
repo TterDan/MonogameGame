@@ -10,12 +10,16 @@ namespace FriendsPoint
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             ScreenCenter = new Vector2(windowSize.X / 2, windowSize.Y / 2);
             Console.Init(windowSize);
-            DrawEngine.Init(font, GraphicsDevice);
+
+            CircleTexture = CreateCircleTexture(300);
+            HalfCircleTexture = CreateHalfCircleTexture(300);
+            QuarterCircleTexture = CreateQuarterCircleTexture(300);
+
+
+            DrawEngine.Init(font, GraphicsDevice, QuarterCircleTexture);
 
 
             SpriteBatch = new SpriteBatch(GraphicsDevice);
-
-            CircleTexture = CreateCircleTexture(300);
 
             CircleHBoxObj.CircleTexture = CircleTexture;
 

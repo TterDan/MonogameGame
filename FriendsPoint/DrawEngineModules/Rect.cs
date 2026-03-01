@@ -4,14 +4,38 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace FriendsPoint.DrawEngineModules {
     public partial class DrawEngine {
+        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, Vector2 centerPosition, float rotation, float scale, float layer, Color fillColor, StrokeStyle strokeStyle, LineStyle lineStyle) {
+            FillRect(spriteBatch, position, centerPosition, size, fillColor, rotation, scale, layer - 0.00001f);
+            StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
+        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, Vector2 centerPosition, float rotation, float scale, float layer, Color fillColor) {
+            FillRect(spriteBatch, position, centerPosition, size, fillColor, rotation, scale, layer - 0.00001f);
+        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, Vector2 centerPosition, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle) {
+            StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
+        }
+        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, Vector2 centerPosition, float rotation, float scale, float layer, Color fillColor, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle) {
+            FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
+            FillRect(spriteBatch, position, centerPosition, size, fillColor, scale, rotation, layer - 0.00001f);
+            StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
+        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, Vector2 centerPosition, float rotation, float scale, float layer, Color fillColor, ShadowStyle shadowStyle) {
+            FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
+            FillRect(spriteBatch, position, centerPosition, size, fillColor, rotation, scale, layer - 0.00001f);
+        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, Vector2 centerPosition, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle) {
+            FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
+            StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
+        }
+
+
+
         static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float rotation, float scale, float layer, Color fillColor, StrokeStyle strokeStyle, LineStyle lineStyle) {
             Vector2 centerPosition = size / 2;
             FillRect(spriteBatch, position, centerPosition, size, fillColor, rotation, scale, layer - 0.00001f);
             StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
-        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float rotation, float scale, float layer, Color fillColor) {
+        }
+        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float rotation, float scale, float layer, Color fillColor) {
             Vector2 centerPosition = size / 2;
             FillRect(spriteBatch, position, centerPosition, size, fillColor, rotation, scale, layer - 0.00001f);
-        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle) {
+        }
+        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle) {
             Vector2 centerPosition = size / 2;
             StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
         }
@@ -20,14 +44,39 @@ namespace FriendsPoint.DrawEngineModules {
             FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
             FillRect(spriteBatch, position, centerPosition, size, fillColor, scale, rotation, layer - 0.00001f);
             StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
-        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float rotation, float scale, float layer, Color fillColor, ShadowStyle shadowStyle) {
+        }
+        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float rotation, float scale, float layer, Color fillColor, ShadowStyle shadowStyle) {
             Vector2 centerPosition = size / 2;
             FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
             FillRect(spriteBatch, position, centerPosition, size, fillColor, rotation, scale, layer - 0.00001f);
-        } static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle) {
+        }
+        static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle) {
             Vector2 centerPosition = size / 2;
             FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
             StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
+        }
+
+
+
+
+        static public void DrawTexture(SpriteBatch spriteBatch, Vector2 position, Vector2 centerPosition, Texture2D texture, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle) {
+            Vector2 size = new Vector2(texture.Width, texture.Height);
+            RectTexture(spriteBatch, texture, position, centerPosition, rotation, scale, layer - 0.00001f);
+            StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
+        }
+        static public void DrawTexture(SpriteBatch spriteBatch, Vector2 position, Vector2 centerPosition, Texture2D texture, float rotation, float scale, float layer) {
+            RectTexture(spriteBatch, texture, position, centerPosition, rotation, scale, layer - 0.000001f);
+        }
+        static public void DrawTexture(SpriteBatch spriteBatch, Vector2 position, Vector2 centerPosition, Texture2D texture, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle) {
+            Vector2 size = new Vector2(texture.Width, texture.Height);
+            FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
+            RectTexture(spriteBatch, texture, position, centerPosition, rotation, scale, layer - 0.00001f);
+            StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
+        }
+        static public void DrawTexture(SpriteBatch spriteBatch, Vector2 position, Vector2 centerPosition, Texture2D texture, float rotation, float scale, float layer, ShadowStyle shadowStyle) {
+            Vector2 size = new Vector2(texture.Width, texture.Height);
+            FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
+            RectTexture(spriteBatch, texture, position, centerPosition, rotation, scale, layer - 0.00001f);
         }
 
 
@@ -35,25 +84,32 @@ namespace FriendsPoint.DrawEngineModules {
         static public void DrawTexture(SpriteBatch spriteBatch, Vector2 position, Texture2D texture, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle) {
             Vector2 size = new Vector2(texture.Width, texture.Height);
             Vector2 centerPosition = size / 2;
-            RectTexture(spriteBatch, texture, position, rotation, scale, layer - 0.00001f);
+            RectTexture(spriteBatch, texture, position, centerPosition, rotation, scale, layer - 0.00001f);
             StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
         }
         static public void DrawTexture(SpriteBatch spriteBatch, Vector2 position, Texture2D texture, float rotation, float scale, float layer) {
-            RectTexture(spriteBatch, texture, position, rotation, scale, layer - 0.000001f);
+            Vector2 size = new Vector2(texture.Width, texture.Height);
+            Vector2 centerPosition = size / 2;
+            RectTexture(spriteBatch, texture, position, centerPosition, rotation, scale, layer - 0.000001f);
         }
         static public void DrawTexture(SpriteBatch spriteBatch, Vector2 position, Texture2D texture, float rotation, float scale, float layer, StrokeStyle strokeStyle, LineStyle lineStyle, ShadowStyle shadowStyle) {
             Vector2 size = new Vector2(texture.Width, texture.Height);
             Vector2 centerPosition = size / 2;
             FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
-            RectTexture(spriteBatch, texture, position, rotation, scale, layer - 0.00001f);
+            RectTexture(spriteBatch, texture, position, centerPosition, rotation, scale, layer - 0.00001f);
             StrokeRect(spriteBatch, lineStyle, position, centerPosition, size, strokeStyle.PositionVariant, strokeStyle.Width, strokeStyle.Color, rotation, scale, layer);
         }
         static public void DrawTexture(SpriteBatch spriteBatch, Vector2 position, Texture2D texture, float rotation, float scale, float layer, ShadowStyle shadowStyle) {
             Vector2 size = new Vector2(texture.Width, texture.Height);
             Vector2 centerPosition = size / 2;
             FillRect(spriteBatch, position + shadowStyle.Offset, centerPosition, shadowStyle.ShadowSize, shadowStyle.Color, rotation, scale, layer - 0.00002f);
-            RectTexture(spriteBatch, texture, position, rotation, scale, layer - 0.00001f);
+            RectTexture(spriteBatch, texture, position, centerPosition, rotation, scale, layer - 0.00001f);
         }
+
+
+
+
+
 
 
 
@@ -61,19 +117,21 @@ namespace FriendsPoint.DrawEngineModules {
         static public void FillRect(SpriteBatch spriteBatch, Vector2 position, Vector2 centerPosition, Vector2 size, Color fillColor, float rotation, float scale, float layer) {
             DrawEngine.RectFigure(spriteBatch, position, new Rectangle(0, 0, (int)size.X, (int)size.Y), centerPosition, fillColor, rotation, scale, layer);
         }
-        static public void StrokeRect(SpriteBatch spriteBatch, LineStyle lineStyle, Vector2 position, Vector2 centerPosition, Vector2 size, string positionVariant, float strokeWidth, Color strokeColor, float rotation, float scale, float layer) {
+        static public void StrokeRect(SpriteBatch spriteBatch, LineStyle lineStyle, Vector2 position, Vector2 cntrPos, Vector2 size, string positionVariant, float strokeWidth, Color strokeColor, float rotation, float scale, float layer) {
+            Vector2 centerPosition = size / 2;
             centerPosition *= scale;
             strokeWidth *= scale;
             Vector2 centerPositionNormal = new Vector2(-centerPosition.X, centerPosition.Y);
-            DrawEngine.RectFigure(spriteBatch, position, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow, 0f, 1f, 1f);
+            DrawEngine.RectFigure(spriteBatch, position, new Rectangle(0, 0, 20, 20), new Vector2(10, 10), Color.Yellow, 0f, 1f, 1f);
             Vector2 WidthVector = new Vector2(strokeWidth, strokeWidth);
             Vector2 WidthNormal = new Vector2(-WidthVector.Y, WidthVector.X);
 
             Matrix rot = Matrix.CreateRotationZ(rotation);
-            Vector2 pos1 = position - Vector2.Transform(centerPosition, rot);
-            Vector2 pos2 = position - Vector2.Transform(centerPositionNormal, rot);
-            Vector2 pos3 = position + Vector2.Transform(centerPosition, rot);
-            Vector2 pos4 = position + Vector2.Transform(centerPositionNormal, rot);
+            Vector2 difference = centerPosition - cntrPos;
+            Vector2 pos1 = position - Vector2.Transform(centerPosition - difference, rot);
+            Vector2 pos2 = position - Vector2.Transform(centerPositionNormal - difference, rot);
+            Vector2 pos3 = position + Vector2.Transform(centerPosition + difference, rot);
+            Vector2 pos4 = position + Vector2.Transform(centerPositionNormal + difference, rot);
 
             Vector2 XstrokeWidthVector = Vector2.Transform(new Vector2(strokeWidth, 0), rot);
             Vector2 YstrokeWidthVector = Vector2.Transform(new Vector2(0, strokeWidth), rot);
@@ -171,7 +229,7 @@ namespace FriendsPoint.DrawEngineModules {
 
 
         static public void RectFigure(SpriteBatch spriteBatch, Vector2 position, Rectangle drawRectangle, Vector2 centerPosition, Color color, float rotation = 0f, float scale = 1f, float layer = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
-
+            
             spriteBatch.Draw(
                 TexturePixel,                //Текстура
                 position,               // Положение 
@@ -185,10 +243,24 @@ namespace FriendsPoint.DrawEngineModules {
             );
         }
 
-        static public void RectTexture(SpriteBatch spriteBatch, Texture2D texture, Vector2 position, float rotation = 0f, float scale = 1f, float layer = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
+        static public void RectTexture(SpriteBatch spriteBatch, Texture2D texture, Vector2 position, Vector2 centerPosition, float rotation = 0f, float scale = 1f, float layer = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
             Color color = Color.White;
             Rectangle drawRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
-            Vector2 centerPosition = new Vector2(drawRectangle.Width / 2, drawRectangle.Height / 2);
+
+            spriteBatch.Draw(
+                texture,                //Текстура
+                position,               // Положение 
+                drawRectangle,          // Область текстуры для отрисовки
+                color,                  // Цвет
+                rotation,               // Вращение
+                centerPosition,         // Центр объекта, вокруг которого происходит вращение и тд
+                scale,      // Масштабирование
+                SpriteEffects.None,     // Отражение по горизонтали и вертикали
+                layer                   // Слой
+            );
+        }
+        static public void RectTexture(SpriteBatch spriteBatch, Texture2D texture, Vector2 position, Vector2 centerPosition, Color color, float rotation = 0f, float scale = 1f, float layer = 1f, SpriteEffects spriteEffect = SpriteEffects.None) {
+            Rectangle drawRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
 
             spriteBatch.Draw(
                 texture,                //Текстура
