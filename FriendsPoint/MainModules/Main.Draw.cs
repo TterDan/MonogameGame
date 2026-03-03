@@ -1,9 +1,4 @@
 
-using System.Collections;
-using System.Reflection.Emit;
-using System.Timers;
-using static System.Formats.Asn1.AsnWriter;
-
 namespace FriendsPoint
 {
     public partial class Main       // Пишу именно partial class, чтобы соединить все файлы начинающиеся на Main в один класс
@@ -12,7 +7,8 @@ namespace FriendsPoint
 
             GraphicsDevice.Clear(Color.LightBlue);
             SpriteBatch.Begin(
-                SpriteSortMode.FrontToBack
+                SpriteSortMode.FrontToBack,
+                samplerState: SamplerState.PointClamp
             );
 
             for (int i = 0; i < Players.Count; i++) {

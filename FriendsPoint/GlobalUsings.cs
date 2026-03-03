@@ -11,3 +11,4 @@ global using System.Xml.Linq;
 global using System.IO;
 global using FriendsPoint.GameObjects;
 global using FriendsPoint.DrawEngineModules;
+global using FriendsPoint.GameObjects.Player;

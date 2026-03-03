@@ -1,4 +1,6 @@
 ﻿
+using FriendsPoint.GameObjects.Player;
+
 namespace FriendsPoint
 {
     public partial class Main : Game

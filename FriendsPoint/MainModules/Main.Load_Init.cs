@@ -25,7 +25,7 @@ namespace FriendsPoint
             // Инициализирую спрайтбатч
             Texture2D fistTexture = Content.Load<Texture2D>("weapons/fist");
             Cursor = Content.Load<Texture2D>("interface/cursor");
-            fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 40, 70, new List<float> { 15, 0, 1, 3, 0, 300, 20, 0, 0, 0}, new Vector2(56, 45), Vector2.Zero);
+            fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 40, 70, new Vector2(56, 45), Vector2.Zero, 15, 0, 1, 3, 0, 300, 20, 0, 0, 0, 1f, 0);
 
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             OtherGameObjects.Add(map);
@@ -44,21 +44,28 @@ namespace FriendsPoint
                 int rndWeapon = rnd.Next(1, weaponsArray.Count);
                 string pathToImg = weaponsArray[rndWeapon]["Path"].ToString();
                 Texture2D weaponTexture = Content.Load<Texture2D>($"weapons/{pathToImg}");
-                Weapon wpn = new Weapon(GraphicsDevice, weaponTexture, weaponsArray[rndWeapon]["Name"].ToString(), weaponsArray[rndWeapon]["Type"].ToString(), new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 60, 105,
-                                        new List<float> 
-                                        { 40, 15, 1, 
-                                        (float)weaponsArray[rndWeapon]["RecoilStrengthForCamera"], 
-                                        (float)weaponsArray[rndWeapon]["ReloadTime"], 
-                                        (float)weaponsArray[rndWeapon]["CoolDownTime"], 
-                                        (float)weaponsArray[rndWeapon]["PatternIndex"], 
-                                        (float)weaponsArray[rndWeapon]["RecoilStrength"], 
-                                        (float)weaponsArray[rndWeapon]["CartrigesInMagazine"], 
-                                        (float)weaponsArray[rndWeapon]["TotalCartriges"]
-                                        },
-                                        new Vector2((float)weaponsArray[rndWeapon]["OffsetX"],
-                                        (float)weaponsArray[rndWeapon]["OffsetY"]),
-                                        new Vector2((float)weaponsArray[rndWeapon]["TrunkOffsetX"],
-                                        (float)weaponsArray[rndWeapon]["TrunkOffsetY"]));
+                Weapon wpn = new Weapon(GraphicsDevice, 
+                    weaponTexture, 
+                    weaponsArray[rndWeapon]["Name"].ToString(), 
+                    weaponsArray[rndWeapon]["Type"].ToString(), 
+                    new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)), 
+                    60,
+                    105,
+                    new Vector2((float)weaponsArray[rndWeapon]["OffsetX"], (float)weaponsArray[rndWeapon]["OffsetY"]),
+                    new Vector2((float)weaponsArray[rndWeapon]["TrunkOffsetX"], (float)weaponsArray[rndWeapon]["TrunkOffsetY"]),
+                    40, 
+                    15, 
+                    1, 
+                    (float)weaponsArray[rndWeapon]["RecoilStrengthForCamera"], 
+                    (float)weaponsArray[rndWeapon]["ReloadTime"], 
+                    (float)weaponsArray[rndWeapon]["CoolDownTime"], 
+                    (float)weaponsArray[rndWeapon]["PatternIndex"], 
+                    (float)weaponsArray[rndWeapon]["RecoilStrength"], 
+                    (float)weaponsArray[rndWeapon]["CartrigesInMagazine"], 
+                    (float)weaponsArray[rndWeapon]["TotalCartriges"],
+                    (float)weaponsArray[rndWeapon]["TextureScale"],
+                    (float)weaponsArray[rndWeapon]["TextureRotationInPlayerHandDegrees"]
+                    );
                 Weapons.Add(wpn);
             }
             base.Initialize();

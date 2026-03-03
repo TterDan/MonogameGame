@@ -1,5 +1,6 @@
 
-                                                                                                           using System.Reflection.Metadata;
+using FriendsPoint.GameObjects.Player;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 
 namespace FriendsPoint

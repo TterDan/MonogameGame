@@ -1,7 +1,4 @@
 
-
-using static System.Formats.Asn1.AsnWriter;
-
 namespace FriendsPoint.DrawEngineModules {
     public partial class DrawEngine {
         static public void DrawRect(SpriteBatch spriteBatch, Vector2 position, Vector2 size, Vector2 centerPosition, float rotation, float scale, float layer, Color fillColor, StrokeStyle strokeStyle, LineStyle lineStyle) {
