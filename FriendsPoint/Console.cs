@@ -108,10 +108,6 @@ static public class Console {                                                   
         BeforeLog(TextBuffer, key, color);
     }
     static public void Log(Vector2 message, string key = "Log", Color? color = null) {
-        TextBuffer.Clear().Append(message);
-        BeforeLog(TextBuffer, key, color);
-    }
-    static public void Log(Vector2 message, string key = "Log", Color? color = null) {
         color = (color == null ? Color.White : color);
         TextBuffer.Clear();
         TextBuffer.Append("(");

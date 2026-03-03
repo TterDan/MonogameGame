@@ -259,8 +259,9 @@ namespace FriendsPoint.GameObjects {
         public override void Draw(SpriteBatch spriteBatch) {
             DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, Radius, Color.Black, 0.34f, 0f, 1f / (300 / Radius));
             DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, AdditionRadius, Color.Black * 0.65f, 0.05f, 0f, 1f / (300 / AdditionRadius));
-            DrawEngine.Texture(spriteBatch, Texture, ScreenPosition, 0.42f, Rotation, 0.7f);
-            DrawEngine.RectFigure(spriteBatch, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow, 0.43f);
+
+            DrawEngine.DrawTexture(spriteBatch, ScreenPosition, Texture, Rotation, 0.7f, 0.42f);
+            DrawEngine.RectFigure(spriteBatch, ScreenPosition, new Rectangle(0, 0, 20, 20), new Vector2(0, 0), Color.Yellow, 0f, 1f, 0.43f);
             if (isShooting)
             {
                 Vector2 recoilTarget = new Vector2(currentWeapon.RecoilStrength, 0f);

@@ -7,8 +7,6 @@ namespace FriendsPoint
         protected override void Initialize()
         {
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
-            multiplyEffect = Content.Load<Effect>("MultiplyTextures");
-
 
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             ScreenCenter = new Vector2(windowSize.X / 2, windowSize.Y / 2);
@@ -18,9 +16,7 @@ namespace FriendsPoint
             HalfCircleTexture = DrawEngine.CreateHalfCircleTexture(300, GraphicsDevice);
             QuarterCircleTexture = DrawEngine.CreateQuarterCircleTexture(300, GraphicsDevice);
 
-
             DrawEngine.Init(font, GraphicsDevice, QuarterCircleTexture);
-
 
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
