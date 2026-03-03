@@ -279,10 +279,10 @@ namespace FriendsPoint.GameObjects {
             Vector2 WeaponPos2 = new Vector2(cosRotation * WeaponOffset2.X - sinRotation * WeaponOffset2.Y, sinRotation * WeaponOffset2.X + cosRotation * WeaponOffset2.Y);      // Математика для определения смещения оружия от игрока в его руке
 
             if (currentWeapon.Name == "Fist") {
-                DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, 0.35f, Rotation);
-                DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos2, 0.35f, Rotation);
+                DrawEngine.DrawTexture(spriteBatch, ScreenPosition + WeaponPos1, currentWeapon.Texture, Rotation, 1f, 0.35f);
+                DrawEngine.DrawTexture(spriteBatch, ScreenPosition + WeaponPos2, currentWeapon.Texture, Rotation, 1f, 0.35f);
             } else {
-              DrawEngine.Texture(spriteBatch, currentWeapon.Texture, ScreenPosition + WeaponPos1, 0.35f, (Rotation) - MathF.PI / 2);
+              DrawEngine.DrawTexture(spriteBatch, ScreenPosition + WeaponPos1, currentWeapon.Texture, (Rotation) - MathF.PI / 2, 1f, 0.35f);
             }
             if (ShotDrawTimer <= currentShotDrawTime) {
                 for (int i = 0; i < bullets.Count; i++)

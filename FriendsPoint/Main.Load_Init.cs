@@ -7,15 +7,22 @@ namespace FriendsPoint
         protected override void Initialize()
         {
             font = Content.Load<SpriteFont>("DebugFont");                           // Назначаю шрифт для текста
+            multiplyEffect = Content.Load<Effect>("MultiplyTextures");
+
+
             windowSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);                    // Получаю размеры окна
             ScreenCenter = new Vector2(windowSize.X / 2, windowSize.Y / 2);
             Console.Init(windowSize);
-            DrawEngine.Init(font, GraphicsDevice);
+
+            CircleTexture = DrawEngine.CreateCircleTexture(300, GraphicsDevice);
+            HalfCircleTexture = DrawEngine.CreateHalfCircleTexture(300, GraphicsDevice);
+            QuarterCircleTexture = DrawEngine.CreateQuarterCircleTexture(300, GraphicsDevice);
 
 
-            render = new SpriteBatch(GraphicsDevice);
+            DrawEngine.Init(font, GraphicsDevice, QuarterCircleTexture);
 
-            CircleTexture = Circle(300);
+
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             CircleHBoxObj.CircleTexture = CircleTexture;
 
@@ -29,7 +36,7 @@ namespace FriendsPoint
 
             player = new Player(GraphicsDevice, Vector2.Zero, 70, 120, 50f, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
             Players.Add(player);
-            player.spriteBatch = render;
+            player.spriteBatch = SpriteBatch;
             player.Fist = fist;
 
             droppedWeapons = new List<(Weapon, Vector2)>();

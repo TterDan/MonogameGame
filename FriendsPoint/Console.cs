@@ -111,6 +111,16 @@ static public class Console {                                                   
         TextBuffer.Clear().Append(message);
         BeforeLog(TextBuffer, key, color);
     }
+    static public void Log(Vector2 message, string key = "Log", Color? color = null) {
+        color = (color == null ? Color.White : color);
+        TextBuffer.Clear();
+        TextBuffer.Append("(");
+        TextBuffer.Append(message.X);
+        TextBuffer.Append(" , ");
+        TextBuffer.Append(message.Y);
+        TextBuffer.Append(")");
+        BeforeLog(TextBuffer, key, color.Value);
+    }
     static public void DrawConsole(SpriteBatch spriteBatch) {
         DrawEngine.RectFigure(
             spriteBatch,
@@ -118,6 +128,8 @@ static public class Console {                                                   
             new Rectangle(0, 0, (int)oneX * 50, (int)(oneY * 35)),
             Vector2.Zero,
             Color.Black * 0.8f,
+             0f,
+             1f,
             0.7f
         );
 

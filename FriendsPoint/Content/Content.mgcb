@@ -44,6 +44,12 @@
 /processorParam:TextureFormat=Color
 /build:interface/pixil-frame-0 (7).png;interface/cursor.png
 
+#begin MultiplyTextures.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:MultiplyTextures.fx
+
 #begin particles/particleAfterExplode.png
 /importer:TextureImporter
 /processor:TextureProcessor
