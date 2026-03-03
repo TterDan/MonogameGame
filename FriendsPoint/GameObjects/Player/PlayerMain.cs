@@ -29,6 +29,8 @@
         public bool isReloading = false;
         public bool isCoolDown = false;
         public float oldShotCount = 0;
+
+        public float dropStrength = 180f;
         public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, int additionRadius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon, SpriteFont Font) {
             Position = startPosition;
             MoveSpeed = moveSpeed;

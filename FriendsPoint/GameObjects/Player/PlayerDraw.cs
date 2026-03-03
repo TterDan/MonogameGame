@@ -31,8 +31,8 @@
             if (ShotDrawTimer <= currentShotDrawTime) {
                 for (int i = 0; i < bullets.Count; i++)
                 {
-                    DrawEngine.Line(spriteBatch, ScreenPosition + GetTrunkOffset(), ScreenPosition + bullets[i], Color.Yellow, 1f, 6f);
-                    Console.Log("1", "1");
+                    DrawEngine.Line(spriteBatch, ScreenPosition + GetTrunkOffset(), ScreenPosition + bullets[i], Color.Yellow, 4.5f, 1f);
+                    Console.Log(rnd.Next(0, 10000), "1");
                 }
             }
             Console.Log(currentShotDrawTime, "5959");
@@ -46,7 +46,7 @@
                 Vector2 secondPoint = firstPoint + new Vector2(minCord * mouseDirection.X / Math.Abs(mouseDirection.X), minCord * mouseDirection.Y / Math.Abs(mouseDirection.Y));
                 Vector2 thirdPoint = secondPoint + (mousePosition - secondPoint);
 
-                if (AdditionRadius + viewWeapon.Radius >= (viewWeapon.Position - Position).Length()) {
+                if (AdditionRadius + viewWeapon.Radius >= (viewWeapon.ScreenPosition - ScreenPosition).Length() && viewWeapon.Name != "Cartriges") {
                     CanToTakeWeapon = true;
                     Main.ViewWeaponUI(spriteBatch, firstPoint, secondPoint, thirdPoint, viewWeapon.Name, Color.White);
                 } else {

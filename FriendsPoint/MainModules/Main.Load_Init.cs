@@ -66,6 +66,7 @@ namespace FriendsPoint
                     (float)weaponsArray[rndWeapon]["TextureScale"],
                     (float)weaponsArray[rndWeapon]["TextureRotationInPlayerHandDegrees"]
                     );
+                wpn.Rotation = rnd.Next(-314 / 20, 314 / 20) * 0.01f;
                 Weapons.Add(wpn);
             }
             base.Initialize();

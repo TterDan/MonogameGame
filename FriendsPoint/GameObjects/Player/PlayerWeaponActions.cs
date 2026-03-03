@@ -153,7 +153,9 @@
             return;
         }
         public void DropWeapon(List<GameObject> weapons, List<(Weapon, Vector2)> droppedWeapons) {
-            currentWeapon.FlyVelocity = currentWeapon.HitForceVelocity;
+            float rand = rnd.Next(90, 110) * 0.01f;
+            Console.Log(rand, "random");
+            currentWeapon.FlyVelocity = dropStrength * rand;
             currentWeapon.Position = Position;
             weapons.Add(currentWeapon);
             droppedWeapons.Add((currentWeapon, Vector2.Normalize(mouseDirection)));

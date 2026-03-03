@@ -137,7 +137,7 @@ namespace FriendsPoint
                 weapon.Rotation += weapon.FlyVelocity * deltaTime * 0.02f;
                 for (int j = 0; j < Enemies.Count; j++) {
                     Enemy enemy = (Enemy)Enemies[j];
-                    if (enemy.Radius + weapon.Radius * 2 >= (enemy.ScreenPosition - weapon.ScreenPosition).Length()) {
+                    if (enemy.Radius + weapon.Radius >= (enemy.ScreenPosition - weapon.ScreenPosition).Length()) {
                         float calculatedDamage = (weapon.HitDamage * weapon.FlyVelocity / weapon.HitForceVelocity);
                         weapon.FlyVelocity = 0;
                         enemy.TakeDamage(calculatedDamage, Enemies, j);

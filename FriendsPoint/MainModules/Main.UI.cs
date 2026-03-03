@@ -25,8 +25,8 @@ namespace FriendsPoint
             ViewWeaponTextBuffer.Append("Take ");
             ViewWeaponTextBuffer.Append(name);
 
-            DrawEngine.Line(spriteBatch, firstPoint, secondPoint, Color.Black, 6f, 0.52f);
-            DrawEngine.Line(spriteBatch, secondPoint, thirdPoint, Color.Black, 6f, 0.52f);
+            DrawEngine.Line(spriteBatch, firstPoint, secondPoint, Color.Black, 6f, 0.52f, true);
+            DrawEngine.Line(spriteBatch, secondPoint, thirdPoint, Color.Black, 6f, 0.52f, true);
             DrawEngine.RectFigure(spriteBatch, thirdPoint, new Rectangle(0, 0, ViewWeaponTextBuffer.Length * 12 + 25, 40), new Vector2(150, 20) / 2, Color.Black, 0f, 1f, 0.521f);
 
             DrawEngine.DrawText(spriteBatch, thirdPoint + new Vector2(-65, -4), "Take", color, 0.522f, 1.3f);
