@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Reflection.Emit;
 using System.Timers;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace FriendsPoint
 {
@@ -9,15 +10,18 @@ namespace FriendsPoint
     {
         float rot = 0;
         float basScale = 1f;
-        float round = 0;
+        int round = 25;
         float angle = 0;
         Vector2 cntrPos = new Vector2(0, 0);
+
+        static public Effect multiplyEffect;
         protected override void Draw(GameTime gameTime) {
 
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.LightBlue);
             SpriteBatch.Begin(
                 SpriteSortMode.FrontToBack
             );
+
             for (int i = 0; i < Players.Count; i++) {
                 Players[i].Draw(SpriteBatch);
             }
@@ -33,12 +37,24 @@ namespace FriendsPoint
             if (Console.IsConsoleOpen == true) {
                 Console.DrawConsole(SpriteBatch);
             }
-            cntrPos += new Vector2(1, 1);
-            rot += MathF.PI / 180;
-            DrawEngine.DrawRoundRect(SpriteBatch, new Vector2(500, 500), new Vector2(150, 150), cntrPos, 50, rot, basScale, 1f, Color.Blue * 0.5f, BasicStrokeStyleIn, BasicLineStyleSolid);
+            //round = (int)(MathF.Sin(angle));
+            //angle += MathF.PI / 180;
+            //rot += MathF.PI / 180;  
+
+            DrawEngine.DrawRoundRect(SpriteBatch, new Vector2(500, 500), new Vector2(150, 150), new Vector2(75, 75), round, rot, basScale, 1f, Color.Blue * 0.5f, BasicStrokeStyleIn, BasicLineStyleSolid);
             DrawUI(SpriteBatch); // Отрисовка интерфейса
-            base.Draw(gameTime);
+
             SpriteBatch.End();
+
+
+
+
+
+
+
+
+
+            base.Draw(gameTime);
         }
     }
 }

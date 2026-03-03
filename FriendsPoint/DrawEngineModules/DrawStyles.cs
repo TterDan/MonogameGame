@@ -42,19 +42,6 @@ public class StrokeStyle : Style {
     }
 }
 
-//public class BasicStyle : Style {
-//    public Vector2 Position;                // Позиция
-//    public Vector2 Size;                    // Размеры
-//    public float Scale;                     // Масштабирование
-//    public Vector2 CenterPosition;          // Центр отрисовки
-//    public float Round;                     // Скругление углов
-//    public BasicStyle(Vector2 position, Vector2 size, Vector2 centerPosition, float round) {
-//        Position = position;
-//        Size = size;
-//        CenterPosition = centerPosition;
-//        Round = round;
-//    }
-//}
 
 public class TextStyle : Style {
     public string FontFamily;               // Шрифт

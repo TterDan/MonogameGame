@@ -14,59 +14,7 @@ namespace FriendsPoint
         public LineStyle BasicLineStyleDotted = new LineStyle("dashed", 15f, 5, 0f);
         public LineStyle BasicLineStyleDouble = new LineStyle("double", 10f, "in", 0f);
 
-        public Texture2D CreateCircleTexture(int radius) {
-            int diameter = radius * 2;
-            Texture2D texture = new Texture2D(GraphicsDevice, diameter, diameter);
-            Color[] data = new Color[diameter * diameter];
-            Vector2 center = new Vector2(radius);
-            for (int y = 0; y < diameter; y++) {
-                for (int x = 0; x < diameter; x++) {
-                    int index = y * diameter + x;
-                    Vector2 pos = new Vector2(x, y);
-                    if (Vector2.Distance(pos, center) <= radius)
-                        data[index] = Color.White;
-                    else
-                        data[index] = Color.Transparent;
-                }
-            }
-            texture.SetData(data);
-            return texture;
-        }
-        public Texture2D CreateQuarterCircleTexture(int radius) {
-            Texture2D texture = new Texture2D(GraphicsDevice, radius, radius);
-            Color[] data = new Color[radius * radius];
-            Vector2 center = new Vector2(radius);
-            for (int y = 0; y < radius; y++) {
-                for (int x = 0; x < radius; x++) {
-                    int index = y * radius + x;
-                    Vector2 pos = new Vector2(x, y);
-                    if (Vector2.Distance(pos, center) <= radius)
-                        data[index] = Color.White;
-                    else
-                        data[index] = Color.Transparent;
-                }
-            }
-            texture.SetData(data);
-            return texture;
-        }
-        public Texture2D CreateHalfCircleTexture(int radius) {
-            int diameter = radius * 2;
-            Texture2D texture = new Texture2D(GraphicsDevice, diameter, radius);
-            Color[] data = new Color[diameter * radius];
-            Vector2 center = new Vector2(radius);
-            for (int y = 0; y < radius; y++) {
-                for (int x = 0; x < diameter; x++) {
-                    int index = y * diameter + x;
-                    Vector2 pos = new Vector2(x, y);
-                    if (Vector2.Distance(pos, center) <= radius)
-                        data[index] = Color.White;
-                    else
-                        data[index] = Color.Transparent;
-                }
-            }
-            texture.SetData(data);
-            return texture;
-        }
+
         public Texture2D CircleTexture;
         public Texture2D HalfCircleTexture;
         public Texture2D QuarterCircleTexture;
