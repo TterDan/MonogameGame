@@ -1,9 +1,9 @@
 
 static public class Camera {                                                          // Статический класс камеры
     static public float deltaTime = 0;
-    static public float MaxShiftOffset = 180f;
+    static public float MaxShiftOffset = 250f;
     static public Vector2 ShiftOffset = Vector2.Zero;
-    static public float ShiftOffsetSpeed = 2.5f;
+    static public float ShiftOffsetSpeed = 1.5f;
 
     static public float MaxMouseOffset = 0.1f;
     static public Vector2 MouseOffset = Vector2.Zero;

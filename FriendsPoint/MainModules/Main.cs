@@ -51,5 +51,15 @@ namespace FriendsPoint
 
             GraphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
         }
+
+        public int GetTimerIndex(string key) {
+            return TimerEngine.GetTimerIndex(key);
+        }
+        public float GetTimer(int index) {
+            return TimerEngine.GetTimer(index);
+        }
+        public void AddTimer(float _Value, float _End, float _Step, string _Key, string _StepType) {
+            TimerEngine.AddTimer(_Value, _End, _Step, _Key, _StepType);
+        }
     }
 }

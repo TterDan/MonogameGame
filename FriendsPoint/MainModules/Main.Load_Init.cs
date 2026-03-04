@@ -17,7 +17,7 @@ namespace FriendsPoint
             QuarterCircleTexture = DrawEngine.CreateQuarterCircleTexture(300, GraphicsDevice);
 
             DrawEngine.Init(font, GraphicsDevice, QuarterCircleTexture);
-
+            TimerEngine.Init();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             CircleHBoxObj.CircleTexture = CircleTexture;

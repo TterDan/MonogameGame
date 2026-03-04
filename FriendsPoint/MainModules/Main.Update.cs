@@ -20,6 +20,7 @@ namespace FriendsPoint
         float IsShootingTimer = 0;
         protected override void Update(GameTime gameTime) {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
+            TimerEngine.UpdateTimer(gameTime);
             Camera.deltaTime = deltaTime;
             timer += gameTime.ElapsedGameTime.TotalSeconds;
 
