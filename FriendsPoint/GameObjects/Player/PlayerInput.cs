@@ -1,6 +1,5 @@
 ﻿namespace FriendsPoint.GameObjects.Player {
     public partial class Player : CircleHBoxObj {          // Класс игрока, наследует класс GameObject
-        
         public void ShiftLook(bool ShiftPressed, Point mousePosition) {
             Vector2 mouseDirectionForCamera;
             if (ShiftPressed) {

@@ -1,41 +1,101 @@
 
 using FriendsPoint;
-using System.Timers;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 public class Animation {
-    public float Value;
-    public float End;
-    public int TimerIndex;
-    public string Function;
-    public string FunctionType;
-    public float Modifier;
-    public bool IsActive;
-    public void SetTimer(float _Value, float _End, float _Step, int _TimerIndex, string _Function, string _FunctionType, float _Modifier) {
-        IsActive = true;
-        Value = _Value;
-        End = _End;
-        TimerIndex = _TimerIndex;
-        Modifier = _Modifier;
-        Function = _Function;                           // 1 - linear, 2 - circle, 3 - expo, 4 - back, 5 - elastic, 6 - bounce 
-        FunctionType = _FunctionType;                   // 1 - easeIn, 2 - easeOut, 3 - easeInOut
+    private string function = "linear";
+    private string funcType = "ease";
+    public float animtime;
+    public float currentanimtime = 0f;
+    private float[] keyframes;
+    private int currentKeyFrame = 0;
+    private int numOfColumns;
+    private bool isPlaying = false;
+
+    public float[] currentValues;
+    public Animation(float[] _keyframes, int _numOfColumns, float _animtime, string _function, string _funcType) {
+        function = _function;
+        animtime = _animtime;
+        keyframes = _keyframes;
+        numOfColumns = _numOfColumns;
+        currentValues = new float[numOfColumns];
+        for (int i = 0; i < _numOfColumns; i++) {
+            currentValues[i] = keyframes[i];
+        }
+    }
+    public Animation(float[] _keyframes, int _numOfColumns, float _animtime) {
+        animtime = _animtime;
+        keyframes = _keyframes;
+        numOfColumns = _numOfColumns;
+        currentValues = new float[numOfColumns];
+        for (int i = 0; i < _numOfColumns; i++) {
+            currentValues[i] = keyframes[i];
+        }
+    }
+
+
+
+    public void Stop() {
+        Pause();
+        Reset();
+    }
+    public void Pause() {
+        for (int i = 0; i < AnimEngine.curAnims.Count; i++) {
+            if (AnimEngine.curAnims[i] == this) {
+                AnimEngine.curAnims.RemoveAt(i);
+            }
+        }
+        isPlaying = false;
+    }
+    public void Reset() {
+        currentanimtime = 0f;
+        currentKeyFrame = 0;
+        for (int i = 0; i < numOfColumns; i++) {
+            currentValues[i] = keyframes[i];
+        }
+    }
+    public void Play() {
+        if (isPlaying == false) {
+            AnimEngine.curAnims.Add(this);
+            isPlaying = true;
+        }
+    }
+
+
+
+    public void doAnim(float elapsedTime) {
+        int keyframeIndex1 = currentKeyFrame * numOfColumns;
+        int keyframeIndex2 = (currentKeyFrame + 1) * numOfColumns;
+
+        float normalizedTime1 = keyframes[keyframeIndex1] / 100;
+        float normalizedTime2 = keyframes[keyframeIndex2] / 100;
+
+        float normalizedCurTime = currentanimtime / animtime;
+
+        float keyFrameTime = normalizedTime2 - normalizedTime1;
+        float keyFrameCurrentTime = normalizedCurTime - normalizedTime1;
+
+        currentValues[0] = normalizedCurTime;
+        for (int i = 1; i < numOfColumns; i++) {
+            float value1 = keyframes[keyframeIndex1 + i];
+            float value2 = keyframes[keyframeIndex2 + i];
+            float newValue = value1 + (value2 - value1) * (keyFrameCurrentTime / keyFrameTime);
+            currentValues[i] = newValue;
+        }
+        currentanimtime += elapsedTime;
+        if (normalizedCurTime >= 1f) {
+            this.Stop();
+        }
+        if (normalizedCurTime >= normalizedTime2) {
+            currentKeyFrame++;
+        }
     }
 }
+
 public partial class AnimEngine {
-
-    static public void Animate(ref int var, float animTime) {
-
-    }
+    static public List<Animation> curAnims = new List<Animation>();
     static public void UpdateAnim(GameTime gameTime) {
-
-    }
-    private int GetTimerIndex(string key) {
-        return TimerEngine.GetTimerIndex(key);
-    }
-    private float GetTimer(int index) {
-        return TimerEngine.GetTimer(index);
-    }
-    private void AddTimer(float _Value, float _End, float _Step, string _Key, string _StepType) {
-        TimerEngine.AddTimer(_Value, _End, _Step, _Key, _StepType);
+        for (int i = 0; i < AnimEngine.curAnims.Count; i++) {
+            AnimEngine.curAnims[i].doAnim((float)gameTime.ElapsedGameTime.TotalMilliseconds);
+        }
     }
 }
 

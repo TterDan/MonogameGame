@@ -11,6 +11,7 @@ namespace FriendsPoint
         public string StepType;
         public string Key;
         public bool IsActive;
+        public int stepModifier = 1;
         public void SetTimer(float _Value, float _End, float _Step, string _Key, string _StepType) {
             IsActive = true;
             Value = _Value;
@@ -18,6 +19,9 @@ namespace FriendsPoint
             Step = _Step;
             Key = _Key;
             StepType = _StepType;               // 1 - counter, 2 - timer       ; 1 - счетчик (любой шаг), 2 - Таймер в миллисекундах 
+        }
+        public void Pause() {
+            stepModifier = stepModifier == 1 ? 0 : 1;
         }
     }
     static public class TimerEngine {
@@ -51,9 +55,10 @@ namespace FriendsPoint
             for (int i = 0; i < timers.Count; i++) {
                 if (timers[i].IsActive == true) {
                     if (timers[i].StepType == "Timer") {
-                        timers[i].Value += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                        timers[i].Value += (float)gameTime.ElapsedGameTime.TotalMilliseconds * timers[i].stepModifier;
+
                     } else {
-                        timers[i].Value += timers[i].Step;
+                        timers[i].Value += timers[i].Step * timers[i].stepModifier;
                     }
                     if (timers[i].Value >= timers[i].End) {
                         timers[i].Value = timers[i].End;

@@ -1,7 +1,20 @@
 ﻿namespace FriendsPoint.GameObjects.Player {
     public partial class Player : CircleHBoxObj {          // Класс игрока, наследует класс GameObject
-
+        float[] keyframes =
+{
+            0,      0f,
+            17,     30f,
+            34,     60f,
+            51,     90f,
+            68,     60f,
+            85,     30f,
+            100,      0f
+        };
+        Animation anim2;
         public void UseWeapon(List<GameObject> enemies, List<GameObject> weapons, float deltaTime) {
+            anim2 = new Animation(keyframes, 2, 500);
+            anim2.Play();
+
             Vector2 direction = mousePosition - ScreenPosition;
             deltaTimeForRecoil = deltaTime;
             if (!isCoolDown)
@@ -46,6 +59,7 @@
             }
         }
         
+
         public void Reload()
         {
              isReloading = true;

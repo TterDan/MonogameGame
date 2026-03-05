@@ -4,7 +4,12 @@
             DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, Radius, Color.Black, 0.34f, 0f, 1f / (300 / Radius));
             DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, AdditionRadius, Color.Black * 0.65f, 0.05f, 0f, 1f / (300 / AdditionRadius));
 
-            DrawEngine.DrawTexture(spriteBatch, ScreenPosition, Texture, Rotation, 0.7f, 0.42f);
+            Vector2 additiveVect = Vector2.Zero;
+            if (anim2 != null) {
+                float additivePos = anim2.currentValues[1];
+                additiveVect = new Vector2(0, additivePos);
+            }
+            DrawEngine.DrawTexture(spriteBatch, ScreenPosition + additiveVect, Texture, Rotation, 0.7f, 0.42f);
             if (isShooting)
             {
                 Vector2 recoilTarget = new Vector2(currentWeapon.RecoilStrength, 0f);
@@ -32,11 +37,8 @@
                 for (int i = 0; i < bullets.Count; i++)
                 {
                     DrawEngine.Line(spriteBatch, ScreenPosition + GetTrunkOffset(), ScreenPosition + bullets[i], Color.Yellow, 4.5f, 1f);
-                    Console.Log(rnd.Next(0, 10000), "1");
                 }
             }
-            Console.Log(currentShotDrawTime, "5959");
-            Console.Log(ShotDrawTimer, "59159");
             if(currentWeapon.Type != "Melee")
                 Main.CartrigesInMagazineUI(spriteBatch,currentWeapon.CartrigesInMagazine, currentWeapon.TotalCartriges);
             if (viewWeapon != null) {

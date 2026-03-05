@@ -11,7 +11,6 @@
         public Random rnd;
         public float Health = 100f;
 
-        public SpriteBatch spriteBatch;
         public bool isShooting;
         public Vector2 currentOffset;
         public Vector2 recoilOffset;

@@ -15,8 +15,6 @@ namespace FriendsPoint
         private Vector2 ScreenCenter;
         private List<(Weapon, Vector2)> droppedWeapons;
         private SpriteFont font;            // Шрифт для отрисовки текста
-        private Weapon fist;
-        private JsonArray weaponsArray;
         private Random rnd;
         private static Texture2D Cursor;
 
@@ -24,17 +22,8 @@ namespace FriendsPoint
         private List<GameObject> Weapons;
         private List<GameObject> Enemies;
         private List<GameObject> OtherGameObjects;
-        BlendState maskBlend;
-        Texture2D maskTexture;
         public Main()
         {
-            maskBlend = new BlendState {
-                ColorSourceBlend = Blend.Zero,
-                ColorDestinationBlend = Blend.SourceColor,
-                AlphaSourceBlend = Blend.Zero,
-                AlphaDestinationBlend = Blend.SourceAlpha
-            };
-            //maskTexture = CreateRoundedRectMask(width, height, radius);
             Players = new List<GameObject>();
             Weapons = new List<GameObject>();
             Enemies = new List<GameObject>();

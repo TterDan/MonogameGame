@@ -3,7 +3,6 @@ namespace FriendsPoint.GameObjects {
     public class Enemy : CircleHBoxObj {                                                          // Класс врага, наследует класс GameObject
         private float Health = 100f;
         private float MoveSpeed;
-        Random rndPosition = new Random();
         private Vector2 HitForce = Vector2.Zero;
         private float HitForceVelocity = 200f;
         private float AdditionForceDeceleraion = 1f;
@@ -24,7 +23,7 @@ namespace FriendsPoint.GameObjects {
             Health -= damage;
             if (Health <= 0) {
                 enemies.RemoveAt(objectIndex);
-                return true;
+                return true; 
             }
             return false;
         }

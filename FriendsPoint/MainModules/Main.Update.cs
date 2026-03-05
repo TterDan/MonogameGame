@@ -21,7 +21,9 @@ namespace FriendsPoint
         protected override void Update(GameTime gameTime) {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
             TimerEngine.UpdateTimer(gameTime);
+            AnimEngine.UpdateAnim(gameTime);
             Camera.deltaTime = deltaTime;
+
             timer += gameTime.ElapsedGameTime.TotalSeconds;
 
             if (timer >= 0.25) {
