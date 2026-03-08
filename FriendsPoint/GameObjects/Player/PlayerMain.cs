@@ -30,6 +30,33 @@
         public float oldShotCount = 0;
 
         public float dropStrength = 180f;
+
+        float[] keyframes1 =
+        {
+            0,      0f,
+            100,      100f
+        };
+        float[] keyframes2 =
+{
+            0,      100f,
+            100,      0f
+        };
+        public bool keah = false;
+        public void firstAnim() {
+            Console.Log("HAHHA");
+            if (keah == false) {
+                keah = true;
+                anim2.Play();
+                timer1.Play();
+            } else {
+                keah = false;
+                anim1.Play();
+                timer1.Play();
+            }
+        }
+        Animation anim1;
+        Animation anim2;
+        Timer timer1;
         public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, int additionRadius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon, SpriteFont Font) {
             Position = startPosition;
             MoveSpeed = moveSpeed;
@@ -44,6 +71,9 @@
             font = Font;
             bullets = new List<Vector2>();
             rnd = new Random();
+            anim1 = new Animation(keyframes1, 2, 800, Functions.easeOutBounce);
+            anim2 = new Animation(keyframes2, 2, 800, Functions.easeInOutQuint);
+            timer1 = new Timer(0f, 800, 0, "Timer", firstAnim);
         }
         public void setConstants(float deltaTime) {
             currentShotDrawTime *= 200 * deltaTime;

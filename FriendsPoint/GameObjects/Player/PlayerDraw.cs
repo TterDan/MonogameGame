@@ -1,14 +1,21 @@
 ﻿namespace FriendsPoint.GameObjects.Player {
     public partial class Player : CircleHBoxObj {          // Класс игрока, наследует класс GameObject
         public override void Draw(SpriteBatch spriteBatch) {
-            DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, Radius, Color.Black, 0.34f, 0f, 1f / (300 / Radius));
-            DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, AdditionRadius, Color.Black * 0.65f, 0.05f, 0f, 1f / (300 / AdditionRadius));
+            DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, Radius, Color.Black, 0.34f);
+            DrawEngine.Circle(spriteBatch, CircleTexture, ScreenPosition, AdditionRadius, Color.Black * 0.65f, 0.05f);
 
             Vector2 additiveVect = Vector2.Zero;
-            if (anim2 != null) {
-                float additivePos = anim2.currentValues[1];
-                additiveVect = new Vector2(0, additivePos);
+
+            if (anim1 != null) {
+                if (anim1.IsActive == true) {
+                    Vector2 position3 = new Vector2(100, 100 + anim1.CurrentValues[1]);
+                    DrawEngine.Circle(spriteBatch, CircleTexture, position3, 50, Color.Black);
+                } else {
+                    Vector2 position3 = new Vector2(100, 100 + anim2.CurrentValues[1]);
+                    DrawEngine.Circle(spriteBatch, CircleTexture, position3, 50, Color.Black);
+                }
             }
+
             DrawEngine.DrawTexture(spriteBatch, ScreenPosition + additiveVect, Texture, Rotation, 0.7f, 0.42f);
             if (isShooting)
             {

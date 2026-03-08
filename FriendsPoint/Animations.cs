@@ -11,7 +11,7 @@ namespace FriendsPoint {
         };
         Animation anim1;
         public void AnimInit() {
-            anim1 = new Animation(keyframes, 3, 5000);          // При создании анимации надо передавать сами кейфреймы, количество столбцов в кейфрейме, и время самой анимации в мс
+            anim1 = new Animation(keyframes, 3, 5000, Functions.linear);          // При создании анимации надо передавать сами кейфреймы, количество столбцов в кейфрейме, и время самой анимации в мс
         }
     }
 }

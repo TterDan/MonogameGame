@@ -36,7 +36,7 @@ namespace FriendsPoint.GameObjects {
             HitForce = Vector2.Lerp(HitForce, Vector2.Zero, AdditionForceDeceleraion * deltaTime);
         }
         public override void Draw(SpriteBatch render) {
-            DrawEngine.Circle(render, CircleTexture, ScreenPosition, Radius, Color.Red, Layer, 0f, 1f / (300 / Radius));
+            DrawEngine.Circle(render, CircleTexture, ScreenPosition, Radius, Color.Red, Layer);
         }
     }
 }
