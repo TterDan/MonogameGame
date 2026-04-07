@@ -43,7 +43,7 @@
         };
         public bool keah = false;
         public void firstAnim() {
-            Console.Log("HAHHA");
+            
             if (keah == false) {
                 keah = true;
                 anim2.Play();
@@ -58,6 +58,7 @@
         Animation anim2;
         Timer timer1;
         public Player(GraphicsDevice GraphicsDevice, Vector2 startPosition, int radius, int additionRadius, float moveSpeed, Vector2 playerScreenPos, Weapon weapon, SpriteFont Font) {
+            Fist = weapon;
             Position = startPosition;
             MoveSpeed = moveSpeed;
             ScreenPosition = playerScreenPos;

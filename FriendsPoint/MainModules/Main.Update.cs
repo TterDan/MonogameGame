@@ -18,6 +18,8 @@ namespace FriendsPoint
         float reloadTimer = 0;
         float coolDownTimer = 0;
         float IsShootingTimer = 0;
+        
+       
         protected override void Update(GameTime gameTime) {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
             TimerEngine.UpdateTimer(gameTime);
@@ -37,6 +39,7 @@ namespace FriendsPoint
             Console.Log(delta, "GC memory adding bytes per second");
 
             Input();
+            grenadesExplosion(deltaTime);
             IsShootingCheck(deltaTime);
             weaponMove();
             semiCheck(gameTime);
@@ -108,30 +111,61 @@ namespace FriendsPoint
             }
         }
 
-        protected void ListForCycles() {                                    // Здесь перебираются массивы игровых объектов
+        protected void ListForCycles()
+        {                                    // Здесь перебираются массивы игровых объектов
             Vector2 PScreenPosition = ScreenCenter - Camera.CameraOffset;
             Vector2 PPosition = player.Position;
             player.ScreenPosition = PScreenPosition;
-            for (int i = 1; i < Players.Count; i++) {
+            for (int i = 1; i < Players.Count; i++)
+            {
                 Player player = (Player)Players[i];
                 player.ScreenPosition = PScreenPosition + (player.Position - PPosition);
                 player.setConstants(deltaTime);
             }
-            for (int i = 0; i < Weapons.Count; i++) {
+            for (int i = 0; i < Weapons.Count; i++)
+            {
                 Weapon weapon = (Weapon)Weapons[i];
                 weapon.Move(deltaTime);
                 weapon.ScreenPosition = PScreenPosition + (weapon.Position - PPosition);
             }
-            for (int i = 0; i < Enemies.Count; i++) {
+            for (int i = 0; i < Enemies.Count; i++)
+            {
                 Enemy enemy = (Enemy)Enemies[i];
                 enemy.Move(player.Position - enemy.Position, player.Radius + enemy.Radius, deltaTime);
                 enemy.ScreenPosition = PScreenPosition + (enemy.Position - PPosition);
             }
-            for (int i = 0; i < OtherGameObjects.Count; i++) {
+            for (int i = 0; i < OtherGameObjects.Count; i++)
+            {
                 GameObject gameObj = (GameObject)OtherGameObjects[i];
                 gameObj.ScreenPosition = PScreenPosition + (gameObj.Position - PPosition);
             }
         }
+
+        protected void grenadesExplosion(float deltatime)
+        {
+            for (int i = 0; i < grenades.Count; i++)
+            {
+
+                grenades[i].BoomTimer -= deltatime;
+                if (grenades[i].BoomTimer <= 0)
+                {
+                    grenades[i].GrenadesAction[grenades[i].Name](Enemies);
+                    grenades[i].Duration -= deltatime;
+                    if (grenades[i].Duration <= 0)
+                    {
+
+                        Weapons.Remove(grenades[i]);
+                        grenades.RemoveAt(i);
+                        
+                        Console.Log("delete");
+                        i--;
+                    }
+                }
+            }
+
+        }
+
+
         protected void weaponMove() {
             for (int i = 0; i < droppedWeapons.Count; i++) {
                 var (weapon, dir) = droppedWeapons[i];
@@ -143,6 +177,10 @@ namespace FriendsPoint
                     if (enemy.Radius + weapon.Radius >= (enemy.ScreenPosition - weapon.ScreenPosition).Length()) {
                         float calculatedDamage = (weapon.HitDamage * weapon.FlyVelocity / weapon.HitForceVelocity);
                         weapon.FlyVelocity = 0;
+                        if(weapon.Name == "Molotov")
+                        {
+                            weapon.BoomTimer = 0;
+                        }
                         enemy.TakeDamage(calculatedDamage, Enemies, j);
                     }
                 }
@@ -182,8 +220,8 @@ namespace FriendsPoint
             DrawEngine.GraphicsDevice = GraphicsDevice;
             int enemyExist = Enemies.Count;
 
-            if (enemyExist < 3) {
-                for (int i = 0; i < 3 - enemyExist; i++) {
+            if (enemyExist < 10) {
+                for (int i = 0; i < 10 - enemyExist; i++) {
                     Enemy enemy = new Enemy(
                         GraphicsDevice,
                         new Vector2(200 + i * 100, 200),

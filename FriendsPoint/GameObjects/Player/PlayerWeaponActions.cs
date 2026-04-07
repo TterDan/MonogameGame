@@ -1,6 +1,6 @@
 ﻿namespace FriendsPoint.GameObjects.Player {
     public partial class Player : CircleHBoxObj {          // Класс игрока, наследует класс GameObject
-        public void UseWeapon(List<GameObject> enemies, List<GameObject> weapons, float deltaTime) {
+        public void UseWeapon(List<GameObject> enemies, List<GameObject> weapons, float deltaTime, List<(Weapon, Vector2)> droppedWeapons, List<Weapon> grenades) {
             anim1.Play();
             timer1.Play();
             Vector2 direction = mousePosition - ScreenPosition;
@@ -21,7 +21,8 @@
                         currentWeapon.CartrigesInMagazine--;
                         if (currentWeapon.Type == "Throwing")
                         {
-                            Throw(weapons);
+                            Console.Log("sosk");
+                            Throw(weapons, droppedWeapons, grenades);
                         }
                         else
                         if (currentWeapon.Name == "Shotgun")
@@ -55,8 +56,15 @@
         public void Place() {
 
         }
-        public void Throw(List<GameObject> objects) {
-
+        public void Throw(List<GameObject> objects, List<(Weapon, Vector2)> droppedWeapons, List<Weapon> grenades) {
+            float rand = rnd.Next(90, 110) * 0.01f;
+            currentWeapon.FlyVelocity = dropStrength * rand;
+            currentWeapon.Position = Position;
+            currentWeapon.IsActivated = true;
+            objects.Add(currentWeapon);
+            droppedWeapons.Add((currentWeapon, Vector2.Normalize(mouseDirection)));
+            grenades.Add(currentWeapon);
+            currentWeapon = Fist;
         }
         public void Beat(List<GameObject> enemies, List<GameObject> weapons) {
             for (int j = 0; j < enemies.Count; j++) {
@@ -130,6 +138,7 @@
             if (CanToTakeWeapon == false || viewWeapon == null) {
                 return;
             }
+            
             int index = weapons.IndexOf(viewWeapon);
             if (viewWeapon.Type == "Ammunition")
             {
@@ -150,13 +159,16 @@
                     break;
                 }
             }
+            if (viewWeapon.IsActivated)
+            {
+                return;
+            }
             currentWeapon = viewWeapon;
             weapons.RemoveAt(index);
             return;
         }
         public void DropWeapon(List<GameObject> weapons, List<(Weapon, Vector2)> droppedWeapons) {
             float rand = rnd.Next(90, 110) * 0.01f;
-            Console.Log(rand, "random");
             currentWeapon.FlyVelocity = dropStrength * rand;
             currentWeapon.Position = Position;
             weapons.Add(currentWeapon);

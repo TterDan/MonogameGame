@@ -26,12 +26,13 @@ namespace FriendsPoint
             TimerEngine.Init();
 
 
-            Weapon fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 40, 70, new Vector2(56, 45), Vector2.Zero, 15, 0, 1, 3, 0, 300, 20, 0, 0, 0, 1f, 0);
+            Weapon fist = new Weapon(GraphicsDevice, fistTexture, "Fist", "Melee", Vector2.Zero, 40, 70, new Vector2(56, 45), Vector2.Zero, 15, 0, 1, 3, 0, 300, 20, 0, 0, 0, 1f, 0, 0, 0, 0);
             map = new Map(new Vector2(0, 0), 400, 400);                                                                 // Инициализирую карту
             player = new Player(GraphicsDevice, Vector2.Zero, 70, 120, 50f, new Vector2(windowSize.X / 2 , windowSize.Y / 2), fist, font);     // Инициализирую игрока
             OtherGameObjects.Add(map);
             Players.Add(player);
             droppedWeapons = new List<(Weapon, Vector2)>();
+            grenades = new List<Weapon>();
 
             SpawnWeapons(20);
             AnimInit();
@@ -44,7 +45,7 @@ namespace FriendsPoint
             map.Texture = Content.Load<Texture2D>("floor");
         }
         private void SpawnWeapons(int numOfWeapons) {
-            for (int i = 0; i < numOfWeapons; i++) {
+            for (int i = 0; i < 50; i++) {
                 JsonArray weaponsArray = JsonNode.Parse(File.ReadAllText("../../../WeaponData.json")).AsArray();
                 int rndWeapon = rnd.Next(1, weaponsArray.Count);
                 string pathToImg = weaponsArray[rndWeapon]["Path"].ToString();
@@ -53,13 +54,13 @@ namespace FriendsPoint
                     weaponTexture,
                     weaponsArray[rndWeapon]["Name"].ToString(),
                     weaponsArray[rndWeapon]["Type"].ToString(),
-                    new Vector2(rnd.Next(-500, 500), rnd.Next(-500, 500)),
+                    new Vector2(rnd.Next(-1000, 1000), rnd.Next(-1000, 1000)),
                     60,
                     105,
                     new Vector2((float)weaponsArray[rndWeapon]["OffsetX"], (float)weaponsArray[rndWeapon]["OffsetY"]),
                     new Vector2((float)weaponsArray[rndWeapon]["TrunkOffsetX"], (float)weaponsArray[rndWeapon]["TrunkOffsetY"]),
                     40,
-                    15,
+                    0.02f,
                     1,
                     (float)weaponsArray[rndWeapon]["RecoilStrengthForCamera"],
                     (float)weaponsArray[rndWeapon]["ReloadTime"],
@@ -69,7 +70,10 @@ namespace FriendsPoint
                     (float)weaponsArray[rndWeapon]["CartrigesInMagazine"],
                     (float)weaponsArray[rndWeapon]["TotalCartriges"],
                     (float)weaponsArray[rndWeapon]["TextureScale"],
-                    (float)weaponsArray[rndWeapon]["TextureRotationInPlayerHandDegrees"]
+                    (float)weaponsArray[rndWeapon]["TextureRotationInPlayerHandDegrees"],
+                    (float)weaponsArray[rndWeapon]["Timer"],
+                    (float)weaponsArray[rndWeapon]["ExplosionArea"],
+                    (float)weaponsArray[rndWeapon]["Duration"]
                     );
                 wpn.Rotation = rnd.Next(-314 / 20, 314 / 20) * 0.01f;
                 Weapons.Add(wpn);

@@ -14,6 +14,7 @@ namespace FriendsPoint
         private Vector2 windowSize;         // Размеры окна
         private Vector2 ScreenCenter;
         private List<(Weapon, Vector2)> droppedWeapons;
+        private List<Weapon> grenades;
         private SpriteFont font;            // Шрифт для отрисовки текста
         private Random rnd;
         private static Texture2D Cursor;
